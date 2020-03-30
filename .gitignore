@@ -1,0 +1,5 @@
+/tools/Addins/
+/tools/Cake/
+/tools/GitVersion.CommandLine
+/tools/*
+!/tools/packages.config
