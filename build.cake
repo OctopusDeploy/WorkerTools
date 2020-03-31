@@ -15,40 +15,38 @@ var target = Argument("target", "Default");
 ///////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES
 ///////////////////////////////////////////////////////////////////////////////
-var artifactsDir = "./artifacts";
-
-string nugetVersion;
+string semVer;
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
 Setup(context =>
 {
-    var fromEnv = context.EnvironmentVariable("GitVersion.NuGetVersion");
+    var fromEnv = context.EnvironmentVariable("GitVersion.semVer");
     
     if (string.IsNullOrEmpty(fromEnv))
     { 
         var gitVersionInfo = GitVersion(new GitVersionSettings {
             OutputType = GitVersionOutput.Json
         });
-        nugetVersion = gitVersionInfo.NuGetVersion;
-        Information("Building worker images v{0}", nugetVersion);
+        semVer = gitVersionInfo.SemVer;
+        Information("Building step-execution-container images v{0}", semVer);
         Information("Informational Version {0}", gitVersionInfo.InformationalVersion);
         Verbose("GitVersion:\n{0}", gitVersionInfo.Dump());
     }
     else
     {
-        nugetVersion = fromEnv;
-        Information("Building woeker images v{0}", nugetVersion);
+        semVer = fromEnv;
+        Information("Building step-execution-container images v{0}", semVer);
     }
 
     if (BuildSystem.IsRunningOnTeamCity)
-        BuildSystem.TeamCity.SetBuildNumber(nugetVersion);
+        BuildSystem.TeamCity.SetBuildNumber(semVer);
 });
 
 Teardown(context =>
 {
-    Information("Finished running tasks for build v{0}", nugetVersion);
+    Information("Finished running tasks for build v{0}", semVer);
 });
 
 //////////////////////////////////////////////////////////////////////
@@ -58,7 +56,7 @@ Teardown(context =>
 Task("Build")
     .Does(() =>
 {
-    var tag = $"octopusdeploy/worker-prerelease:{nugetVersion}-ubuntu1804";
+    var tag = $"octopusdeploy/step-execution-container-prerelease:{semVer}-ubuntu1804";
     DockerBuild(new DockerImageBuildSettings { Tag = new [] { tag } }, "ubuntu.18.04");
 });
 
