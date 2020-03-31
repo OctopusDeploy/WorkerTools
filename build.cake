@@ -56,7 +56,7 @@ Teardown(context =>
 Task("Build")
     .Does(() =>
 {
-    var tag = $"octopusdeploy/step-execution-container-prerelease:{semVer}-ubuntu1804";
+    var tag = $"octopusdeploy/step-execution-container:{semVer}-ubuntu1804";
     DockerBuild(new DockerImageBuildSettings { Tag = new [] { tag } }, "ubuntu.18.04");
 });
 
