@@ -9,6 +9,10 @@ ARG Helm_Version=v3.0.2
 ARG Node_Version=12.16.2\*
 ARG Kubectl_Version=1.11.1-00
 ARG Terraform_Version=0.12.24
+ARG Eks_Cli_Version=0.18.0
+ARG Ecs_Cli_Version=1.18.1
+ARG Aws_Iam_Authenticator_Version=1.16.8
+ARG Umoci_Version=0.4.5
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
@@ -55,6 +59,9 @@ RUN apt-get install -y apt-transport-https && \
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04
 RUN apt-get install -y default-jdk
 
+# Install common Java tools
+RUN apt-get install -y maven gradle
+
 # Get Azure CLI
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
 RUN wget --quiet -O - https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
@@ -92,3 +99,36 @@ RUN apt-get install -y python3-pip groff
 # Get AWS CLI
 # https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html#install-linux-awscli
 RUN pip3 install "awscli>=1.18.0,<=1.19.0"  --upgrade
+
+# Get EKS CLI
+# https://github.com/weaveworks/eksctl
+RUN curl --silent --location "https://github.com/weaveworks/eksctl/releases/${Eks_Cli_Version}/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp && \
+    sudo mv /tmp/eksctl /usr/local/bin
+
+# Get ECS CLI
+# https://github.com/aws/amazon-ecs-cli
+RUN curl --silent --location "https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-v${Ecs_Cli_Version}" -o /usr/local/bin/ecs-cli && \
+    chmod +x /usr/local/bin/ecs-cli
+
+# Get AWS IAM Authneticator
+# https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
+RUN curl --silent --location https://amazon-eks.s3.us-west-2.amazonaws.com/${Aws_Iam_Authenticator_Version}/2020-04-16/bin/linux/amd64/aws-iam-authenticator -o /usr/local/bin/aws-iam-authenticator && \
+    chmod +x /usr/local/bin/aws-iam-authenticator
+
+# Get the Istio CLI
+# https://istio.io/docs/ops/diagnostic-tools/istioctl/
+RUN curl -sL https://istio.io/downloadIstioctl | sh -
+
+# Get the Linkerd CLI
+# https://linkerd.io/2/getting-started/
+RUN curl -sL https://run.linkerd.io/install | sh
+
+# Get tools for working with Docker images without the DOcker daemon
+# https://github.com/openSUSE/umoci
+RUN curl --silent --location https://github.com/openSUSE/umoci/releases/download/v${Umoci_Version}/umoci.amd64 -o /usr/local/bin/umoci && \
+    chmod +x /usr/local/bin/umoci
+
+# Get common utilities for scripting
+# https://mikefarah.gitbook.io/yq/
+RUN add-apt-repository ppa:rmescandon/yq
+RUN apt-get update && apt-get install -y jq yq openssh-client rsync
