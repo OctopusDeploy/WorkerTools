@@ -102,17 +102,13 @@ RUN pip3 install "awscli>=1.18.0,<=1.19.0"  --upgrade
 
 # Get EKS CLI
 # https://github.com/weaveworks/eksctl
-RUN curl --silent --location "https://github.com/weaveworks/eksctl/releases/${Eks_Cli_Version}/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp && \
-    sudo mv /tmp/eksctl /usr/local/bin
+RUN curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/${Eks_Cli_Version}/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp && \
+    mv /tmp/eksctl /usr/local/bin
 
 # Get ECS CLI
 # https://github.com/aws/amazon-ecs-cli
 RUN curl --silent --location "https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-v${Ecs_Cli_Version}" -o /usr/local/bin/ecs-cli && \
     chmod +x /usr/local/bin/ecs-cli
-
-# Get the Elastic Beanstalk CLI
-# https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install-linux.html
-RUN pip3 install awsebcli --upgrade
 
 # Get AWS IAM Authneticator
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
@@ -134,5 +130,6 @@ RUN curl --silent --location https://github.com/openSUSE/umoci/releases/download
 
 # Get common utilities for scripting
 # https://mikefarah.gitbook.io/yq/
+# https://augeas.net/
 RUN add-apt-repository ppa:rmescandon/yq
 RUN apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools
