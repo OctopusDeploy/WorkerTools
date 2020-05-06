@@ -110,6 +110,10 @@ RUN curl --silent --location "https://github.com/weaveworks/eksctl/releases/${Ek
 RUN curl --silent --location "https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-v${Ecs_Cli_Version}" -o /usr/local/bin/ecs-cli && \
     chmod +x /usr/local/bin/ecs-cli
 
+# Get the Elastic Beanstalk CLI
+# https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install-linux.html
+RUN pip3 install awsebcli --upgrade
+
 # Get AWS IAM Authneticator
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
 RUN curl --silent --location https://amazon-eks.s3.us-west-2.amazonaws.com/${Aws_Iam_Authenticator_Version}/2020-04-16/bin/linux/amd64/aws-iam-authenticator -o /usr/local/bin/aws-iam-authenticator && \
@@ -123,7 +127,7 @@ RUN curl -sL https://istio.io/downloadIstioctl | sh -
 # https://linkerd.io/2/getting-started/
 RUN curl -sL https://run.linkerd.io/install | sh
 
-# Get tools for working with Docker images without the DOcker daemon
+# Get tools for working with Docker images without the Docker daemon
 # https://github.com/openSUSE/umoci
 RUN curl --silent --location https://github.com/openSUSE/umoci/releases/download/v${Umoci_Version}/umoci.amd64 -o /usr/local/bin/umoci && \
     chmod +x /usr/local/bin/umoci
@@ -131,4 +135,4 @@ RUN curl --silent --location https://github.com/openSUSE/umoci/releases/download
 # Get common utilities for scripting
 # https://mikefarah.gitbook.io/yq/
 RUN add-apt-repository ppa:rmescandon/yq
-RUN apt-get update && apt-get install -y jq yq openssh-client rsync
+RUN apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools
