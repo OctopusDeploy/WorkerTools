@@ -117,11 +117,15 @@ RUN curl --silent --location https://amazon-eks.s3.us-west-2.amazonaws.com/${Aws
 
 # Get the Istio CLI
 # https://istio.io/docs/ops/diagnostic-tools/istioctl/
-RUN curl -sL https://istio.io/downloadIstioctl | sh -
+RUN curl -sL https://istio.io/downloadIstioctl | sh - && \
+    mv /root/.istioctl/bin/istioctl /usr/local/bin/istioctl && \
+    rm -rf /root/.istioctl
 
 # Get the Linkerd CLI
 # https://linkerd.io/2/getting-started/
-RUN curl -sL https://run.linkerd.io/install | sh
+RUN curl -sL https://run.linkerd.io/install | sh && \
+    cp /root/.linkerd2/bin/linkerd /usr/local/bin && \
+    rm -rf /root/.linkerd2
 
 # Get tools for working with Docker images without the Docker daemon
 # https://github.com/openSUSE/umoci

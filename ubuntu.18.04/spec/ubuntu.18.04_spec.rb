@@ -72,3 +72,33 @@ describe command("octo --version") do
   its(:stdout) { should contain(/7.3.2/)}
 end
 
+describe command("eksctl version") do
+  its(:exit_status) { should eq(0) }
+  its(:stdout) { should contain(/0.180.0/)}
+end
+
+describe command("ecs-cli --version") do
+  its(:exit_status) { should eq(0) }
+  its(:stdout) { should contain(/1.18.1/)}
+end
+
+describe command("mvn --version") do
+  its(:exit_status) { should eq(0) }
+end
+
+describe command("gradle --version") do
+  its(:exit_status) { should eq(0) }
+end
+
+describe command("aws-iam-authenticator --version") do
+  its(:exit_status) { should eq(0) }
+  its(:stdout) { should contain(/v0.5.0/)}
+end
+
+describe command("istioctl version") do
+  its(:exit_status) { should eq(0) }
+end
+
+describe command("linkerd version") do
+  its(:exit_status) { should eq(0) }
+end
