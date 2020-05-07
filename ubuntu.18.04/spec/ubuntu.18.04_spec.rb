@@ -32,7 +32,7 @@ end
 
 describe command('node --version') do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/v12.16.2/) }
+  its(:stdout) { should contain(/v12.16.3/) }
 end
 
 describe command('kubectl version') do
@@ -74,7 +74,7 @@ end
 
 describe command("eksctl version") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/0.180.0/)}
+  its(:stdout) { should contain(/0.18.0/)}
 end
 
 describe command("ecs-cli --version") do
@@ -90,7 +90,7 @@ describe command("gradle --version") do
   its(:exit_status) { should eq(0) }
 end
 
-describe command("aws-iam-authenticator --version") do
+describe command("aws-iam-authenticator version") do
   its(:exit_status) { should eq(0) }
   its(:stdout) { should contain(/v0.5.0/)}
 end
