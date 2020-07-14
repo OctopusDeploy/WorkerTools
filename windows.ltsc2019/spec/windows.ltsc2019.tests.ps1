@@ -56,4 +56,8 @@ Describe  'installed dependencies' {
     It 'has octo is installed' {
         octo --version | Should Match '7.3.4'
     }
+
+    It 'has eksctl is installed' {
+        eksctl version | Should Match '0.23.0'
+    }
 }
