@@ -12,7 +12,7 @@ end
 
 describe command('dotnet --version') do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/3.1.201/) }
+  its(:stdout) { should contain(/3.1.301/) }
 end
 
 describe command('java --version') do
@@ -32,7 +32,7 @@ end
 
 describe command('node --version') do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/v12.16.3/) }
+  its(:stdout) { should contain(/v12.18.2/) }
 end
 
 describe command('kubectl version') do
@@ -74,7 +74,7 @@ end
 
 describe command("eksctl version") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/0.18.0/)}
+  its(:stdout) { should contain(/0.23.0/)}
 end
 
 describe command("ecs-cli --version") do
