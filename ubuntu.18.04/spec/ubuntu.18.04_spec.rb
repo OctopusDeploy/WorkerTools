@@ -12,7 +12,7 @@ end
 
 describe command('dotnet --version') do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/3.1.301/) }
+  its(:stdout) { should contain(/3.1.302/) }
 end
 
 describe command('java --version') do
