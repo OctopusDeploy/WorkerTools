@@ -63,5 +63,8 @@ RUN choco install octopustools -y --version 7.3.4
 RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion 8.4.2
 RUN $path = Join-Path (Get-Item ((Get-Package Octopus.Client).source)).Directory.FullName "lib/net452/Octopus.Client.dll"; Add-Type -Path $path; echo $path;
 
+# # Install eksctl
+RUN choco install eksctl -y --version 0.23.0
+
 # # Update path for new tools
 RUN .\update_path.cmd;
