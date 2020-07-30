@@ -141,5 +141,5 @@ RUN apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-t
 # Skopeo
 # https://github.com/containers/skopeo/blob/master/install.md
 RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
-RUN wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O- | apt-key add -
+RUN APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=true wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O- | apt-key add -
 RUN apt-get update && apt-get install skopeo
