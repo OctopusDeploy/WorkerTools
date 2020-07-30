@@ -36,7 +36,7 @@ describe command('node --version') do
 end
 
 describe command('kubectl version') do
-  its(:stdout) { should contain(/v1.11.1/) }
+  its(:stdout) { should contain(/v1.18.6/) }
 end
 
 describe command("helm version") do
