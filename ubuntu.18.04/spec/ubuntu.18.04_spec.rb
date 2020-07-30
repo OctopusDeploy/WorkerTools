@@ -17,7 +17,7 @@ end
 
 describe command('java --version') do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/11.0.7/) }
+  its(:stdout) { should contain(/11.0.8/) }
 end
 
 describe command('az --version') do
