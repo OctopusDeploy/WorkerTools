@@ -12,7 +12,7 @@ ARG Terraform_Version=0.12.24
 ARG Eks_Cli_Version=0.23.0
 ARG Ecs_Cli_Version=1.18.1
 ARG Aws_Iam_Authenticator_Version=1.16.8
-ARG Umoci_Version=0.4.5
+ARG Umoci_Version=0.4.6
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
