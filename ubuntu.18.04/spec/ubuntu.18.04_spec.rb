@@ -41,7 +41,7 @@ end
 
 describe command("helm version") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/v3.0.2/)}
+  its(:stdout) { should contain(/v3.2.4/)}
 end
 
 describe command("terraform version") do
