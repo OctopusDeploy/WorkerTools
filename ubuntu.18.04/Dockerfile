@@ -137,3 +137,9 @@ RUN curl --silent --location https://github.com/openSUSE/umoci/releases/download
 # https://augeas.net/
 RUN add-apt-repository ppa:rmescandon/yq
 RUN apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools
+
+# Skopeo
+# https://github.com/containers/skopeo/blob/master/install.md
+RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
+RUN wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O- | sudo apt-key add -
+RUN apt-get update && apt-get install skopeo
