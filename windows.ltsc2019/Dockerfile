@@ -66,10 +66,7 @@ RUN choco install scriptcs -y --version 0.17.1 --no-progress
 RUN choco install octopustools -y --version 7.4.1 --no-progress
 
 # # Install Octopus Client
-RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion 8.8.3 `
-    $path = Join-Path (Get-Item ((Get-Package Octopus.Client).source)).Directory.FullName "lib/net452/Octopus.Client.dll"; `
-    Add-Type -Path $path; `
-    echo $path;
+RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion 8.8.3
 
 # # Install eksctl
 RUN choco install eksctl -y --version 0.25.0 --no-progress

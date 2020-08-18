@@ -2,15 +2,15 @@ $pesterModules = @( Get-Module -Name "Pester" -ErrorAction "SilentlyContinue" );
 
 Write-Host 'Running tests with Pester v'+$($pesterModules[0].Version)
 
-$PowershellVersion = '5.1.17763';
-
 Describe  'installed dependencies' {
-    It 'has powershell $PowershellVersion is installed' {
-        $PSVersionTable.PSVersion.ToString() | Should Match $PowershellVersion
+    It 'has powershell is installed' {
+        $PSVersionTable.PSVersion.ToString() | Should Match '5.1.17763'
     }
 
     It 'has Octopus.Client is installed ' {
-      [Reflection.AssemblyName]::GetAssemblyName("C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.8.8.3\lib\net452\Octopus.Client.dll").Version.ToString() | Should Match '8.8.3.0'
+        $expectedVersion = "8.8.3"
+        Test-Path "C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net452\Octopus.Client.dll" | Should Be $true
+        [Reflection.AssemblyName]::GetAssemblyName("C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net452\Octopus.Client.dll").Version.ToString() | Should Match "$expectedVersion.0"
     }
 
     It 'has dotnet is installed' {
@@ -22,7 +22,8 @@ Describe  'installed dependencies' {
     }
 
     It 'has az is installed' {
-      az version | Select-String -Pattern '2.4.0' | Should Match '2.4.0'
+      $output = (& az version) | convertfrom-json
+      $output.'azure-cli' | Should Be '2.10.1'
     }
 
     It 'has aws is installed' {
@@ -34,7 +35,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has kubectl is installed' {
-        kubectl version --client | Should Match '1.18.0'
+        kubectl version --client | Should Match '1.18.8'
     }
 
     It 'has helm is installed' {
@@ -62,6 +63,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has 7zip installed' {
-      & ".\Program Files\7-Zip\7z.exe" --help | Should Match '7-Zip 19.00'
+      $output = (& "C:\Program Files\7-Zip\7z.exe" --help) -join "`n"
+      $output | Should Match '7-Zip 19.00'
   }
 }

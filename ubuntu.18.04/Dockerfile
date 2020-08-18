@@ -109,7 +109,7 @@ RUN curl --silent --location "https://github.com/weaveworks/eksctl/releases/down
 RUN curl --silent --location "https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-v${Ecs_Cli_Version}" -o /usr/local/bin/ecs-cli && \
     chmod +x /usr/local/bin/ecs-cli
 
-# Get AWS IAM Authneticator
+# Get AWS IAM Authenticator
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
 RUN curl --silent --location https://amazon-eks.s3.us-west-2.amazonaws.com/${Aws_Iam_Authenticator_Version}/2020-08-04/bin/linux/amd64/aws-iam-authenticator -o /usr/local/bin/aws-iam-authenticator && \
     chmod +x /usr/local/bin/aws-iam-authenticator
