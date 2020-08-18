@@ -10,11 +10,11 @@ Describe  'installed dependencies' {
     }
 
     It 'has Octopus.Client is installed ' {
-      [Reflection.AssemblyName]::GetAssemblyName("C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.8.4.2\lib\net452\Octopus.Client.dll").Version.ToString() | Should Match '8.4.2.0'
+      [Reflection.AssemblyName]::GetAssemblyName("C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.8.8.3\lib\net452\Octopus.Client.dll").Version.ToString() | Should Match '8.8.3.0'
     }
 
     It 'has dotnet is installed' {
-        dotnet --version | Should Match '3.1.302'
+        dotnet --version | Should Match '3.1.401'
     }
 
     It 'has java is installed' {
@@ -26,11 +26,11 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws is installed' {
-      Get-AWSPowerShellVersion | Should Match '4.0.5'
+      Get-AWSPowerShellVersion | Should Match '4.0.6'
     }
 
     It 'has node is installed' {
-        node --version | Should Match '12.16.2'
+        node --version | Should Match '12.18.3'
     }
 
     It 'has kubectl is installed' {
@@ -38,26 +38,30 @@ Describe  'installed dependencies' {
     }
 
     It 'has helm is installed' {
-        helm version | Should Match '3.1.2'
+        helm version | Should Match '3.3.0'
     }
 
     It 'has terraform is installed' {
-        terraform version | Should Match '0.12.24'
+        terraform version | Should Match '0.13.0'
     }
 
     It 'has python is installed' {
-        python --version | Should Match '3.8.2'
+        python --version | Should Match '3.8.5'
     }
 
     It 'has gcloud is installed' {
-      gcloud --version | Select-String -Pattern "289.0.0" | Should BeLike "*289.0.0*"
+        gcloud --version | Select-String -Pattern "305.0.0" | Should BeLike "*305.0.0*"
     }
 
     It 'has octo is installed' {
-        octo --version | Should Match '7.3.4'
+        octo --version | Should Match '7.4.1'
     }
 
     It 'has eksctl is installed' {
-        eksctl version | Should Match '0.23.0'
+        eksctl version | Should Match '0.25.0'
     }
+
+    It 'has 7zip installed' {
+      & ".\Program Files\7-Zip\7z.exe" --help | Should Match '7-Zip 19.00'
+  }
 }

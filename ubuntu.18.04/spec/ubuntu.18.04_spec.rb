@@ -2,17 +2,22 @@ require 'spec_helper'
 
 describe command('pwsh --version') do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/PowerShell 7.0.0/) }
+  its(:stdout) { should contain(/PowerShell 7.0.3/) }
 end
 
 describe command("pwsh -c '[Reflection.AssemblyName]::GetAssemblyName(\"/Octopus.Client.dll\").Version.ToString()'") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/8.4.0.0/) }
+  its(:stdout) { should contain(/8.8.3.0/) }
+end
+
+describe command("pwsh -c '(Get-Module Az -ListAvailable).Version.ToString()'") do
+  its(:exit_status) { should eq(0) }
+  its(:stdout) { should contain(/4.5.0/) }
 end
 
 describe command('dotnet --version') do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/3.1.302/) }
+  its(:stdout) { should contain(/3.1.401/) }
 end
 
 describe command('java --version') do
@@ -22,7 +27,7 @@ end
 
 describe command('az --version') do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/2.4.0/) }
+  its(:stdout) { should contain(/2.10.1/) }
 end
 
 describe command('aws --version') do
@@ -36,17 +41,17 @@ describe command('node --version') do
 end
 
 describe command('kubectl version') do
-  its(:stdout) { should contain(/v1.18.6/) }
+  its(:stdout) { should contain(/v1.18.8/) }
 end
 
 describe command("helm version") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/v3.2.4/)}
+  its(:stdout) { should contain(/v3.3.0/)}
 end
 
 describe command("terraform version") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/Terraform v0.12.24/)}
+  its(:stdout) { should contain(/Terraform v0.13.0/)}
 end
 
 describe "python" do
@@ -69,17 +74,17 @@ end
 
 describe command("octo --version") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/7.3.2/)}
+  its(:stdout) { should contain(/7.4.1/)}
 end
 
 describe command("eksctl version") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/0.23.0/)}
+  its(:stdout) { should contain(/0.25.0/)}
 end
 
 describe command("ecs-cli --version") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/1.18.1/)}
+  its(:stdout) { should contain(/1.20.0/)}
 end
 
 describe command("mvn --version") do

@@ -1,24 +1,23 @@
 FROM ubuntu:18.04
 
-ARG Powershell_Version=7.0.0\*
-ARG Octopus_Cli_Version=7.3.2
-ARG Octopus_Client_Version=8.4.0
-ARG Azure_Cli_Version=2.4.0\*
-ARG Azure_Powershell_Version=2.2.0
-ARG Helm_Version=v3.2.4
+ARG Powershell_Version=7.0.3\*
+ARG Octopus_Cli_Version=7.4.1
+ARG Octopus_Client_Version=8.8.3
+ARG Azure_Cli_Version=2.10.1\*
+ARG Azure_Powershell_Version=4.5.0
+ARG Helm_Version=v3.3.0
 ARG Node_Version=12.18.3\*
-ARG Kubectl_Version=1.18.6-00
-ARG Terraform_Version=0.12.24
-ARG Eks_Cli_Version=0.23.0
-ARG Ecs_Cli_Version=1.18.1
-ARG Aws_Iam_Authenticator_Version=1.16.8
+ARG Kubectl_Version=1.18.8-00
+ARG Terraform_Version=0.13.0
+ARG Eks_Cli_Version=0.25.0
+ARG Ecs_Cli_Version=1.20.0
+ARG Aws_Iam_Authenticator_Version=1.17.9
 ARG Umoci_Version=0.4.6
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
-RUN apt-get update && \ 
-    apt-get install -y wget unzip apt-utils curl && \ 
-    apt-get install -y software-properties-common 
+RUN apt-get update && \
+    apt-get install -y wget unzip apt-utils curl software-properties-common
 
 # get powershell for 18.04
 RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && \
@@ -64,9 +63,9 @@ RUN apt-get install -y maven gradle
 
 # Get Azure CLI
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
-RUN wget --quiet -O - https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
-RUN echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main" | tee /etc/apt/sources.list.d/azure-cli.list
-RUN apt-get update && \
+RUN wget --quiet -O - https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null && \
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main" | tee /etc/apt/sources.list.d/azure-cli.list && \
+    apt-get update && \
     apt-get install -y azure-cli=${Azure_Cli_Version}
 
 # Get NodeJS
@@ -76,9 +75,9 @@ RUN wget --quiet -O - https://deb.nodesource.com/setup_12.x | bash && \
 
 # Get Kubectl
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management
-RUN wget --quiet -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-RUN apt-get update && apt-get install -y kubectl=${Kubectl_Version}
+RUN wget --quiet -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -  && \
+    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list && \
+    apt-get update && apt-get install -y kubectl=${Kubectl_Version}
 
 # Get Terraform
 # https://computingforgeeks.com/how-to-install-terraform-on-ubuntu-centos-7/
@@ -88,10 +87,10 @@ RUN wget https://releases.hashicorp.com/terraform/${Terraform_Version}/terraform
 
 # Install Google Cloud CLI
 # https://cloud.google.com/sdk/docs/downloads-apt-get
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-RUN apt-get install -y ca-certificates gnupg
-RUN wget -q -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-RUN apt-get update && apt-get install -y google-cloud-sdk
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    apt-get install -y ca-certificates gnupg && \
+    wget -q -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
+    apt-get update && apt-get install -y google-cloud-sdk
 
 # Get python & groff
 RUN apt-get install -y python3-pip groff
@@ -112,7 +111,7 @@ RUN curl --silent --location "https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-li
 
 # Get AWS IAM Authneticator
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
-RUN curl --silent --location https://amazon-eks.s3.us-west-2.amazonaws.com/${Aws_Iam_Authenticator_Version}/2020-04-16/bin/linux/amd64/aws-iam-authenticator -o /usr/local/bin/aws-iam-authenticator && \
+RUN curl --silent --location https://amazon-eks.s3.us-west-2.amazonaws.com/${Aws_Iam_Authenticator_Version}/2020-08-04/bin/linux/amd64/aws-iam-authenticator -o /usr/local/bin/aws-iam-authenticator && \
     chmod +x /usr/local/bin/aws-iam-authenticator
 
 # Get the Istio CLI
@@ -135,11 +134,11 @@ RUN curl --silent --location https://github.com/opencontainers/umoci/releases/do
 # Get common utilities for scripting
 # https://mikefarah.gitbook.io/yq/
 # https://augeas.net/
-RUN add-apt-repository ppa:rmescandon/yq
-RUN apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools
+RUN add-apt-repository -y ppa:rmescandon/yq && \
+    apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools
 
 # Skopeo
 # https://github.com/containers/skopeo/blob/master/install.md
-RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
-RUN wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O- | apt-key add -
-RUN apt-get update && apt-get install -y skopeo
+RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" && \
+    wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O- | apt-key add - && \
+    apt-get update && apt-get install -y skopeo
