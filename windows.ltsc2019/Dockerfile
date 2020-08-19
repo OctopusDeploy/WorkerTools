@@ -68,6 +68,9 @@ RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDep
 # # Install eksctl
 RUN choco install eksctl -y --version 0.25.0 --no-progress
 
+# # Install Powershell Core
+RUN choco install powershell-core --yes --version 7.0.3 --no-progress
+
 # # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
