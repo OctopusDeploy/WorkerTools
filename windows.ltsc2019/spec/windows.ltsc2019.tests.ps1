@@ -82,6 +82,6 @@ Describe  'installed dependencies' {
     It 'should have installed powershell core' {
         $output = & pwsh --version
         $LASTEXITCODE | Should be 0
-        $output | Should -match '^PowerShell 7\.0\.3*'
+        $output | Should Match '^PowerShell 7\.0\.3*'
     }
 }
