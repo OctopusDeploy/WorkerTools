@@ -1,8 +1,5 @@
 # escape=`
 
-#todo: change to (New-Object Net.WebClient).DownloadFile(url,dest)
-#todo: install pwsh
-
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 SHELL ["powershell", "-Command"]
 
