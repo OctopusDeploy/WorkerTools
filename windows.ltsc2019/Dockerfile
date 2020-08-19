@@ -18,7 +18,6 @@ RUN Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -outFile 'dotnet-i
 RUN choco install openjdk14 --allow-empty-checksums --yes --no-progress; refreshenv
 
 # Install Azure CLI
-# This currently isn't working, and I'm unsure why
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest
 RUN Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; `
     Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; `
