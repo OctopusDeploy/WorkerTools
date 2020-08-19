@@ -97,7 +97,7 @@ end
 
 describe command("aws-iam-authenticator version") do
   its(:exit_status) { should eq(0) }
-  its(:stdout) { should contain(/v0.5.1/)}
+  its(:stdout) { should contain(/0.5.1/)}
 end
 
 describe command("istioctl version") do
