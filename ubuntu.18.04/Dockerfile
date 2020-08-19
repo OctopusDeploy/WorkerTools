@@ -11,7 +11,7 @@ ARG Kubectl_Version=1.18.8-00
 ARG Terraform_Version=0.13.0
 ARG Eks_Cli_Version=0.25.0
 ARG Ecs_Cli_Version=1.20.0
-ARG Aws_Iam_Authenticator_Version=1.17.9
+ARG Aws_Iam_Authenticator_Version=0.5.1
 ARG Umoci_Version=0.4.6
 
 # get `wget` & software-properties-common
@@ -111,7 +111,7 @@ RUN curl --silent --location "https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-li
 
 # Get AWS IAM Authenticator
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
-RUN curl --silent --location https://amazon-eks.s3.us-west-2.amazonaws.com/${Aws_Iam_Authenticator_Version}/2020-08-04/bin/linux/amd64/aws-iam-authenticator -o /usr/local/bin/aws-iam-authenticator && \
+RUN curl --silent --location https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${Aws_Iam_Authenticator_Version}/aws-iam-authenticator_${Aws_Iam_Authenticator_Version}_linux_amd64 -o /usr/local/bin/aws-iam-authenticator && \
     chmod +x /usr/local/bin/aws-iam-authenticator
 
 # Get the Istio CLI
