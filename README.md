@@ -18,7 +18,7 @@ Our tests are implemented in `serverspec`, which relies on `ruby` and `rspec`.
 #### Option 1: Build and Test scripts
 
 ```bash
-./build.sh --image-directory=`ubuntu.18.04`
+./build.sh --image-directory='ubuntu.18.04'
 ```
 
 Runs a build and test of the `ubuntu.18.04` container
