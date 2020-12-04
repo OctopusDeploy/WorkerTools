@@ -1,4 +1,4 @@
 ARG ContainerUnderTest=octopusdeploy/worker-tools
 
 FROM ${ContainerUnderTest}
-SHELL ["powershell", "-Command"]
+SHELL ["pwsh", "-Command"]
