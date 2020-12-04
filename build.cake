@@ -164,10 +164,8 @@ Task("Test")
         ProcessSettings processSettings;
 
         if (IsRunningOnUnix()) {
-            var specPath = "spec/";
-            var appPath ="app/";
             processSettings = new ProcessSettings{
-                Arguments = $"run -v {currentDirectory}:/app {testContainerName} pwsh -Command \"cd {appPath}{dockerTag.imageDirectory}; Invoke-Pester {specPath}{dockerTag.imageDirectory}* -OutputFile PesterTestResults.xml -OutputFormat NUnitXml -EnableExit\""
+                Arguments = $"run -v {currentDirectory}:/app {testContainerName} pwsh -file /app/scripts/run-tests.ps1"
             };
         } else {
             var specPath = "spec\\";
