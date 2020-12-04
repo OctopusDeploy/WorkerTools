@@ -167,7 +167,7 @@ Task("Test")
             var specPath = "spec/";
             var appPath ="app/";
             processSettings = new ProcessSettings{
-                Arguments = $"run -v {currentDirectory}:/app {testContainerName} powershell -Command \"cd {appPath}{dockerTag.imageDirectory}; Invoke-Pester {specPath}{dockerTag.imageDirectory}* -OutputFile PesterTestResults.xml -OutputFormat NUnitXml -EnableExit\""
+                Arguments = $"run -v {currentDirectory}:/app {testContainerName} pwsh -Command \"cd {appPath}{dockerTag.imageDirectory}; Invoke-Pester {specPath}{dockerTag.imageDirectory}* -OutputFile PesterTestResults.xml -OutputFormat NUnitXml -EnableExit\""
             };
         } else {
             var specPath = "spec\\";
