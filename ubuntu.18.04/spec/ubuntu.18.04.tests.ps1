@@ -28,6 +28,10 @@ Describe  'installed dependencies' {
       $LASTEXITCODE | Should -be 0
     }
 
+    it 'has az powershell module installed' {
+        (Get-Module Az -ListAvailable).Version.ToString() | should -be '4.5.0'
+    }
+
     It 'has aws cli installed' {
       aws --version 2>&1 | Should -match '2.0.60'
     }
