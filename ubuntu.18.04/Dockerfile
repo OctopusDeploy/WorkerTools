@@ -6,7 +6,7 @@ ARG Octopus_Client_Version=8.8.3
 ARG Azure_Cli_Version=2.14.0\*
 ARG Azure_Powershell_Version=4.5.0
 ARG Helm_Version=v3.3.0
-ARG Node_Version=14.15.1\*
+ARG Node_Version=14.16.0\*
 ARG Kubectl_Version=1.18.8-00
 ARG Terraform_Version=0.14.7
 ARG Eks_Cli_Version=0.25.0
@@ -14,7 +14,7 @@ ARG Ecs_Cli_Version=1.20.0
 ARG Aws_Iam_Authenticator_Version=0.5.1
 ARG Umoci_Version=0.4.6
 ARG Dotnet_Sdk_Version=3.1.401-1
-ARG Java_Jdk_Version=11.0.9.1+1-0ubuntu1~18.04
+ARG Java_Jdk_Version=11.0.10+9-0ubuntu1~18.04
 
 
 # get `wget` & software-properties-common
