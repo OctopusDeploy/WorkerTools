@@ -51,8 +51,9 @@ RUN wget --quiet -O - https://raw.githubusercontent.com/kubernetes/helm/master/s
 
 # Get .NET SDK 3.1
 # https://docs.microsoft.com/en-us/dotnet/core/install/linux-package-manager-ubuntu-1804
-ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
-RUN apt-get install -y apt-transport-https && \
+RUN DOTNET_CLI_TELEMETRY_OPTOUT=1 && \
+    echo "export DOTNET_CLI_TELEMETRY_OPTOUT=1" > /etc/profile.d/set-dotnet-env-vars.sh && \
+    apt-get install -y apt-transport-https && \
     apt-get update && \
     apt-get install -y dotnet-sdk-3.1
 
