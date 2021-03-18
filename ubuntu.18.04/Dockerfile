@@ -13,8 +13,7 @@ ARG Eks_Cli_Version=0.25.0
 ARG Ecs_Cli_Version=1.20.0
 ARG Aws_Iam_Authenticator_Version=0.5.1
 ARG Umoci_Version=0.4.6
-ARG Java_Jdk_Version=11.0.9.1+1-0ubuntu1~18.04
-
+ARG Java_Jdk_Version=11.0.10+9-0ubuntu1~18.04
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
