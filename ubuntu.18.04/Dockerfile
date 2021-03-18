@@ -13,7 +13,6 @@ ARG Eks_Cli_Version=0.25.0
 ARG Ecs_Cli_Version=1.20.0
 ARG Aws_Iam_Authenticator_Version=0.5.1
 ARG Umoci_Version=0.4.6
-ARG Dotnet_Sdk_Version=3.1.401-1
 ARG Java_Jdk_Version=11.0.9.1+1-0ubuntu1~18.04
 
 
@@ -53,9 +52,10 @@ RUN wget --quiet -O - https://raw.githubusercontent.com/kubernetes/helm/master/s
 
 # Get .NET SDK 3.1
 # https://docs.microsoft.com/en-us/dotnet/core/install/linux-package-manager-ubuntu-1804
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 RUN apt-get install -y apt-transport-https && \
     apt-get update && \
-    apt-get install -y dotnet-sdk-3.1=${Dotnet_Sdk_Version}
+    apt-get install -y dotnet-sdk-3.1
 
 # Get JDK
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04

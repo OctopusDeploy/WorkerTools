@@ -10,8 +10,9 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Install dotnet 3+
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 RUN Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
-    .\dotnet-install.ps1 -Version "3.1.401"; `
+    .\dotnet-install.ps1 -Version "3.1"; `
     rm dotnet-install.ps1
 
 # Install JDK
