@@ -13,12 +13,12 @@ Describe  'installed dependencies' {
     }
 
     It 'has dotnet installed' {
-        dotnet --version | Should -match '3.1.401'
+        dotnet --version | Should -match '3.1.\d\d\d'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has java installed' {
-        java --version | Should -beLike "*11.0.9*"
+        java --version | Should -beLike "*11.0.10*"
         $LASTEXITCODE | Should -be 0
     }
 
@@ -37,7 +37,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has node installed' {
-        node --version | Should -match '14.15.1'
+        node --version | Should -match '14.16.0'
         $LASTEXITCODE | Should -be 0
     }
 
