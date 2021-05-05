@@ -39,7 +39,7 @@ RUN Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release
 RUN choco install -y kubernetes-helm --version 3.3.0 --no-progress
 
 # # Install Terraform
-RUN choco install -y terraform --version 0.13.4 --no-progress
+RUN choco install -y terraform --version 0.13.7 --no-progress
 
 # # Install python
 RUN choco install -y python3 --version 3.8.5 --no-progress; `
