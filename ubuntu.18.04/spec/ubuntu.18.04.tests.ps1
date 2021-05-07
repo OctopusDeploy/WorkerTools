@@ -68,7 +68,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Should -match 'Google Cloud SDK 339.0.0'
+        gcloud --version | Select -First 1 | Should -be 'Google Cloud SDK 339.0.0'
         $LASTEXITCODE | Should -be 0
     }
 
