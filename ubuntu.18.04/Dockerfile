@@ -14,7 +14,7 @@ ARG Ecs_Cli_Version=1.20.0
 ARG Aws_Iam_Authenticator_Version=0.5.1
 ARG Umoci_Version=0.4.6
 ARG Dotnet_Sdk_Version=3.1.401-1
-ARG Java_Jdk_Version=11.0.11+9-0ubuntu2~18.04
+ARG Java_Jdk_Version=8u292-b10-0ubuntu1~18.04
 
 
 # get `wget` & software-properties-common
@@ -59,7 +59,7 @@ RUN apt-get install -y apt-transport-https && \
 
 # Get JDK
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04
-RUN apt-get install -y openjdk-11-jdk-headless=${Java_Jdk_Version}
+RUN apt-get install -y openjdk-8-jdk-headless=${Java_Jdk_Version}
 
 # Install common Java tools
 RUN apt-get install -y maven gradle
