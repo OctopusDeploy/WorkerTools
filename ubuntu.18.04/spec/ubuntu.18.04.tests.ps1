@@ -18,7 +18,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has java installed' {
-        java --version | Should -beLike "*8.*"
+        java --version | Should -beLike "*11.0.11*"
         $LASTEXITCODE | Should -be 0
     }
 
