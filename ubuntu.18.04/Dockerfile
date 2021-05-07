@@ -93,7 +93,7 @@ RUN wget https://releases.hashicorp.com/terraform/${Terraform_Version}/terraform
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     apt-get install -y ca-certificates gnupg && \
     wget -q -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
-    apt-get update && apt-get install -y google-cloud-sdk
+    apt-get update && apt-get install -y google-cloud-sdk=339.0.0-0
 
 # Get python & groff
 RUN apt-get install -y python3-pip groff
