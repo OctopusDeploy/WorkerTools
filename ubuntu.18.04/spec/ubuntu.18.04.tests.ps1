@@ -108,7 +108,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has linkerd installed' {
-        linkerd version | out-null
+        linkerd version --client | out-null
         $LASTEXITCODE | Should -be 0
     }
 
