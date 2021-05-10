@@ -17,7 +17,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has dotnet installed' {
-        dotnet --version | Should -Match '3.1.\d\d\d'
+        dotnet --version | Should -Match '3.1.\d+'
         $LASTEXITCODE | Should -be 0
     }
 
