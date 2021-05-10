@@ -18,7 +18,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has java installed' {
-        java --version | Should -beLike "*11.0.10*"
+        java --version | Should -beLike "*11.0.11*"
         $LASTEXITCODE | Should -be 0
     }
 
@@ -37,7 +37,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has node installed' {
-        node --version | Should -match '14.16.0'
+        node --version | Should -match '14.16.1'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -53,7 +53,7 @@ Describe  'installed dependencies' {
 
     # If the terraform version is not the latest, then `terraform version` returns multiple lines and a non-zero return code
     It 'has terraform installed' {
-        terraform version | Select-Object -First 1 | Should -match '0.13.5'
+        terraform version | Select-Object -First 1 | Should -match '0.13.7'
     }
 
     It 'has python3 installed' {
@@ -68,7 +68,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select-String -Pattern "2020" | Should -beLike "*2020*"
+        gcloud --version | Select -First 1 | Should -be 'Google Cloud SDK 339.0.0'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -108,7 +108,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has linkerd installed' {
-        linkerd version | out-null
+        linkerd version --client | out-null
         $LASTEXITCODE | Should -be 0
     }
 
