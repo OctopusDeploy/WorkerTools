@@ -3,26 +3,30 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 SHELL ["powershell", "-Command"]
 
+ARG Azure_Cli_Version=2.14.0
+ARG Aws_Cli_Version=2.0.60
+ARG Java_Jdk_Version=14.0.2
+
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
     Set-ExecutionPolicy Bypass -Scope Process -Force; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Install dotnet 3+
+# Install dotnet 3.1+
 RUN Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
     [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', '1', 'Machine'); `
     .\dotnet-install.ps1 -Channel '3.1'; `
     rm dotnet-install.ps1
 
 # Install JDK
-RUN choco install openjdk14 --allow-empty-checksums --yes --no-progress --version 14.0.2; refreshenv
+RUN choco install openjdk14 --allow-empty-checksums --yes --no-progress --version ${Java_Jdk_Version}; refreshenv
 
 # Install Azure CLI
-RUN choco install azure-cli -y --version 2.14.0 --no-progress
+RUN choco install azure-cli -y --version ${Azure_Cli_Version} --no-progress
 
 # Install the AWS CLI
-RUN choco install awscli -y --version 2.0.60 --no-progress
+RUN choco install awscli -y --version ${Aws_Cli_Version} --no-progress
 
 # # Install AWS PowerShell module
 # # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-windows.html#ps-installing-awspowershellnetcore
