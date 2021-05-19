@@ -3,9 +3,22 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 SHELL ["powershell", "-Command"]
 
-ARG Azure_Cli_Version=2.14.0
 ARG Aws_Cli_Version=2.0.60
+ARG Aws_Powershell_Version=4.1.2
+ARG Azure_Cli_Version=2.14.0
+ARG Eks_Cli_Version=0.25.0
+ARG Google_Cloud_Cli_Version=339.0.0
+ARG Helm_Version=3.3.0
 ARG Java_Jdk_Version=14.0.2
+ARG Kubectl_Version=1.18.8
+ARG Node_Version=14.17.0
+ARG Octopus_Cli_Version=7.4.1
+ARG Octopus_Client_Version=8.8.3
+ARG Powershell_Version=7.0.3
+ARG Python_Version=3.8.5
+ARG ScriptCs_Version=0.17.1
+ARG Terraform_Version=0.13.7
+ARG 7Zip_Version=19.0
 
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
@@ -31,49 +44,49 @@ RUN choco install awscli -y --version $Env:Aws_Cli_Version --no-progress
 # # Install AWS PowerShell module
 # # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-windows.html#ps-installing-awspowershellnetcore
 RUN Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force; `
-    Install-Module -name AWSPowerShell.NetCore -RequiredVersion 4.1.2 -Force
+    Install-Module -name AWSPowerShell.NetCore -RequiredVersion $Env:Aws_Powershell_Version -Force
 
 # # Install NodeJS
-RUN choco install nodejs-lts -y --version 14.15.0 --no-progress
+RUN choco install nodejs-lts -y --version $Env:Node_Version --no-progress
 
 # # Install kubectl
-RUN Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v1.18.8/bin/windows/amd64/kubectl.exe" -OutFile .\kubectl.exe; `
+RUN Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v${Env:Kubectl_Version}/bin/windows/amd64/kubectl.exe" -OutFile .\kubectl.exe; `
     mv .\kubectl.exe C:\Windows\system32\;
 
 # # Install helm 3
-RUN choco install -y kubernetes-helm --version 3.3.0 --no-progress
+RUN choco install -y kubernetes-helm --version $Env:Helm_Version --no-progress
 
 # # Install Terraform
-RUN choco install -y terraform --version 0.13.7 --no-progress
+RUN choco install -y terraform --version $Env:Terraform_Version --no-progress
 
 # # Install python
-RUN choco install -y python3 --version 3.8.5 --no-progress; `
+RUN choco install -y python3 --version $Env:Python_Version --no-progress; `
     refreshenv
 
 # # Install 7ZIP because gcloud
-RUN choco install 7zip -y --version 19.0 --no-progress
+RUN choco install 7zip -y --version $Env:7Zip_Version --no-progress
 
 # # Install gcloud
-RUN Invoke-WebRequest "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-305.0.0-windows-x86_64.zip" -OutFile google-cloud-sdk-305.0.0-windows-x86_64.zip; `
+RUN Invoke-WebRequest "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${Env:Google_Cloud_Cli_Version}-windows-x86_64.zip" -OutFile google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip; `
     # # UNZIP AND INSTALL gcloud
-    & '.\Program Files\7-Zip\7z.exe' x .\google-cloud-sdk-305.0.0-windows-x86_64.zip; `
+    & '.\Program Files\7-Zip\7z.exe' x .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip; `
     .\google-cloud-sdk\install.bat --quiet; `
-    rm .\google-cloud-sdk-305.0.0-windows-x86_64.zip
+    rm .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip
 
 # # Install ScriptCS
-RUN choco install scriptcs -y --version 0.17.1 --no-progress
+RUN choco install scriptcs -y --version $Env:ScriptCs_Version --no-progress
 
 # # Install octo
-RUN choco install octopustools -y --version 7.4.1 --no-progress
+RUN choco install octopustools -y --version $Env:Octopus_Cli_Version --no-progress
 
 # # Install Octopus Client
-RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion 8.8.3
+RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion $Env:Octopus_Client_Version
 
 # # Install eksctl
-RUN choco install eksctl -y --version 0.25.0 --no-progress
+RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress
 
 # # Install Powershell Core
-RUN choco install powershell-core --yes --version 7.0.3 --no-progress
+RUN choco install powershell-core --yes --version $Env:Powershell_Version --no-progress
 
 # # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
