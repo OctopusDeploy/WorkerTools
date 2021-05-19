@@ -20,13 +20,13 @@ RUN Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -outFile 'dotnet-i
     rm dotnet-install.ps1
 
 # Install JDK
-RUN choco install openjdk14 --allow-empty-checksums --yes --no-progress --version ${Java_Jdk_Version}; refreshenv
+RUN choco install openjdk14 --allow-empty-checksums --yes --no-progress --version $Java_Jdk_Version; refreshenv
 
 # Install Azure CLI
-RUN choco install azure-cli -y --version ${Azure_Cli_Version} --no-progress
+RUN choco install azure-cli -y --version $Azure_Cli_Version --no-progress
 
 # Install the AWS CLI
-RUN choco install awscli -y --version ${Aws_Cli_Version} --no-progress
+RUN choco install awscli -y --version $Aws_Cli_Version --no-progress
 
 # # Install AWS PowerShell module
 # # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-windows.html#ps-installing-awspowershellnetcore
