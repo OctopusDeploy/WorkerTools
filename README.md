@@ -1,11 +1,29 @@
 # Worker Tools
+
 Officially sanctioned worker images for Octopus Deploy available on [docker hub](https://hub.docker.com/r/octopusdeploy/worker-tools)
 
-## How to Use the Image
+| Operating System  | Installed Tools and Versions |
+| ------------- | ------------- |
+| Ubuntu 18.04  | https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.18.04/Dockerfile  |
+| Windows Server Core 2019  | https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2019/Dockerfile  |
 
-See the docs to get started using a worker-tools image as an [execution container for workers](https://octopus.com/docs/deployment-process/execution-containers-for-workers).
+## Management
 
-## Testing
+The Worker Tools images provided by this repository are currently updated on a best-effort basis. This repository should contain the latest stable versions of all of the tools.
+
+If you want a tool version that is not yet available, PRs are welcome. 
+
+If the tools or the way they are managed don't fit your particular use case, it is easy to [create your own images](https://octopus.com/docs/projects/steps/execution-containers-for-workers#which-image) to use as execution containers.
+
+## Getting Started
+
+See the docs to get started using the `octopusdeploy/worker-tools` image as an [execution container for workers](https://octopus.com/docs/deployment-process/execution-containers-for-workers).
+
+The images we publish are [semantically versioned](https://semver.org/). To ensure stability within your deployment processes, we recommend using the full `major.minor.patch` tag when using the `octopusdeploy/worker-tools` image - for example, use `2.0.2-ubuntu.18.04`, not `ubuntu.18.04`.
+
+## Contributing
+
+### Testing
 
 To run these tests, you can see the instructions for [Ubuntu](#Ubuntu) and [Windows](#Windows)
 
