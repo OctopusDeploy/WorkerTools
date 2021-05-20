@@ -4,8 +4,8 @@ Officially sanctioned worker images for Octopus Deploy available on [docker hub]
 
 | Operating System  | Installed Tools and Versions |
 | ------------- | ------------- |
-| Ubuntu 18.04  | https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.18.04/Dockerfile  |
-| Windows Server Core 2019  | https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2019/Dockerfile  |
+| Ubuntu 18.04  | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.18.04/Dockerfile)  |
+| Windows Server Core 2019  | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2019/Dockerfile)  |
 
 ## Management
 
