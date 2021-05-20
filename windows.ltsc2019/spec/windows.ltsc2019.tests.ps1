@@ -42,7 +42,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has node installed' {
-        node --version | Should -Match '14.15.0'
+        node --version | Should -Match '14.17.0'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -67,7 +67,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select-String -Pattern "305.0.0" | Should -BeLike "*305.0.0*"
+        gcloud --version | Select-String -Pattern "339.0.0" | Should -BeLike "*339.0.0*"
         $LASTEXITCODE | Should -be 0
     }
 
