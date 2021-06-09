@@ -15,7 +15,7 @@ ARG Octopus_Cli_Version=7.4.1
 ARG Octopus_Client_Version=8.8.3
 ARG Node_Version=14.17.0\*
 ARG Powershell_Version=7.0.3\*
-ARG Terraform_Version=0.13.7
+ARG Terraform_Version=1.0.0
 ARG Umoci_Version=0.4.6
 
 # get `wget` & software-properties-common
