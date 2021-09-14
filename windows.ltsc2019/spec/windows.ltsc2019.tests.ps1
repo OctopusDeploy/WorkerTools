@@ -40,6 +40,11 @@ Describe  'installed dependencies' {
       Import-Module AWSPowerShell.NetCore
       Get-AWSPowerShellVersion | Should -Match '4.1.2'
     }
+    
+    # There is no version command for aws-iam-authenticator, so we just check for the installed version.
+    It 'has aws-iam-authenticator installed' {
+        Test-Path 'C:\ProgramData\chocolatey\bin\aws-iam-authenticator.exe' | should -be $true
+    }
 
     It 'has node installed' {
         node --version | Should -Match '14.17.2'
