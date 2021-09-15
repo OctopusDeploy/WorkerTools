@@ -2,6 +2,7 @@ FROM ubuntu:18.04
 
 ARG Aws_Cli_Version=2.0.60
 ARG Aws_Iam_Authenticator_Version=0.5.3
+ARG Aws_Powershell_Version=4.1.2
 ARG Azure_Cli_Version=2.14.0\*
 ARG Azure_Powershell_Version=4.5.0
 ARG Dotnet_Sdk_Version=3.1.401-1
@@ -43,6 +44,10 @@ RUN apt-get update && \
 RUN pwsh -c 'Install-Package -Force Octopus.Client -MaximumVersion "'${Octopus_Client_Version}'" -source https://www.nuget.org/api/v2 -SkipDependencies' && \
     octopusClientPackagePath=$(pwsh -c '(Get-Item ((Get-Package Octopus.Client).source)).Directory.FullName') && \
     cp -r $octopusClientPackagePath/lib/netstandard2.0/* .
+
+# Get AWS Powershell core modules
+# https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-linux-mac.html
+RUN pwsh -c 'Install-Module -Force -Name AWSPowerShell.NetCore -AllowClobber -Scope AllUsers -MaximumVersion "'${Aws_Powershell_Version}'"'
 
 # Get AZ Powershell core modules
 # https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-3.6.1
