@@ -102,7 +102,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws-iam-authenticator installed' {
-        aws-iam-authenticator version | Should -match '0.5.1'
+        aws-iam-authenticator version | out-null
         $LASTEXITCODE | Should -be 0
     }
 
