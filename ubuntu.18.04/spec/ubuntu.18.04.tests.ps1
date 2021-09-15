@@ -22,13 +22,17 @@ Describe  'installed dependencies' {
         $LASTEXITCODE | Should -be 0
     }
 
+    It 'has aws powershell module installed' {
+        (Get-Module AWSPowerShell.NetCore -ListAvailable).Version.ToString() | should -be '4.1.2'
+    }
+
     It 'has az installed' {
       $output = (& az version) | convertfrom-json
       $output.'azure-cli' | Should -be '2.14.0'
       $LASTEXITCODE | Should -be 0
     }
 
-    it 'has az powershell module installed' {
+    It 'has az powershell module installed' {
         (Get-Module Az -ListAvailable).Version.ToString() | should -be '4.5.0'
     }
 
