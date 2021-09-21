@@ -31,6 +31,10 @@ Describe  'installed dependencies' {
       $output.'azure-cli' | Should -Be '2.14.0'
       $LASTEXITCODE | Should -be 0
     }
+    
+    It 'has az powershell module installed' {
+        (Get-Module Az -ListAvailable).Version.ToString() | should -be '4.5.0'
+    }
 
     It 'has aws cli installed' {
       aws --version 2>&1 | Should -Match '2.0.60'
