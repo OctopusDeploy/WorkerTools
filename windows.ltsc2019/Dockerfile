@@ -40,11 +40,6 @@ RUN choco install openjdk14 --allow-empty-checksums --yes --no-progress --versio
 # Install Azure CLI
 RUN choco install azure-cli -y --version $Env:Azure_Cli_Version --no-progress
 
-#Install Azure PowerShell modules
-# https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-3.6.1
-RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion $Env:Azure_Powershell_Version; `
-    Enable-AzureRmAlias -Scope LocalMachine
-
 # Install the AWS CLI
 RUN choco install awscli -y --version $Env:Aws_Cli_Version --no-progress
 
@@ -55,6 +50,11 @@ RUN choco install aws-iam-authenticator -y --version $Env:Aws_Iam_Authenticator_
 # # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-windows.html#ps-installing-awspowershellnetcore
 RUN Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force; `
     Install-Module -name AWSPowerShell.NetCore -RequiredVersion $Env:Aws_Powershell_Version -Force
+
+#Install Azure PowerShell modules
+# https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-3.6.1
+RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion $Env:Azure_Powershell_Version; `
+    Enable-AzureRmAlias -Scope LocalMachine
 
 # # Install NodeJS
 RUN choco install nodejs-lts -y --version $Env:Node_Version --no-progress
