@@ -42,7 +42,7 @@ RUN choco install azure-cli -y --version $Env:Azure_Cli_Version --no-progress
 
 #Install Azure PowerShell modules
 # https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-3.6.1
-RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion $Env:Azure_Powershell_Version}; `
+RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion $Env:Azure_Powershell_Version; `
     Enable-AzureRmAlias -Scope LocalMachine
 
 # Install the AWS CLI
