@@ -67,7 +67,7 @@ Describe  'installed dependencies' {
 
     # If the terraform version is not the latest, then `terraform version` returns multiple lines and a non-zero return code
     It 'has terraform installed' {
-        terraform version | Select-Object -First 1 | Should -Match '1.0.0'
+        terraform version | Select-Object -First 1 | Should -Match '1.0.11'
     }
 
     It 'has python installed' {

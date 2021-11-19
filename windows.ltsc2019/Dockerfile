@@ -19,7 +19,7 @@ ARG Octopus_Client_Version=8.8.3
 ARG Powershell_Version=7.0.6
 ARG Python_Version=3.8.5
 ARG ScriptCs_Version=0.17.1
-ARG Terraform_Version=1.0.0
+ARG Terraform_Version=1.0.11
 ARG 7Zip_Version=19.0
 
 # Install Choco
