@@ -51,7 +51,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has helm installed' {
-        helm version | Should -match '3.3.0'
+        helm version | Should -match '3.7.1'
         $LASTEXITCODE | Should -be 0
     }
 
