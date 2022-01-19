@@ -15,7 +15,7 @@ ARG Kubectl_Version=1.18.8-00
 ARG Octopus_Cli_Version=7.4.1
 ARG Octopus_Client_Version=8.8.3
 ARG Powershell_Version=7.0.6\*
-ARG Terraform_Version=1.0.0
+ARG Terraform_Version=1.1.3
 ARG Umoci_Version=0.4.6
 
 # get `wget` & software-properties-common
