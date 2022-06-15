@@ -49,7 +49,7 @@ class OctopusDockerTag
 Context.Log.Verbosity = Argument("Verbosity", Verbosity.Normal);
 
 var target = Argument("target", "Default");
-var dockerNamespace = Argument("docker-namespace", "octopusdeploy/worker-tools");
+var dockerNamespace = Argument("docker-namespace", "docker.packages.octopushq.com/octopusdeploy/worker-tools");
 var imageDirectory = Argument("image-directory", "ubuntu.18.04");
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -198,9 +198,9 @@ Task("Push")
 {
     try
     {
-        Information("Releasing image to Docker Hub");
+        Information("Releasing image to Artifactory");
         dockerTag.Tags().ToList().ForEach((tag) => {
-            Information("Releasing image to Docker Hub");
+            Information("Releasing image to Artifactory");
             using(var process = StartAndReturnProcess("docker", new ProcessSettings{ Arguments = $"push {tag}" }))
             {
                 process.WaitForExit();

@@ -5,3 +5,4 @@
 !/tools/packages.config
 /build/**
 /**/PesterTestResults.xml
+.idea

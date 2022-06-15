@@ -10,11 +10,11 @@ ARG Ecs_Cli_Version=1.20.0
 ARG Eks_Cli_Version=0.25.0
 ARG Google_Cloud_Cli_Version=339.0.0-0
 ARG Helm_Version=v3.7.1
-ARG Java_Jdk_Version=11.0.13+8-0ubuntu1~18.04
+ARG Java_Jdk_Version=11.0.15+10-0ubuntu0.18.04.1
 ARG Kubectl_Version=1.18.8-00
 ARG Octopus_Cli_Version=8.0.1
 ARG Octopus_Client_Version=13.0.3807
-ARG Powershell_Version=7.0.6\*
+ARG Powershell_Version=7.0.10\*
 ARG Terraform_Version=1.1.3
 ARG Umoci_Version=0.4.6
 
