@@ -23,14 +23,14 @@ $dynamicWorkerProductionTenants = @("Tenants-8286", "Tenants-8287", "Tenants-828
 
 function Get-FromApi($url, $apiKey) {
     Write-Verbose "Getting response from $url"
-    # $result = Invoke-RestMethod -Uri $url -Headers @{ 'X-Octopus-ApiKey' = $enthusiasticPromoterApiKey } -TimeoutSec 60 -RetryIntervalSec 10 -MaximumRetryCount 2
+    $result = Invoke-RestMethod -Uri $url -Headers @{ 'X-Octopus-ApiKey' = $apiKey } -TimeoutSec 60 -RetryIntervalSec 10 -MaximumRetryCount 2
 
     # log out the  json, so we can diagnose what's happening / write a test for it
-    write-verbose "--------------------------------------------------------"
-    write-verbose "response:"
-    write-verbose "--------------------------------------------------------"
-    write-verbose ($result | ConvertTo-Json -depth 10)
-    write-verbose "--------------------------------------------------------"
+    Write-Debug "--------------------------------------------------------"
+    Write-Debug "response:"
+    Write-Debug "--------------------------------------------------------"
+    Write-Debug ($result | ConvertTo-Json -depth 10)
+    Write-Debug "--------------------------------------------------------"
     return $result
 }
 
@@ -54,7 +54,7 @@ function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[
         if ($deployedToEnvironments -contains $targetProjectTestEnvironment) {
             if ($deployedToEnvironments -contains $targetProjectProdEnvironment) {
                 foreach ($supersededCandidate in $candidateReleases) {
-                    Write-Verbose "Ignoring $($supersededCandidate.ReleaseID) because it is superseded by $($release.ReleaseId), which was created later and has been fully promoted."
+                    Write-Host "Ignoring $($supersededCandidate.ReleaseID) because it is superseded by $($release.ReleaseId), which was created later and has been fully promoted."
                 }
 
                 $candidateReleases = @()
@@ -81,8 +81,8 @@ function Get-ProductionDWVersions {
 }
 
 function Get-Release($projectId, $baseUrl, $apiToken) {
-    $releasesResponse = Get-FromApi "$baseUrl/api/projects/$projectId" $targetInstanceApiKey
-    $releasesResponse.Items | Foreach-Object { [Release]::new($_.Id, $_.ProjectId) }
+    $releasesResponse = Get-FromApi "$baseUrl/api/projects/$projectId/releases" $targetInstanceApiKey
+    $releasesResponse.Items | Foreach-Object { [Release]::new($_.Id, $_.ProjectId, $_.Assembled) }
 }
 
 function Get-Deployment($projectId, $baseUrl, $apiToken) {
@@ -92,3 +92,5 @@ function Get-Deployment($projectId, $baseUrl, $apiToken) {
 
 $dynamicWorkerReleases      = Get-Release $targetProjectId $targetInstanceUrl $targetInstanceApiKey
 $dynamicWorkerDeployments   = Get-Deployment $targetProjectId $targetInstanceUrl $targetInstanceApiKey
+
+Get-PromotionCandidates $dynamicWorkerReleases $dynamicWorkerDeployments
