@@ -13,14 +13,25 @@ $branchApiKey = "API-Key"
 $deployUrl = "https://deploy.octopus.app"
 $deployApiKey = "API-Key"
 
-function Get-PromotionCandidates {
-    $promotedDeploymentsResponse = (Invoke-WebRequest -Uri "$branchUrl/api/deployments?projects=$promotionProjectId&environments=$dockerhubEnvironmentId" -Headers @{ "X-Octopus-ApiKey"=$branchApiKey }).Content | ConvertFrom-Json
-    $promotedReleases = $promotedDeploymentsResponse.Items | Select-Object -ExpandProperty "ReleaseId" -Unique
+function Get-FromApi($url, $apiKey) {
+    Write-Verbose "Getting response from $url"
+    $result = Invoke-RestMethod -Uri $url -Headers @{ 'X-Octopus-ApiKey' = $enthusiasticPromoterApiKey } -TimeoutSec 60 -RetryIntervalSec 10 -MaximumRetryCount 2
 
-    $allReleasesResponse = (Invoke-WebRequest -Uri "$branchUrl/api/deployments?projects=$promotionProjectId" -Headers @{ "X-Octopus-ApiKey"=$branchApiKey }).Content | ConvertFrom-Json
-    $allReleases = $allReleasesResponse.Items | Select-Object -ExpandProperty "ReleaseId" -Unique
+    # log out the  json, so we can diagnose what's happening / write a test for it
+    write-verbose "--------------------------------------------------------"
+    write-verbose "response:"
+    write-verbose "--------------------------------------------------------"
+    write-verbose ($result | ConvertTo-Json -depth 10)
+    write-verbose "--------------------------------------------------------"
+    return $result
+}
 
-    $candidates = $allReleases | Where-Object { -not ($_ -in $promotedReleases) } 
+function Get-PromotionCandidates($dynamicWorkerReleases, $dynamicWorkerDeployments) {
+    
+    $uniqueReleases = $dynamicWorkerReleases.Items | Select-Object -ExpandProperty "ReleaseId" -Unique
+    $promotedReleases = $dynamicWorkerDeployments.Items | Select-Object -ExpandProperty "ReleaseId" -Unique
+
+    $candidates = $uniqueReleases | Where-Object { -not ($_ -in $promotedReleases) } 
 
     Write-Host $candidates
 }
@@ -38,8 +49,9 @@ function Get-ProductionDWVersions {
     Write-Host ($releases | Select-Object -ExpandProperty "ReleaseId")
 }
 
-function Get-CachedImageVersions() {
-    
-}
+function Execute {
+    $dynamicWorkerReleases      = Get-FromApi "$branchUrl/api/deployments?projects=$promotionProjectId" $branchApiKey
+    $dynamicWorkerDeployments   = Get-FromApi "$branchUrl/api/deployments?projects=$promotionProjectId&environments=$dockerhubEnvironmentId" $branchApiKey
 
-Get-ProductionDWVersions
+    Get-ProductionDWVersions
+}
