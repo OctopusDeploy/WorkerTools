@@ -19,7 +19,7 @@ param (
     [Parameter()][string] $targetProjectProdEnvironment = "Environments-62"
 )
 
-$productionTenants = @("Tenants-8286", "Tenants-8287", "Tenants-8288")
+$dynamicWorkerProductionTenants = @("Tenants-8286", "Tenants-8287", "Tenants-8288")
 
 function Get-FromApi($url, $apiKey) {
     Write-Verbose "Getting response from $url"
@@ -70,7 +70,7 @@ function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[
 function Get-ProductionDWVersions {
     $releases = @();
 
-    foreach ($tenant in $productionTenants) {
+    foreach ($tenant in $dynamicWorkerProductionTenants) {
         $releasesInProductionResponse = Get-FromApi "$dynamicWorkerInstanceUrl/api/$dynamicWorkerSpaceId/deployments?projects=$dynamicWorkerProjectId&environments=$dynamicWorkerProdEnvironment&tenants=$tenant" $dynamicWorkerInstanceApiKey
         $release = $releasesInProductionResponse.Items | Sort-Object -Property "Created" -Descending | Select-Object -First 1
         
