@@ -1,5 +1,10 @@
+using module .\enthusiastic-promotor.psm1
+
+$stagingEnvironment = "Environments-1"
+$prodEnvironment = "Environments-2"
+
 BeforeAll {
-    . (Join-Path -Path $PSScriptRoot -ChildPath "enthusiastic-promotor.ps1")
+    . .\enthusiastic-promotor.ps1 -targetProjectTestEnvironment $stagingEnvironment -targetProjectProdEnvironment $prodEnvironment
 }
 
 Describe "Get-PromotionCandidates" {

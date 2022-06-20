@@ -1,3 +1,5 @@
+using module .\enthusiastic-promotor.psm1
+
 [CmdletBinding()]
 param (
     [Parameter()][string] $dynamicWorkerInstanceApiKey = "",
@@ -9,38 +11,15 @@ param (
     [Parameter()][string] $targetInstanceUrl        = "https://deploy-fnm.testoctopus.app",
     [Parameter()][string] $targetProjectId          = "Projects-381",
     [Parameter()][string] $targetSpaceId            = "Spaces-1",
-    [Parameter()][string] $runbookProjectId         = "Projects-386"
+    [Parameter()][string] $runbookProjectId         = "Projects-386",
+
+    [Parameter()][string] $targetProjectTestEnvironment = "Environments-61",
+    [Parameter()][string] $targetProjectProdEnvironment = "Environments-62"
 )
 
 $dockerhubEnvironmentId = "Environments-62"
 $productionEnvironmentId = "Environments-842"
 $productionTenants = @("Tenants-8286", "Tenants-8287", "Tenants-8288")
-
-class Release {
-    [string]$ReleaseId
-    [string]$ProjectId
-    
-    Release() {}
-
-    Release($releaseId, $projectId) {
-        $this.ReleaseId = $releaseId
-        $this.ProjectId = $projectId
-    }
-}
-
-class Deployment {
-    [string]$DeploymentId
-    [string]$ReleaseId
-    [string]$EnvironmentId
-
-    Deployment() {}
-
-    Deployment($deploymentId, $releaseId, $environmentId) {
-        $this.DeploymentId = $deploymentId
-        $this.ReleaseId = $releaseId
-        $this.EnvironmentId = $environmentId
-    }
-}
 
 function Get-FromApi($url, $apiKey) {
     Write-Verbose "Getting response from $url"
