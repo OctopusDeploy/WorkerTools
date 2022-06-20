@@ -39,7 +39,13 @@ function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[
         return
     }
 
-    $chronologicalReleases = $dynamicWorkerReleases | Sort-Object -Property "Created", "ReleaseId" -PipelineVariable Release | Foreach-Object { @{ Release = $Release; Deployments = ($dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $Release.ReleaseId }) } }
+    $chronologicalReleases = $dynamicWorkerReleases | `
+        Sort-Object -Property "Created", "ReleaseId" -PipelineVariable Release | `
+        Foreach-Object { @{ 
+            Release = $Release; 
+            Deployments = ($dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $Release.ReleaseId }) 
+        } 
+    }
         
     $candidateReleases = @()
     foreach ($release in $chronologicalReleases) {
