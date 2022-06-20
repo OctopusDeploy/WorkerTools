@@ -39,17 +39,26 @@ function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[
         return
     }
 
-    $deploymentsByRelease = $dynamicWorkerDeployments | Group-Object -Property "ReleaseId"
-    
+    $chronologicalReleases = $dynamicWorkerReleases | Sort-Object -Property "Created", "ReleaseId" -PipelineVariable Release | Foreach-Object { @{ Release = $Release; Deployments = ($dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $Release.ReleaseId }) } }
+        
     $candidateReleases = @()
-    foreach ($release in $deploymentsByRelease) {
-        $deployedToEnvironments = $release.Group | Select-Object -ExpandProperty EnvironmentId
-        if ($deployedToEnvironments -contains $targetProjectTestEnvironment -and -not ($deployedToEnvironments -contains $targetProjectProdEnvironment)) {
-            $candidateReleases += $release.Name
+    foreach ($release in $chronologicalReleases) {
+        $deployedToEnvironments = $dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $release.Release.ReleaseId } | Select-Object -ExpandProperty EnvironmentId
+        
+        if ($deployedToEnvironments -contains $targetProjectTestEnvironment) {
+            if ($deployedToEnvironments -contains $targetProjectProdEnvironment) {
+                foreach ($supersededCandidate in $candidateReleases) {
+                    Write-Verbose "Ignoring $($supersededCandidate.ReleaseID) because it is superseded by $($release.ReleaseId), which was created later and has been fully promoted."
+                }
+
+                $candidateReleases = @()
+            } else {
+                $candidateReleases += $release.Release
+            }
         }
     }
 
-    $dynamicWorkerReleases | Where-Object { $candidateReleases -contains $_.ReleaseId }
+    $candidateReleases
 }
 
 function Get-ProductionDWVersions {
