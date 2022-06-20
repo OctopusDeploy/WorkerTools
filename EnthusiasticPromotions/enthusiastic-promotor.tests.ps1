@@ -40,7 +40,7 @@ Describe "Get-PromotionCandidates" {
         $result.Count | Should -Be 0
     }
 
-    It "with one Release deployed to all environments returns nothing" {
+    It "ignores already promoted Releases" {
         # Arrange
         $releases = [Release[]] @( [Release]::new("Release-1", "Project-1") )
         $deployments = [Deployment[]] @( 
@@ -53,5 +53,26 @@ Describe "Get-PromotionCandidates" {
 
         # Assert
         $result.Count | Should -Be 0
+    }
+
+    It "includes unpromoted Releases" {
+        # Arrange
+        $releases = [Release[]] @( 
+            [Release]::new("Release-1", "Project-1") 
+            [Release]::new("Release-2", "Project-1") 
+        )
+        $deployments = [Deployment[]] @( 
+            [Deployment]::new("Deployment-1", "Release-1", $stagingEnvironment)
+            [Deployment]::new("Deployment-1", "Release-1", $prodEnvironment)
+
+            [Deployment]::new("Deployment-1", "Release-2", $stagingEnvironment)
+        )
+
+        # Act
+        $result = Get-PromotionCandidates $releases $deployments
+
+        # Assert
+        $result.Count | Should -Be 1
+        $result[0].ReleaseId | Should -Be "Release-2"
     }
 }

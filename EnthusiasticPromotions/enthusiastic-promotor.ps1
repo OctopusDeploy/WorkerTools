@@ -40,9 +40,16 @@ function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[
     }
 
     $deploymentsByRelease = $dynamicWorkerDeployments | Group-Object -Property "ReleaseId"
-    $candidateReleases = $deploymentsByRelease | Where-Object { ($_.Group | Select-Object -Property EnvironmentId) -contains $targetProjectTestEnvironment -and -not ($_.Group | Select-Object -Property EnvironmentId) -contains $targetProjectProdEnvironment }
+    
+    $candidateReleases = @()
+    foreach ($release in $deploymentsByRelease) {
+        $deployedToEnvironments = $release.Group | Select-Object -ExpandProperty EnvironmentId
+        if ($deployedToEnvironments -contains $targetProjectTestEnvironment -and -not ($deployedToEnvironments -contains $targetProjectProdEnvironment)) {
+            $candidateReleases += $release.Name
+        }
+    }
 
-    $candidateReleases
+    $dynamicWorkerReleases | Where-Object { $candidateReleases -contains $_.ReleaseId }
 }
 
 function Get-ProductionDWVersions {
