@@ -1,3 +1,5 @@
+[CmdletBinding()]
+param ()
 
 $promotionProjectId = "Projects-386"
 $dockerhubEnvironmentId = "Environments-62"
