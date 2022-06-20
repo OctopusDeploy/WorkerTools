@@ -39,12 +39,10 @@ function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[
         return
     }
 
-    $uniqueReleases = $dynamicWorkerReleases | Select-Object Property "ReleaseId" -Unique
-    $promotedReleases = $dynamicWorkerDeployments | Select-Object -Property "ReleaseId" -Unique
+    $deploymentsByRelease = $dynamicWorkerDeployments | Group-Object -Property "ReleaseId"
+    $candidateReleases = $deploymentsByRelease | Where-Object { ($_.Group | Select-Object -Property EnvironmentId) -contains $targetProjectTestEnvironment -and -not ($_.Group | Select-Object -Property EnvironmentId) -contains $targetProjectProdEnvironment }
 
-    $candidates = $uniqueReleases | Where-Object { -not ($_ -in $promotedReleases) } 
-
-    Write-Host $candidates
+    $candidateReleases
 }
 
 function Get-ProductionDWVersions {

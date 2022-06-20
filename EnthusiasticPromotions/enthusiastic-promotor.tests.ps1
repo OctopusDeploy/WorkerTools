@@ -39,4 +39,19 @@ Describe "Get-PromotionCandidates" {
         # Assert
         $result.Count | Should -Be 0
     }
+
+    It "with one Release deployed to all environments returns nothing" {
+        # Arrange
+        $releases = [Release[]] @( [Release]::new("Release-1", "Project-1") )
+        $deployments = [Deployment[]] @( 
+            [Deployment]::new("Deployment-1", "Release-1", $stagingEnvironment)
+            [Deployment]::new("Deployment-1", "Release-1", $prodEnvironment)
+        )
+
+        # Act
+        $result = Get-PromotionCandidates $releases $deployments
+
+        # Assert
+        $result.Count | Should -Be 0
+    }
 }
