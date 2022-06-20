@@ -7,6 +7,8 @@ param (
     [Parameter()][string] $dynamicWorkerProjectId   = "Projects-5063",
     [Parameter()][string] $dynamicWorkerSpaceId     = "Spaces-142",
 
+    [Parameter()][string] $dynamicWorkerProdEnvironment = "Environments-842",
+
     [Parameter()][string] $targetInstanceApiKey = "",
     [Parameter()][string] $targetInstanceUrl        = "https://deploy-fnm.testoctopus.app",
     [Parameter()][string] $targetProjectId          = "Projects-381",
@@ -17,8 +19,6 @@ param (
     [Parameter()][string] $targetProjectProdEnvironment = "Environments-62"
 )
 
-$dockerhubEnvironmentId = "Environments-62"
-$productionEnvironmentId = "Environments-842"
 $productionTenants = @("Tenants-8286", "Tenants-8287", "Tenants-8288")
 
 function Get-FromApi($url, $apiKey) {
@@ -65,7 +65,7 @@ function Get-ProductionDWVersions {
     $releases = @();
 
     foreach ($tenant in $productionTenants) {
-        $releasesInProductionResponse = Get-FromApi "$dynamicWorkerInstanceUrl/api/$dynamicWorkerSpaceId/deployments?projects=$dynamicWorkerProjectId&environments=$productionEnvironmentId&tenants=$tenant" $dynamicWorkerInstanceApiKey
+        $releasesInProductionResponse = Get-FromApi "$dynamicWorkerInstanceUrl/api/$dynamicWorkerSpaceId/deployments?projects=$dynamicWorkerProjectId&environments=$dynamicWorkerProdEnvironment&tenants=$tenant" $dynamicWorkerInstanceApiKey
         $release = $releasesInProductionResponse.Items | Sort-Object -Property "Created" -Descending | Select-Object -First 1
         
         $releases += $release
@@ -79,10 +79,10 @@ function Get-Release($projectId, $baseUrl, $apiToken) {
     $releasesResponse.Items | Foreach-Object { [Release]::new($_.Id, $_.ProjectId) }
 }
 
-function Get-Deployment($projectId, $environment, $baseUrl, $apiToken) {
-    $deploymentsResponse = Get-FromApi "$targetInstanceUrl/api/deployments?projects=$targetProjectId&environments=$dockerhubEnvironmentId" $targetInstanceApiKey
+function Get-Deployment($projectId, $baseUrl, $apiToken) {
+    $deploymentsResponse = Get-FromApi "$targetInstanceUrl/api/deployments?projects=$targetProjectId" $targetInstanceApiKey
     $deploymentsResponse.Items | Foreach-Object { [Deployment]::new($_.Id, $_.ReleaseId, $_.EnvironmentId) }
 }
 
 $dynamicWorkerReleases      = Get-Release $targetProjectId $targetInstanceUrl $targetInstanceApiKey
-$dynamicWorkerDeployments   = Get-Deployment $targetProjectId $dockerhubEnvironmentId $targetInstanceUrl $targetInstanceApiKey
+$dynamicWorkerDeployments   = Get-Deployment $targetProjectId $targetInstanceUrl $targetInstanceApiKey
