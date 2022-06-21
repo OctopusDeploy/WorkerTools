@@ -10,10 +10,10 @@ param (
     [Parameter()][string] $dynamicWorkerProdEnvironment = "Environments-842",
 
     [Parameter()][string] $targetInstanceApiKey = "",
-    [Parameter()][string] $targetInstanceUrl        = "https://deploy-fnm.testoctopus.app",
+    [Parameter()][string] $targetInstanceUrl        = "https://deploy.octopus.app",
     [Parameter()][string] $targetProjectId          = "Projects-381",
-    [Parameter()][string] $targetSpaceId            = "Spaces-1",
-    [Parameter()][string] $runbookProjectId         = "Projects-386",
+    [Parameter()][string] $targetSpaceId            = "Projects-6481",
+    [Parameter()][string] $runbookProjectId         = "",
 
     [Parameter()][string] $targetProjectTestEnvironment = "Environments-61",
     [Parameter()][string] $targetProjectProdEnvironment = "Environments-62"
