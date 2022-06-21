@@ -19,7 +19,20 @@ param (
     [Parameter()][string] $targetProjectProdEnvironment = "Environments-62"
 )
 
-$dynamicWorkerProductionTenants = @("Tenants-8286", "Tenants-8287", "Tenants-8288")
+$workerToolsProject = @{ 
+    BaseUri = $targetInstanceUrl
+    ApiKey = $targetInstanceApiKey
+    ProjectId = $targetProjectId
+    SpaceId = $targetSpaceId
+}
+
+$dynamicWorkerProject = @{ 
+    BaseUri = $dynamicWorkerInstanceUrl
+    ApiKey = $dynamicWorkerInstanceApiKey
+    ProjectId = $dynamicWorkerProjectId
+    SpaceId = $dynamicWorkerSpaceId 
+    ProductionTenants = @("Tenants-8286", "Tenants-8287", "Tenants-8288")
+}
 
 function Get-FromApi($url, $apiKey) {
     Write-Verbose "Getting response from $url"
@@ -80,17 +93,17 @@ function Get-ProductionDWVersions {
     Write-Host ($releases | Select-Object -ExpandProperty "ReleaseId")
 }
 
-function Get-Release($projectId, $baseUrl, $apiToken) {
-    $releasesResponse = Get-FromApi "$baseUrl/api/projects/$projectId/releases" $targetInstanceApiKey
+function Get-Release($octopusProject) {
+    $releasesResponse = Get-FromApi "$($octopusProject.BaseUri)/api/projects/$($octopusProject.ProjectId)/releases" $octopusProject.ApiKey
     $releasesResponse.Items | Foreach-Object { [Release]::new($_.Id, $_.ProjectId, $_.Assembled) }
 }
 
-function Get-Deployment($projectId, $baseUrl, $apiToken) {
-    $deploymentsResponse = Get-FromApi "$targetInstanceUrl/api/deployments?projects=$targetProjectId" $targetInstanceApiKey
+function Get-Deployment($octopusProject) {
+    $deploymentsResponse = Get-FromApi "$($octopusProject.BaseUri)/api/deployments?projects=$($octopusProject.ProjectId)" $octopusProject.ApiKey
     $deploymentsResponse.Items | Foreach-Object { [Deployment]::new($_.Id, $_.ReleaseId, $_.EnvironmentId) }
 }
 
-$dynamicWorkerReleases      = Get-Release $targetProjectId $targetInstanceUrl $targetInstanceApiKey
-$dynamicWorkerDeployments   = Get-Deployment $targetProjectId $targetInstanceUrl $targetInstanceApiKey
-
-Get-PromotionCandidates $dynamicWorkerReleases $dynamicWorkerDeployments
+# Find our candidates for promotion
+$workerToolsReleases        = Get-Release $workerToolsProject
+$workerToolsDeployments     = Get-Deployment $workerToolsProject
+$promotionCandidates        = Get-PromotionCandidates $workerToolsReleases $workerToolsDeployments
