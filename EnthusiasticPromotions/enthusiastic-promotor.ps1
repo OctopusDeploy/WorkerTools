@@ -47,22 +47,22 @@ function Get-FromApi($url, $apiKey) {
     return $result
 }
 
-function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[]]$dynamicWorkerDeployments, [string]$testEnvironment, [string]$prodEnvironment) {
-    if ($dynamicWorkerReleases.Count -eq 0 -or $dynamicWorkerDeployments.Count -eq 0) {
+function Get-PromotionCandidates([Release[]]$workerToolReleases, [Deployment[]]$workerToolDeployments, [string]$testEnvironment, [string]$prodEnvironment) {
+    if ($workerToolReleases.Count -eq 0 -or $workerToolDeployments.Count -eq 0) {
         return
     }
 
-    $chronologicalReleases = $dynamicWorkerReleases | `
+    $chronologicalReleases = $workerToolReleases | `
         Sort-Object -Property "Created", "ReleaseId" -PipelineVariable Release | `
         Foreach-Object { @{ 
             Release = $Release; 
-            Deployments = ($dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $Release.ReleaseId }) 
+            Deployments = ($workerToolDeployments | Where-Object { $_.ReleaseId -eq $Release.ReleaseId }) 
         } 
     }
 
     $candidateReleases = @()
     foreach ($release in $chronologicalReleases) {
-        $deployedToEnvironments = $dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $release.Release.ReleaseId } | Select-Object -ExpandProperty EnvironmentId
+        $deployedToEnvironments = $workerToolDeployments | Where-Object { $_.ReleaseId -eq $release.Release.ReleaseId } | Select-Object -ExpandProperty EnvironmentId
 
         if ($deployedToEnvironments -contains $testEnvironment) {
             if ($deployedToEnvironments -contains $prodEnvironment) {
