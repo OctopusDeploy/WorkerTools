@@ -47,7 +47,7 @@ function Get-FromApi($url, $apiKey) {
     return $result
 }
 
-function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[]]$dynamicWorkerDeployments) {
+function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[]]$dynamicWorkerDeployments, [string]$testEnvironment, [string]$prodEnvironment) {
     if ($dynamicWorkerReleases.Count -eq 0 -or $dynamicWorkerDeployments.Count -eq 0) {
         return
     }
@@ -59,13 +59,13 @@ function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[
             Deployments = ($dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $Release.ReleaseId }) 
         } 
     }
-        
+
     $candidateReleases = @()
     foreach ($release in $chronologicalReleases) {
-        $deployedToEnvironments = $dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $release.Release.ReleaseId } | Select-Object -ExpandProperty EnvironmentId
-        
-        if ($deployedToEnvironments -contains $targetProjectTestEnvironment) {
-            if ($deployedToEnvironments -contains $targetProjectProdEnvironment) {
+        $deployedToEnvironments = $dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $release.Release.ReleaseID } | Select-Object -ExpandProperty EnvironmentId
+
+        if ($deployedToEnvironments -contains $testEnvironment) {
+            if ($deployedToEnvironments -contains $prodEnvironment) {
                 foreach ($supersededCandidate in $candidateReleases) {
                     Write-Host "Ignoring $($supersededCandidate.ReleaseID) because it is superseded by $($release.ReleaseId), which was created later and has been fully promoted."
                 }
@@ -103,7 +103,9 @@ function Get-Deployment($octopusProject) {
     $deploymentsResponse.Items | Foreach-Object { [Deployment]::new($_.Id, $_.ReleaseId, $_.EnvironmentId) }
 }
 
-# Find our candidates for promotion
-$workerToolsReleases        = Get-Release $workerToolsProject
-$workerToolsDeployments     = Get-Deployment $workerToolsProject
-$promotionCandidates        = Get-PromotionCandidates $workerToolsReleases $workerToolsDeployments
+function Invoke-Promotions() {
+    # Find our candidates for promotion
+    $workerToolsReleases        = Get-Release $workerToolsProject
+    $workerToolsDeployments     = Get-Deployment $workerToolsProject
+    $promotionCandidates        = Get-PromotionCandidates $workerToolsReleases $workerToolsDeployments $targetProjectTestEnvironment $targetProjectProdEnvironment
+}

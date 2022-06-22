@@ -1,43 +1,49 @@
 using module .\enthusiastic-promotor.psm1
 
-$stagingEnvironment = "Environments-1"
-$prodEnvironment = "Environments-2"
-
 BeforeAll {
-    . .\enthusiastic-promotor.ps1 -targetProjectTestEnvironment $stagingEnvironment -targetProjectProdEnvironment $prodEnvironment
+    . .\enthusiastic-promotor.ps1
+    
+    $stagingEnvironment = "Environments-1"
+    $prodEnvironment = "Environments-2"
 }
 
 Describe "Get-PromotionCandidates" {
-    It "with no parameters returns nothing" {
-        # Act
-        $result = Get-PromotionCandidates ([Release[]] @()) ([Deployment[]] @())
+    Context "with no parameters" {
+        It "returns nothing" {
+            # Act
+            $result = Get-PromotionCandidates ([Release[]] @()) ([Deployment[]] @()) $stagingEnvironment $prodEnvironment
 
-        # Assert
-        $result.Count | Should -Be 0
+            # Assert
+            $result.Count | Should -Be 0
+        }
     }
 
-    It "with a Release and no Deployments returns nothing" {
-        # Arrange
-        $releases = [Release[]] @( [Release]::new("Release-1", "Project-1") )
-        $deployments = [Deployment[]] @()
-        
-        # Act
-        $result = Get-PromotionCandidates $releases $deployments
+    Context "with a Release and no Deployments" {
+        It "returns nothing" {
+            # Arrange
+            $releases = [Release[]] @( [Release]::new("Release-1", "Project-1") )
+            $deployments = [Deployment[]] @()
+            
+            # Act
+            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
-        # Assert
-        $result.Count | Should -Be 0
+            # Assert
+            $result.Count | Should -Be 0
+        }
     }
 
-    It "with no Releases and a Deployment returns nothing" {
-        # Arrange
-        $releases = [Release[]] @()
-        $deployments = [Deployment[]] @( [Deployment]::new("Deployment-1", "Release-1", "Project-1") )
-        
-        # Act
-        $result = Get-PromotionCandidates $releases $deployments
+    Context "with no Releases and a Deployment" {
+        It "returns nothing" {
+            # Arrange
+            $releases = [Release[]] @()
+            $deployments = [Deployment[]] @( [Deployment]::new("Deployment-1", "Release-1", "Project-1") )
+            
+            # Act
+            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
-        # Assert
-        $result.Count | Should -Be 0
+            # Assert
+            $result.Count | Should -Be 0
+        }
     }
 
     It "ignores already promoted Releases" {
@@ -49,7 +55,7 @@ Describe "Get-PromotionCandidates" {
         )
 
         # Act
-        $result = Get-PromotionCandidates $releases $deployments
+        $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
         # Assert
         $result.Count | Should -Be 0
@@ -69,7 +75,7 @@ Describe "Get-PromotionCandidates" {
         )
 
         # Act
-        $result = Get-PromotionCandidates $releases $deployments
+        $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
         # Assert
         $result.Count | Should -Be 1
@@ -93,7 +99,7 @@ Describe "Get-PromotionCandidates" {
         )
 
         # Act
-        $result = Get-PromotionCandidates $releases $deployments
+        $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
         # Assert
         $result.Count | Should -Be 1
