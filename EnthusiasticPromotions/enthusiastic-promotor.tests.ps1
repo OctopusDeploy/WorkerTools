@@ -45,64 +45,65 @@ Describe "Get-PromotionCandidates" {
             $result.Count | Should -Be 0
         }
     }
+    Context "with valid Releases and Deployments" {
+        It "ignores already promoted Releases" {
+            # Arrange
+            $releases = [Release[]] @( [Release]::new("Release-1", "Project-1") )
+            $deployments = [Deployment[]] @( 
+                [Deployment]::new("Deployment-1", "Release-1", $stagingEnvironment)
+                [Deployment]::new("Deployment-2", "Release-1", $prodEnvironment)
+            )
 
-    It "ignores already promoted Releases" {
-        # Arrange
-        $releases = [Release[]] @( [Release]::new("Release-1", "Project-1") )
-        $deployments = [Deployment[]] @( 
-            [Deployment]::new("Deployment-1", "Release-1", $stagingEnvironment)
-            [Deployment]::new("Deployment-2", "Release-1", $prodEnvironment)
-        )
+            # Act
+            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
-        # Act
-        $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
+            # Assert
+            $result.Count | Should -Be 0
+        }
 
-        # Assert
-        $result.Count | Should -Be 0
-    }
+        It "includes unpromoted Releases" {
+            # Arrange
+            $releases = [Release[]] @( 
+                [Release]::new("Release-1", "Project-1")
+                [Release]::new("Release-2", "Project-1")
+            )
+            $deployments = [Deployment[]] @( 
+                [Deployment]::new("Deployment-1", "Release-1", $stagingEnvironment)
+                [Deployment]::new("Deployment-2", "Release-1", $prodEnvironment)
 
-    It "includes unpromoted Releases" {
-        # Arrange
-        $releases = [Release[]] @( 
-            [Release]::new("Release-1", "Project-1")
-            [Release]::new("Release-2", "Project-1")
-        )
-        $deployments = [Deployment[]] @( 
-            [Deployment]::new("Deployment-1", "Release-1", $stagingEnvironment)
-            [Deployment]::new("Deployment-2", "Release-1", $prodEnvironment)
+                [Deployment]::new("Deployment-3", "Release-2", $stagingEnvironment)
+            )
 
-            [Deployment]::new("Deployment-3", "Release-2", $stagingEnvironment)
-        )
+            # Act
+            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
-        # Act
-        $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
+            # Assert
+            $result.Count | Should -Be 1
+            $result[0].ReleaseId | Should -Be "Release-2"
+        }
 
-        # Assert
-        $result.Count | Should -Be 1
-        $result[0].ReleaseId | Should -Be "Release-2"
-    }
+        It "excludes superseded unpromoted Releases" {
+            # Arrange
+            $releases = [Release[]] @( 
+                [Release]::new("Release-1", "Project-1", [DateTime]::Now.AddDays(-10))
+                [Release]::new("Release-2", "Project-1", [DateTime]::Now.AddDays(-7))
+                [Release]::new("Release-3", "Project-1", [DateTime]::Now.AddDays(-3))
+            )
+            $deployments = [Deployment[]] @( 
+                [Deployment]::new("Deployment-1", "Release-1", $stagingEnvironment)
 
-    It "excludes superseded unpromoted Releases" {
-        # Arrange
-        $releases = [Release[]] @( 
-            [Release]::new("Release-1", "Project-1", [DateTime]::Now.AddDays(-10))
-            [Release]::new("Release-2", "Project-1", [DateTime]::Now.AddDays(-7))
-            [Release]::new("Release-3", "Project-1", [DateTime]::Now.AddDays(-3))
-        )
-        $deployments = [Deployment[]] @( 
-            [Deployment]::new("Deployment-1", "Release-1", $stagingEnvironment)
+                [Deployment]::new("Deployment-2", "Release-2", $stagingEnvironment)
+                [Deployment]::new("Deployment-3", "Release-2", $prodEnvironment)
 
-            [Deployment]::new("Deployment-2", "Release-2", $stagingEnvironment)
-            [Deployment]::new("Deployment-3", "Release-2", $prodEnvironment)
+                [Deployment]::new("Deployment-4", "Release-3", $stagingEnvironment)
+            )
 
-            [Deployment]::new("Deployment-4", "Release-3", $stagingEnvironment)
-        )
+            # Act
+            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
-        # Act
-        $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
-
-        # Assert
-        $result.Count | Should -Be 1
-        $result[0].ReleaseId | Should -Be "Release-3"
+            # Assert
+            $result.Count | Should -Be 1
+            $result[0].ReleaseId | Should -Be "Release-3"
+        }
     }
 }
