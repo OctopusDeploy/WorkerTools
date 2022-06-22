@@ -47,7 +47,7 @@ function Get-FromApi($url, $apiKey) {
     return $result
 }
 
-function Get-PromotionCandidates([Release[]]$workerToolReleases, [Deployment[]]$workerToolDeployments, [string]$testEnvironment, [string]$prodEnvironment) {
+function Select-PromotionCandidates([Release[]]$workerToolReleases, [Deployment[]]$workerToolDeployments, [string]$testEnvironment, [string]$prodEnvironment) {
     if ($workerToolReleases.Count -eq 0 -or $workerToolDeployments.Count -eq 0) {
         return
     }

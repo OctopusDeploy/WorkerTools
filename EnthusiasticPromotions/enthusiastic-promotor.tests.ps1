@@ -7,11 +7,11 @@ BeforeAll {
     $prodEnvironment = "Environments-2"
 }
 
-Describe "Get-PromotionCandidates" {
+Describe "Select-PromotionCandidates" {
     Context "with no parameters" {
         It "returns nothing" {
             # Act
-            $result = Get-PromotionCandidates ([Release[]] @()) ([Deployment[]] @()) $stagingEnvironment $prodEnvironment
+            $result = Select-PromotionCandidates ([Release[]] @()) ([Deployment[]] @()) $stagingEnvironment $prodEnvironment
 
             # Assert
             $result.Count | Should -Be 0
@@ -25,7 +25,7 @@ Describe "Get-PromotionCandidates" {
             $deployments = [Deployment[]] @()
             
             # Act
-            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
+            $result = Select-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
             # Assert
             $result.Count | Should -Be 0
@@ -39,7 +39,7 @@ Describe "Get-PromotionCandidates" {
             $deployments = [Deployment[]] @( [Deployment]::new("Deployment-1", "Release-1", "Project-1") )
             
             # Act
-            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
+            $result = Select-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
             # Assert
             $result.Count | Should -Be 0
@@ -55,7 +55,7 @@ Describe "Get-PromotionCandidates" {
             )
 
             # Act
-            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
+            $result = Select-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
             # Assert
             $result.Count | Should -Be 0
@@ -75,7 +75,7 @@ Describe "Get-PromotionCandidates" {
             )
 
             # Act
-            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
+            $result = Select-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
             # Assert
             $result.Count | Should -Be 1
@@ -99,7 +99,7 @@ Describe "Get-PromotionCandidates" {
             )
 
             # Act
-            $result = Get-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
+            $result = Select-PromotionCandidates $releases $deployments $stagingEnvironment $prodEnvironment
 
             # Assert
             $result.Count | Should -Be 1
