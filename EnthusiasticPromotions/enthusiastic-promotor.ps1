@@ -62,12 +62,12 @@ function Get-PromotionCandidates([Release[]]$dynamicWorkerReleases, [Deployment[
 
     $candidateReleases = @()
     foreach ($release in $chronologicalReleases) {
-        $deployedToEnvironments = $dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $release.Release.ReleaseID } | Select-Object -ExpandProperty EnvironmentId
+        $deployedToEnvironments = $dynamicWorkerDeployments | Where-Object { $_.ReleaseId -eq $release.Release.ReleaseId } | Select-Object -ExpandProperty EnvironmentId
 
         if ($deployedToEnvironments -contains $testEnvironment) {
             if ($deployedToEnvironments -contains $prodEnvironment) {
                 foreach ($supersededCandidate in $candidateReleases) {
-                    Write-Host "Ignoring $($supersededCandidate.ReleaseID) because it is superseded by $($release.ReleaseId), which was created later and has been fully promoted."
+                    Write-Verbose "Ignoring $($supersededCandidate.ReleaseId) because it is superseded by $($release.Release.ReleaseId), which was created later and has been fully promoted."
                 }
 
                 $candidateReleases = @()
