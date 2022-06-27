@@ -80,7 +80,7 @@ function Select-PromotionCandidates([Release[]]$workerToolReleases, [Deployment[
     $candidateReleases
 }
 
-function Get-ProductionDWVersions {
+function Select-ProductionDynamicWorkerRelease([Release[]]$dynamicWorkerReleases, [Deployment[]]$dynamicWorkerDeployments) {
     $releases = @();
 
     foreach ($tenant in $dynamicWorkerProductionTenants) {
@@ -107,5 +107,15 @@ function Invoke-Promotions() {
     # Find our candidates for promotion
     $workerToolsReleases        = Get-Release $workerToolsProject
     $workerToolsDeployments     = Get-Deployment $workerToolsProject
-    $promotionCandidates        = Get-PromotionCandidates $workerToolsReleases $workerToolsDeployments $targetProjectTestEnvironment $targetProjectProdEnvironment
+    $promotionCandidates        = Select-PromotionCandidates $workerToolsReleases $workerToolsDeployments $targetProjectTestEnvironment $targetProjectProdEnvironment
+
+    # Find the current Dynamic Worker production version
+    $dynamicWorkerReleases      = Get-Release $dynamicWorkerProject
+    $dynamicWorkerDeployments   = Get-Deployment $dynamicWorkerProject
+    $currentProductionDw        = Select-ProductionDynamicWorkerRelease $dynamicWorkerReleases $dynamicWorkerDeployments
+
+    # Figure out cached versions of current prod release from TC parameter
+
+    # Promote whichever candidates are ready
+
 }

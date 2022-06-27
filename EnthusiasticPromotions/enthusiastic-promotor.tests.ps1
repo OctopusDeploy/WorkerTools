@@ -107,3 +107,19 @@ Describe "Select-PromotionCandidates" {
         }
     }
 }
+
+Describe "Select-ProductionDynamicWorkerRelease" {
+    Context "with no parameters" {
+        It "returns nothing" {
+            # Arrange
+            $releases = [Release[]] @()
+            $deployments = [Deployment[]] @()
+
+            # Act
+            $result = Select-ProductionDynamicWorkerRelease $releases $deployments
+            
+            # Assert
+            $result.Count | Should -Be 0
+        }
+    }
+}
