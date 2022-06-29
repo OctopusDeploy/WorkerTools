@@ -1,7 +1,7 @@
 step "Push Docker image" {
 
     action {
-        environments = ["Staging"]
+        environments = ["Staging", "Production"]
         properties = {
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
             DockerPush.Target.Docker.Registry.Password = "#{Docker.Registry.Target.Password}"

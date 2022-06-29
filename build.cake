@@ -4,7 +4,6 @@
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #addin "nuget:?package=Cake.Docker&version=0.10.0"
 #addin "nuget:?package=Cake.Incubator&version=5.1.0"
-#tool "nuget:?package=OctopusTools&version=9.0.0"
 
 using Cake.Incubator.LoggingExtensions;
 
@@ -84,6 +83,7 @@ Setup(context =>
             Verbose("GitVersion:\n{0}", gitVersionInfo.Dump());
             Information("Building {1} images v{0}", gitVersionInfo.SemVer, dockerNamespace);
             dockerTag = new OctopusDockerTag(gitVersionInfo, dockerNamespace, imageDirectory);
+            context.BuildSystem().TeamCity.SetParameter("WorkerToolsVersion", dockerTag.version);
         }
         catch (Exception e)
         {
@@ -188,8 +188,7 @@ Task("Push")
 {
     try
     {
-        Information("Releasing image to Artifactory");
-        Information($"Releasing tag {dockerTag.imageName} to Artifactory");
+        Information($"Releasing image {dockerTag.imageName} to Artifactory");
         using(var process = StartAndReturnProcess("docker", new ProcessSettings{ Arguments = $"push {dockerTag.imageName}" }))
         {
             process.WaitForExit();
@@ -205,53 +204,6 @@ Task("Push")
     {
         Information(e);
         throw; // rethrow the exception so cake will fail
-    }
-});
-
-Task("OctoRelease")
-    .IsDependentOn("Push")
-    .Does(() =>
-{
-    var octopusServerName = Argument("octopus-server-url", "");
-    var octopusApiKey = Argument("octopus-api-key", "");
-    var octopusProjectName = Argument("octopus-project-name", "");
-
-    Information($"Creating a release for project: {octopusProjectName}");
-    Information($"dockerTag.version: {dockerTag.version}");
-
-    Information(Environment.CurrentDirectory);
-    var process = StartAndReturnProcess("./tools/OctopusTools.9.0.0/tools/octo.exe");
-    Information(process);
-
-    try
-    {
-        OctoCreateRelease(octopusProjectName, new CreateReleaseSettings {
-            ToolPath = $"{Environment.CurrentDirectory}/tools/OctopusTools.9.0.0/tools/octo.exe",
-            Server = octopusServerName,
-            ApiKey = octopusApiKey,
-            EnableDebugLogging = true,
-            EnableServiceMessages = true,
-            ReleaseNumber = dockerTag.version
-        });
-    }
-    catch (Exception e)
-    {
-        Information(e);
-    }
-
-    try
-    {
-        OctoCreateRelease(octopusProjectName, new CreateReleaseSettings {
-            Server = octopusServerName,
-            ApiKey = octopusApiKey,
-            EnableDebugLogging = true,
-            EnableServiceMessages = true,
-            ReleaseNumber = dockerTag.version
-        });
-    }
-    catch (Exception e)
-    {
-        Information(e);
     }
 });
 

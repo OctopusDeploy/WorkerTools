@@ -29,9 +29,6 @@ CONFIGURATION="Release"
 VERBOSITY="verbose"
 IMAGEDIRECTORY="ubuntu.18.04"
 DOCKERNAMESPACE="docker.packages.octopushq.com/octopusdeploy/worker-tools"
-OCTOPUSSERVERURL=
-OCTOPUSAPIKEY=
-OCTOPUSPROJECTNAME=
 DRYRUN=
 SHOW_VERSION=false
 SCRIPT_ARGUMENTS=()
@@ -45,9 +42,6 @@ for i in "$@"; do
         -v|--verbosity) VERBOSITY="$2"; shift ;;
         -id|--image-directory) IMAGEDIRECTORY="$2"; shift ;;
         -dn|--docker-namespace) DOCKERNAMESPACE="$2"; shift ;;
-        --octopus-server-url) OCTOPUSSERVERURL="$2"; shift ;;
-        --octopus-api-key) OCTOPUSAPIKEY="$2"; shift ;;
-        --octopus-project-name) OCTOPUSPROJECTNAME="$2"; shift ;;
         -d|--dryrun) DRYRUN="-dryrun" ;;
         --version) SHOW_VERSION=true ;;
         --) shift; SCRIPT_ARGUMENTS+=("$@"); break ;;
@@ -107,5 +101,5 @@ fi
 if $SHOW_VERSION; then
     exec mono "$CAKE_EXE" -version
 else
-    exec mono "$CAKE_EXE" $SCRIPT -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET -image-directory=$IMAGEDIRECTORY -docker-namespace=$DOCKERNAMESPACE -octopus-server-url=$OCTOPUSSERVERURL -octopus-api-key=$OCTOPUSAPIKEY -octopus-project-name=$OCTOPUSPROJECTNAME $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
+    exec mono "$CAKE_EXE" $SCRIPT -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET -image-directory=$IMAGEDIRECTORY -docker-namespace=$DOCKERNAMESPACE $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
 fi

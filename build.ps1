@@ -21,12 +21,6 @@ The directory with the Dockerfile to build.
 The docker namespace to use to build and publish the image.
 .PARAMETER DockerNamespace
 The build script target to run.
-.PARAMETER OctopusServerUrl
-Octopus server url to create a release for.
-.PARAMETER OctopusApiKey
-Octopus server API Key.
-.PARAMETER OctopusProjectName
-The octopus project name to create a release on.
 .PARAMETER Configuration
 The build configuration to use.
 .PARAMETER Verbosity
@@ -54,9 +48,6 @@ Param(
     [string]$Target = "Default",
     [string]$ImageDirectory = "windows.ltsc2019",
     [string]$DockerNamespace = "docker.packages.octopushq.com/octopusdeploy/worker-tools",
-    [string]$OctopusServerUrl,
-    [string]$OctopusApiKey,
-    [string]$OctopusProjectName,
     [ValidateSet("Release", "Debug")]
     [string]$Configuration = "Release",
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
@@ -202,5 +193,5 @@ if (!(Test-Path $CAKE_EXE)) {
 
 # Start Cake
 Write-Host "Running build script..."
-Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -image-directory=`"$ImageDirectory`" -docker-namespace=`"$DockerNamespace`" -octopus-server-url=`"$OctopusServerUrl`" -octopus-api-key=`"$OctopusApiKey`" -octopus-project-name=`"$OctopusProjectName`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" -signing_certificate_path=`"$SigningCertificatePath`" -signing_certificate_password=`"$SigningCertificatePassword`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
+Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -image-directory=`"$ImageDirectory`" -docker-namespace=`"$DockerNamespace`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" -signing_certificate_path=`"$SigningCertificatePath`" -signing_certificate_password=`"$SigningCertificatePassword`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
 exit $LASTEXITCODE
