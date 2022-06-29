@@ -129,8 +129,9 @@ function Select-PromotionCandidates($workerToolReleases, $workerToolDeployments,
         if ($deployedToEnvironments -contains $stagingEnvironmentId) {
             if ($deployedToEnvironments -contains $prodEnvironmentId) {
                 foreach ($supersededCandidate in $candidateReleases) {
-                    Write-Verbose "Ignoring $($supersededCandidate.Version) because it is superseded by $($release.Release.Version), which was created later and has been fully promoted."
+                    Write-Verbose "Ignoring $($supersededCandidate.Version) because it is superseded by a fully promoted release: $($release.Release.Version)"
                 }
+                Write-Verbose "Ignoring $($release.Release.Version) because it is been fully promoted"
 
                 $candidateReleases = @()
             } else {
