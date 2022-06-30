@@ -70,9 +70,9 @@ function Get-Deployments($octopusProject) {
     }
 }
 
-function Test-DeploymentSuccessful($octopusProject, $deployment) {
-    $taskResponse = Get-FromOctopusApi "$($octopusProject.BaseUri)/api/$($octopusProject.SpaceId)/tasks/$($deployment.TaskId)" $octopusProject.ApiKey
-    $taskResponse.FinishedSuccessfully
+function Get-ReleaseVersion($octopusProject, $releaseId) {
+    $releaseDetailsResponse = Get-FromOctopusApi "$($octopusProject.BaseUri)/api/$($octopusProject.SpaceId)/releases/$releaseId" $octopusProject.ApiKey
+    $releaseDetailsResponse.Version
 }
 
 function Get-ProductionDynamicWorkerReleaseIds($dynamicWorkerProductionTenantIds) {
@@ -82,7 +82,7 @@ function Get-ProductionDynamicWorkerReleaseIds($dynamicWorkerProductionTenantIds
         $deployment = $productionDynamicWorkerDeploymentsResponse.Items | Sort-Object -Property "Created" -Descending | Select-Object -First 1
         $deployments += $deployment
     }
-    $deployments | Select-Object -ExpandProperty ReleaseId -Unique
+    $deployments | Select-Object -ExpandProperty ReleaseId
 }
 
 function Get-DynamicWorkerBuildId($releaseId) {
@@ -94,10 +94,11 @@ function Get-DynamicWorkerBuildId($releaseId) {
 function Get-CachedWorkerToolsVersions($releaseId) {
     $buildId = Get-DynamicWorkerBuildId $releaseId
     $buildParametersResponse = Get-FromTeamCityApi "$teamCityUrl/app/rest/builds/$buildId/resulting-properties"
-    $cachedWorkerToolsVersionsValue = $buildParametersResponse `
+    $cachedWorkerToolsVersionsParameter = $buildParametersResponse `
         | Select-Xml -XPath "/properties/property" `
         | Where-Object { $_.Node.name -eq "CachedWorkerToolsVersions" } `
-        | Select-Object -First 1 -ExpandProperty value
+        | Select-Object -First 1 
+    $cachedWorkerToolsVersionsValue = $cachedWorkerToolsVersionsParameter.Node.value
     $cachedWorkerToolsVersions = $cachedWorkerToolsVersionsValue -split "," | Select-Object -Unique
     Write-Verbose "Cached worker tools versions for Dynamic Worker release $($releaseId):"
     $cachedWorkerToolsVersions | ForEach-Object { Write-Verbose " - $_" }
@@ -126,7 +127,7 @@ function Select-PromotionCandidates($workerToolReleases, $workerToolDeployments,
                 foreach ($supersededCandidate in $candidateReleases) {
                     Write-Verbose "Ignoring $($supersededCandidate.Version) because it is superseded by a fully promoted release: $($release.Release.Version)"
                 }
-                Write-Verbose "Ignoring $($release.Release.Version) because it is been fully promoted"
+                Write-Verbose "Ignoring $($release.Release.Version) because it has been fully promoted"
 
                 $candidateReleases = @()
             } else {
@@ -171,7 +172,7 @@ function Invoke-Promotion() {
     Write-Host "Finding promotion candidates..."
 
     $workerToolsReleases = Get-Releases $workerToolsProject
-    $workerToolsDeployments = Get-Deployments $octopusProject
+    $workerToolsDeployments = Get-Deployments $workerToolsProject
     $promotionCandidates = Select-PromotionCandidates $workerToolsReleases $workerToolsDeployments $targetProjectStagingEnvironmentId $targetProjectProdEnvironmentId
 
     if ($promotionCandidates.Count -eq 0) {
