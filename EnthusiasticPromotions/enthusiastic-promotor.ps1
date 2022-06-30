@@ -59,7 +59,7 @@ function Get-Releases($octopusProject) {
 }
 
 function Get-Deployments($octopusProject) {
-    $deploymentsResponse = Get-FromOctopusApi "$($octopusProject.BaseUri)/api/$($octopusProject.SpaceId)/deployments?projects=$($octopusProject.ProjectId)" $octopusProject.ApiKey
+    $deploymentsResponse = Get-FromOctopusApi "$($octopusProject.BaseUri)/api/$($octopusProject.SpaceId)/deployments?projects=$($octopusProject.ProjectId)&taskState=Success" $octopusProject.ApiKey
     $deploymentsResponse.Items | Foreach-Object {
         @{
             DeploymentId = $_.Id
@@ -70,11 +70,6 @@ function Get-Deployments($octopusProject) {
     }
 }
 
-function Get-ReleaseVersion($octopusProject, $releaseId) {
-    $releaseDetailsResponse = Get-FromOctopusApi "$($octopusProject.BaseUri)/api/$($octopusProject.SpaceId)/releases/$releaseId" $octopusProject.ApiKey
-    $releaseDetailsResponse.Version
-}
-
 function Test-DeploymentSuccessful($octopusProject, $deployment) {
     $taskResponse = Get-FromOctopusApi "$($octopusProject.BaseUri)/api/$($octopusProject.SpaceId)/tasks/$($deployment.TaskId)" $octopusProject.ApiKey
     $taskResponse.FinishedSuccessfully
@@ -83,7 +78,7 @@ function Test-DeploymentSuccessful($octopusProject, $deployment) {
 function Get-ProductionDynamicWorkerReleaseIds($dynamicWorkerProductionTenantIds) {
     $deployments = @();
     foreach ($tenantId in $dynamicWorkerProductionTenantIds) {
-        $productionDynamicWorkerDeploymentsResponse = Get-FromOctopusApi "$dynamicWorkerInstanceUrl/api/$dynamicWorkerSpaceId/deployments?projects=$dynamicWorkerProjectId&environments=$dynamicWorkerProdEnvironmentId&tenants=$tenantId" $dynamicWorkerInstanceApiKey
+        $productionDynamicWorkerDeploymentsResponse = Get-FromOctopusApi "$dynamicWorkerInstanceUrl/api/$dynamicWorkerSpaceId/deployments?projects=$dynamicWorkerProjectId&environments=$dynamicWorkerProdEnvironmentId&tenants=$tenantId&taskState=Success" $dynamicWorkerInstanceApiKey
         $deployment = $productionDynamicWorkerDeploymentsResponse.Items | Sort-Object -Property "Created" -Descending | Select-Object -First 1
         $deployments += $deployment
     }
@@ -176,7 +171,7 @@ function Invoke-Promotion() {
     Write-Host "Finding promotion candidates..."
 
     $workerToolsReleases = Get-Releases $workerToolsProject
-    $workerToolsDeployments = Get-Deployments $octopusProject | Where-Object { Test-DeploymentSuccessful $octopusProject $_ }
+    $workerToolsDeployments = Get-Deployments $octopusProject
     $promotionCandidates = Select-PromotionCandidates $workerToolsReleases $workerToolsDeployments $targetProjectStagingEnvironmentId $targetProjectProdEnvironmentId
 
     if ($promotionCandidates.Count -eq 0) {
