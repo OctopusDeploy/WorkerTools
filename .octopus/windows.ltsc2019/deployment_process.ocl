@@ -1,19 +1,15 @@
 step "Push Docker image" {
 
     action {
-        environments = ["Dockerhub", "Artifactory"]
+        environments = ["Staging", "Production"]
         properties = {
-            DockerPush.Source.Docker.Registry.Hostname = "#{OctopusDockerRegistry.Hostname}"
-            DockerPush.Source.Docker.Registry.Password = "#{OctopusDockerRegistry.Password}"
-            DockerPush.Source.Docker.Registry.Username = "#{OctopusDockerRegistry.Username}"
-            DockerPush.Source.Docker.Repository = "docker.packages.octopushq.com/octopusdeploy/worker-tools"
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
             DockerPush.Target.Docker.Registry.Password = "#{Docker.Registry.Target.Password}"
             DockerPush.Target.Docker.Registry.Username = "#{Docker.Registry.Target.Username}"
             DockerPush.Target.Docker.Repository = "#{Docker.Registry.Target.Repository}"
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Template.Id = "ActionTemplates-2141"
-            Octopus.Action.Template.Version = "5"
+            Octopus.Action.Template.Version = "7"
         }
         worker_pool = "Hosted Ubuntu"
 
