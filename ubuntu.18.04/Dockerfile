@@ -103,8 +103,11 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.
     wget -q -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
     apt-get update && apt-get install -y google-cloud-sdk=${Google_Cloud_Cli_Version}
 
-# Get python & groff
+# Get python3 & groff
 RUN apt-get install -y python3-pip groff
+
+# Install python2
+RUN apt-get install python-minimal
 
 # Get AWS CLI
 # https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html#install-linux-awscli
