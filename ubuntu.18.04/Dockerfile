@@ -5,7 +5,7 @@ ARG Aws_Iam_Authenticator_Version=0.5.3
 ARG Aws_Powershell_Version=4.1.2
 ARG Azure_Cli_Version=2.14.0\*
 ARG Azure_Powershell_Version=4.5.0
-ARG Dotnet_Sdk_Version=3.1.401-1
+ARG Dotnet_Sdk_Version=6.0
 ARG Ecs_Cli_Version=1.20.0
 ARG Eks_Cli_Version=0.25.0
 ARG Google_Cloud_Cli_Version=339.0.0-0
@@ -56,13 +56,13 @@ RUN pwsh -c 'Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -Maxim
 # Get Helm3
 RUN wget --quiet -O - https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash -s -- -v ${Helm_Version}
 
-# Get .NET SDK 3.1
+# Get .NET SDK 6.0
 # https://docs.microsoft.com/en-us/dotnet/core/install/linux-package-manager-ubuntu-1804
 RUN DOTNET_CLI_TELEMETRY_OPTOUT=1 && \
     echo "export DOTNET_CLI_TELEMETRY_OPTOUT=1" > /etc/profile.d/set-dotnet-env-vars.sh && \
     apt-get install -y apt-transport-https && \
     apt-get update && \
-    apt-get install -y dotnet-sdk-3.1
+    apt-get install -y ${Dotnet_Sdk_Version}
 
 # Get JDK
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04
