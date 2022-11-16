@@ -31,7 +31,7 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
 # Install dotnet 3.1+
 RUN Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
     [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', '1', 'Machine'); `
-    .\dotnet-install.ps1 -Channel '3.1'; `
+    .\dotnet-install.ps1 -Channel '6.0'; `
     rm dotnet-install.ps1
 
 # Install JDK
