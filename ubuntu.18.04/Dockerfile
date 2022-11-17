@@ -1,4 +1,5 @@
-FROM ubuntu:18.04
+#FROM ubuntu:18.04
+FROM octopusdeploy/tentacle:6.2.268
 
 ARG Aws_Cli_Version=2.0.60
 ARG Aws_Iam_Authenticator_Version=0.5.3
@@ -9,25 +10,24 @@ ARG Dotnet_Sdk_Version=6.0
 ARG Ecs_Cli_Version=1.20.0
 ARG Eks_Cli_Version=0.25.0
 ARG Google_Cloud_Cli_Version=339.0.0-0
-ARG Helm_Version=v3.7.1
-ARG Java_Jdk_Version=11.0.17+8-1ubuntu2~18.04	
-ARG Kubectl_Version=1.18.8-00
-ARG Octopus_Cli_Version=7.4.1
-ARG Octopus_Client_Version=8.8.3
+ARG Helm_Version=v3.10.2
+ARG Java_Jdk_Version=11.0.17+8-1ubuntu2~18.04
+ARG Kubectl_Version=1.25.4-00
+ARG Octopus_Cli_Version=9.0.0
+ARG Octopus_Client_Version=14.2.303
 ARG Powershell_Version=7.0.10\*
-ARG Terraform_Version=1.1.3
-ARG Umoci_Version=0.4.6
+ARG Terraform_Version=1.3.4
+ARG Umoci_Version=0.4.7
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
 RUN apt-get update && \
     apt-get install -y wget unzip apt-utils curl software-properties-common
 
-# get powershell for 18.04
-RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && \
+# get powershell for debian 10
+RUN wget -q https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     apt-get update && \
-    add-apt-repository universe && \
     apt-get install -y powershell=${Powershell_Version}
 
 # Get Octo CLI
@@ -67,7 +67,8 @@ RUN DOTNET_CLI_TELEMETRY_OPTOUT=1 && \
 # Get JDK
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04
 # https://packages.ubuntu.com/bionic/openjdk-11-dbg
-RUN apt-get install -y openjdk-11-jdk-headless=${Java_Jdk_Version}
+# RUN apt-get install -y openjdk-11-jdk-headless=${Java_Jdk_Version}
+RUN apt-get install -y default-jdk
 
 # Install common Java tools
 RUN apt-get install -y maven gradle
@@ -152,11 +153,10 @@ RUN curl --silent --location https://github.com/opencontainers/umoci/releases/do
 # Get common utilities for scripting
 # https://mikefarah.gitbook.io/yq/
 # https://augeas.net/
-RUN add-apt-repository -y ppa:rmescandon/yq && \
-    apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools
+RUN apt-get update && apt-get install -y openssh-client rsync git augeas-tools
 
 # Skopeo
 # https://github.com/containers/skopeo/blob/master/install.md
-RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" && \
-    wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O- | apt-key add - && \
-    apt-get update && apt-get install -y skopeo
+#RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" && \
+#    wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O- | apt-key add - && \
+#    apt-get update && apt-get install -y skopeo

@@ -25,18 +25,18 @@
 * Aws Powershell 4.1.2
 * Azure CLI 2.14.0\*
 * Azure Powershell 4.5.0
-* Dotnet Sdk 3.1.401-1
+* Dotnet Sdk 6.0
 * Ecs CLI 1.20.0
 * Eks CTL 0.25.0
 * Google Cloud CLI 339.0.0-0
-* Helm v3.7.1
+* Helm v3.10.2
 * Java Jdk 11.0.13+8-0ubuntu1~18.04
-* Kubectl 1.18.8-00
-* Octopus CLI 7.4.1
-* Octopus Client 8.8.3
+* Kubectl 1.25.4-00
+* Octopus CLI 9.0.0
+* Octopus Client 14.2.303
 * Powershell 7.0.6\*
-* Terraform 1.1.3
-* Umoci 0.4.6
+* Terraform 1.3.4
+* Umoci 0.4.7
 * wget - Latest
 * unzip - Latest
 * apt-utils - Latest
