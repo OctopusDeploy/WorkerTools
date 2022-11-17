@@ -1,5 +1,8 @@
 # Ubuntu WorkerTools
 
+> Please note that we update this document periodically to match the latest version on DockerHub which is publicly available.
+> This does not necessarily match the content of Dockerfiles in this repository, as they may contain changes that are not released yet.
+
 ## Image Name
 `octopusdeploy/worker-tools`
 
