@@ -62,7 +62,7 @@ RUN DOTNET_CLI_TELEMETRY_OPTOUT=1 && \
     echo "export DOTNET_CLI_TELEMETRY_OPTOUT=1" > /etc/profile.d/set-dotnet-env-vars.sh && \
     apt-get install -y apt-transport-https && \
     apt-get update && \
-    apt-get install -y ${Dotnet_Sdk_Version}
+    apt-get install -y dotnet-sdk-${Dotnet_Sdk_Version}
 
 # Get JDK
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04
