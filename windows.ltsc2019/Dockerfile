@@ -12,6 +12,8 @@ ARG Eks_Cli_Version=0.25.0
 ARG Google_Cloud_Cli_Version=339.0.0
 ARG Helm_Version=3.7.1
 ARG Java_Jdk_Version=14.0.2
+# If bumping Kubectl to 1.26 or above, please also add the gke-cloud-auth-plugin tool to this image to facilitate GKE login
+# See https://github.com/OctopusDeploy/Issues/issues/7621 for more info
 ARG Kubectl_Version=1.18.8
 ARG Node_Version=14.17.2
 ARG Octopus_Cli_Version=7.4.1
