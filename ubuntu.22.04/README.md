@@ -23,18 +23,18 @@
 * Aws CLI 2.0.60
 * Aws Iam Authenticator 0.5.3
 * Aws Powershell 4.1.2
-* Azure CLI 2.14.0\*
+* Azure CLI 2.44.1-1~bionic
 * Azure Powershell 4.5.0
 * Dotnet Sdk 3.1.401-1
 * Ecs CLI 1.20.0
 * Eks CTL 0.25.0
-* Google Cloud CLI 339.0.0-0
+* Google Cloud CLI 412.0.0-0
 * Helm v3.7.1
-* Java Jdk 11.0.13+8-0ubuntu1~22.04
+* Java Jdk 11.0.17+8-1ubuntu2~22.04
 * Kubectl 1.18.8-00
-* Octopus CLI 7.4.1
+* Octopus CLI 9.1.7
 * Octopus Client 8.8.3
-* Powershell 7.0.6\*
+* Powershell 7.3.1-1.deb
 * Terraform 1.1.3
 * Umoci 0.4.6
 * wget - Latest
