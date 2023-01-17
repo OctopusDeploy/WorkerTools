@@ -5,12 +5,12 @@ try {
 
     Import-Module -Name "Pester"
 
-    Set-Location /app/ubuntu.18.04/spec
+    Set-Location /app/ubuntu.22.04/spec
 
     Write-Output "Running Pester Tests"
     $configuration = [PesterConfiguration]::Default
     $configuration.TestResult.Enabled = $true
-    $configuration.TestResult.OutputPath = '/app/ubuntu.18.04/spec/PesterTestResults.xml'
+    $configuration.TestResult.OutputPath = '/app/ubuntu.22.04/spec/PesterTestResults.xml'
     $configuration.TestResult.OutputFormat = 'NUnitXml'
     $configuration.Run.PassThru = $true
 

@@ -1,30 +1,30 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 ARG Aws_Cli_Version=2.0.60
 ARG Aws_Iam_Authenticator_Version=0.5.3
 ARG Aws_Powershell_Version=4.1.2
-ARG Azure_Cli_Version=2.14.0\*
+ARG Azure_Cli_Version=2.44.1-1~bionic
 ARG Azure_Powershell_Version=4.5.0
 ARG Dotnet_Sdk_Version=6.0
 ARG Ecs_Cli_Version=1.20.0
 ARG Eks_Cli_Version=0.25.0
-ARG Google_Cloud_Cli_Version=339.0.0-0
+ARG Google_Cloud_Cli_Version=412.0.0-0
 ARG Helm_Version=v3.7.1
-ARG Java_Jdk_Version=11.0.17+8-1ubuntu2~18.04	
+ARG Java_Jdk_Version=11.0.17+8-1ubuntu2~22.04
 ARG Kubectl_Version=1.18.8-00
-ARG Octopus_Cli_Version=7.4.1
+ARG Octopus_Cli_Version=9.1.7
 ARG Octopus_Client_Version=8.8.3
-ARG Powershell_Version=7.0.10\*
+ARG Powershell_Version=7.3.1-1.deb
 ARG Terraform_Version=1.1.3
 ARG Umoci_Version=0.4.6
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
 RUN apt-get update && \
-    apt-get install -y wget unzip apt-utils curl software-properties-common
+    apt-get install -y wget unzip apt-utils curl software-properties-common iputils-ping
 
-# get powershell for 18.04
-RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && \
+# get powershell for 22.04
+RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     apt-get update && \
     add-apt-repository universe && \
@@ -58,7 +58,10 @@ RUN wget --quiet -O - https://raw.githubusercontent.com/kubernetes/helm/master/s
 
 # Get .NET SDK 6.0
 # https://docs.microsoft.com/en-us/dotnet/core/install/linux-package-manager-ubuntu-1804
+# https://learn.microsoft.com/en-us/dotnet/core/install/linux-package-mixup
 RUN DOTNET_CLI_TELEMETRY_OPTOUT=1 && \
+    touch /etc/apt/preferences && \
+    echo "Package: dotnet* aspnet* netstandard* \nPin: origin \"packages.microsoft.com\" \nPin-Priority: -10" > /etc/apt/preferences && \
     echo "export DOTNET_CLI_TELEMETRY_OPTOUT=1" > /etc/profile.d/set-dotnet-env-vars.sh && \
     apt-get install -y apt-transport-https && \
     apt-get update && \
@@ -70,7 +73,13 @@ RUN DOTNET_CLI_TELEMETRY_OPTOUT=1 && \
 RUN apt-get install -y openjdk-11-jdk-headless=${Java_Jdk_Version}
 
 # Install common Java tools
-RUN apt-get install -y maven gradle
+RUN apt-get update && \
+    apt-get install -y maven gradle
+
+# Get Libssl 1.1, required for Azure CLI as of Ubuntu 22.04. This can be removed when a proper Azure CLI ubuntu 22.04 version is avaliable
+RUN wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb && \
+    dpkg -i ./libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb && \
+    rm -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
 
 # Get Azure CLI
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
@@ -107,7 +116,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.
 RUN apt-get install -y python3-pip groff
 
 # Install python2
-RUN apt-get install -y python-minimal
+RUN apt-get install -y python2-minimal
 
 # Get AWS CLI
 # https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html#install-linux-awscli
@@ -157,6 +166,6 @@ RUN add-apt-repository -y ppa:rmescandon/yq && \
 
 # Skopeo
 # https://github.com/containers/skopeo/blob/master/install.md
-RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" && \
-    wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O- | apt-key add - && \
+RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" && \
+    wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_22.04/Release.key -O- | apt-key add - && \
     apt-get update && apt-get install -y skopeo

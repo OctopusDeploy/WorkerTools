@@ -39,7 +39,7 @@ Context.Log.Verbosity = Argument("Verbosity", Verbosity.Normal);
 
 var target = Argument("target", "Default");
 var dockerNamespace = Argument("docker-namespace", "docker.packages.octopushq.com/octopusdeploy/worker-tools");
-var imageDirectory = Argument("image-directory", "ubuntu.18.04");
+var imageDirectory = Argument("image-directory", "ubuntu.22.04");
 
 ///////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES
