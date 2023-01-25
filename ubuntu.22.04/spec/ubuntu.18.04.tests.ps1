@@ -28,7 +28,7 @@ Describe  'installed dependencies' {
 
     It 'has az installed' {
       $output = (& az version) | convertfrom-json
-      $output.'azure-cli' | Should -be '2.14.0'
+      $output.'azure-cli' | Should -be '2.44.1'
       $LASTEXITCODE | Should -be 0
     }
 
@@ -61,7 +61,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has python3 installed' {
-        python3 --version | Should -match '3.6.9'
+        python3 --version | Should -match '3.10.6'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -72,12 +72,12 @@ Describe  'installed dependencies' {
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select -First 1 | Should -be 'Google Cloud SDK 339.0.0'
+        gcloud --version | Select -First 1 | Should -be 'Google Cloud SDK 412.0.0'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has octo installed' {
-        octo --version | Should -match '7.4.1'
+        octo --version | Should -match '9.1.7'
         $LASTEXITCODE | Should -be 0
     }
 
