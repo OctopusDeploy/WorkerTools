@@ -117,7 +117,7 @@ RUN apt-get install -y python3-pip groff
 
 # Install python2
 RUN apt-get install -y python2-minimal && \
-    alias python=python2
+    ln -s /usr/bin/python2 /usr/bin/python
 
 # Get AWS CLI
 # https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html#install-linux-awscli
