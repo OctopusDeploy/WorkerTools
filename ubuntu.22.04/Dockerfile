@@ -113,7 +113,8 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.
     apt-get update && apt-get install -y google-cloud-sdk=${Google_Cloud_Cli_Version}
 
 # Get python3 & groff
-RUN apt-get install -y python3-pip groff
+RUN apt-get install -y python3-pip groff && \
+    python3 -m pip install pycryptodome --user
 
 # Install python2
 RUN apt-get install -y python2-minimal && \
