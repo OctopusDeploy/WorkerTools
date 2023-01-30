@@ -67,7 +67,7 @@ Describe  'installed dependencies' {
 
     It 'has python2 installed' {
         # python 2 prints it's version to stderr, for some reason
-        python --version 2>&1 | Should -match 'Python 2.7.17'
+        python --version 2>&1 | Should -match 'Python 2.7.18'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -129,6 +129,6 @@ Describe  'installed dependencies' {
     It 'should have installed powershell core' {
         $output = & pwsh --version
         $LASTEXITCODE | Should -be 0
-        $output | Should -match '^PowerShell 7\.0\.6*'
+        $output | Should -match '^PowerShell 7\.3\.1*'
     }
 }

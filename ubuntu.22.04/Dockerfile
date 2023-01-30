@@ -17,6 +17,7 @@ ARG Octopus_Client_Version=8.8.3
 ARG Powershell_Version=7.3.1-1.deb
 ARG Terraform_Version=1.1.3
 ARG Umoci_Version=0.4.6
+ARG Python2_Version=2.7.18-3
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
@@ -117,7 +118,7 @@ RUN apt-get install -y python3-pip groff && \
     python3 -m pip install pycryptodome --user
 
 # Install python2
-RUN apt-get install -y python2-minimal && \
+RUN apt-get install -y python2-minimal=${Python2_Version} && \
     ln -s /usr/bin/python2 /usr/bin/python
 
 # Get AWS CLI
