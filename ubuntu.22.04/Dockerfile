@@ -9,6 +9,7 @@ ARG Dotnet_Sdk_Version=6.0
 ARG Ecs_Cli_Version=1.20.0
 ARG Eks_Cli_Version=0.25.0
 ARG Google_Cloud_Cli_Version=412.0.0-0
+ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=415.0.0-0
 ARG Helm_Version=v3.7.1
 ARG Java_Jdk_Version=11.0.17+8-1ubuntu2~22.04
 ARG Kubectl_Version=1.18.8-00
@@ -111,7 +112,8 @@ RUN wget https://releases.hashicorp.com/terraform/${Terraform_Version}/terraform
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     apt-get install -y ca-certificates gnupg && \
     wget -q -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
-    apt-get update && apt-get install -y google-cloud-sdk=${Google_Cloud_Cli_Version}
+    apt-get update && apt-get install -y google-cloud-sdk=${Google_Cloud_Cli_Version} && \
+    apt-get install google-cloud-sdk-gke-gcloud-auth-plugin=${Google_Cloud_Gke_Cloud_Auth_Plugin_Version}
 
 # Get python3 & groff
 RUN apt-get install -y python3-pip groff && \

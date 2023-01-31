@@ -75,6 +75,11 @@ Describe  'installed dependencies' {
         gcloud --version | Select -First 1 | Should -be 'Google Cloud SDK 412.0.0'
         $LASTEXITCODE | Should -be 0
     }
+    
+    It 'has gke-gcloud-auth-plugin installed' {
+        gke-gcloud-auth-plugin --version | Select -First 1 | Should -be 'Kubernetes v1.25.2-alpha+ae91c1fc0c443c464a4c878ffa2a4544483c6d1f'
+        $LASTEXITCODE | Should -be 0
+    }
 
     It 'has octo installed' {
         octo --version | Should -match '9.1.7'
