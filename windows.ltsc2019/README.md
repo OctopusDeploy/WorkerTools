@@ -27,6 +27,7 @@
 * Azure Powershell 4.5.0
 * Eks Ctl 0.25.0
 * Google Cloud CLI 412.0.0
+* Google Cloud GKE auth plugin 412.0.0-0
 * Helm 3.7.1
 * Java Jdk 14.0.2
 * Kubectl 1.18.8

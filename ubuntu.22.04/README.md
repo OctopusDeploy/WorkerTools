@@ -29,6 +29,7 @@
 * Ecs CLI 1.20.0
 * Eks CTL 0.25.0
 * Google Cloud CLI 412.0.0-0
+* Google Cloud GKE auth plugin 412.0.0-0
 * Helm v3.7.1
 * Java Jdk 11.0.17+8-1ubuntu2~22.04
 * Kubectl 1.18.8-00

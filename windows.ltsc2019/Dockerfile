@@ -10,7 +10,6 @@ ARG Azure_Cli_Version=2.44.0
 ARG Azure_Powershell_Version=4.5.0
 ARG Eks_Cli_Version=0.25.0
 ARG Google_Cloud_Cli_Version=412.0.0
-ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=415.0.0-0
 ARG Helm_Version=3.7.1
 ARG Java_Jdk_Version=14.0.2
 ARG Kubectl_Version=1.18.8
@@ -82,8 +81,7 @@ RUN Invoke-WebRequest "https://dl.google.com/dl/cloudsdk/channels/rapid/download
     # # UNZIP AND INSTALL gcloud
     & '.\Program Files\7-Zip\7z.exe' x .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip; `
     .\google-cloud-sdk\install.bat --quiet; `
-    rm .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip `
-    gcloud components install gke-gcloud-auth-plugin
+    rm .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip
 
 # # Install ScriptCS
 RUN choco install scriptcs -y --version $Env:ScriptCs_Version --no-progress
@@ -103,3 +101,4 @@ RUN choco install powershell-core --yes --version $Env:Powershell_Version --no-p
 # # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
+RUN gcloud components install gke-gcloud-auth-plugin
