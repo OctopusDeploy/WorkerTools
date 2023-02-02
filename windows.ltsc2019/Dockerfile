@@ -17,7 +17,7 @@ ARG Node_Version=14.17.2
 ARG Octopus_Cli_Version=9.1.7
 ARG Octopus_Client_Version=8.8.3
 ARG Powershell_Version=7.3.1
-ARG Python_Version=3.8.10
+ARG Python_Version=3.8.5
 ARG ScriptCs_Version=0.17.1
 ARG Terraform_Version=1.1.3
 ARG 7Zip_Version=19.0
@@ -28,7 +28,7 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Install dotnet 3.1+
+# Install dotnet 6.0+
 RUN Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
     [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', '1', 'Machine'); `
     .\dotnet-install.ps1 -Channel '6.0'; `
@@ -101,4 +101,6 @@ RUN choco install powershell-core --yes --version $Env:Powershell_Version --no-p
 # # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
+
+# gcloud requires python on path, update_path.cmd adds python to path
 RUN gcloud components install gke-gcloud-auth-plugin
