@@ -28,7 +28,7 @@ Describe  'installed dependencies' {
 
     It 'has az installed' {
       $output = (& az version) | convertfrom-json
-      $output.'azure-cli' | Should -Be '2.14.0'
+      $output.'azure-cli' | Should -Be '2.44.0'
       $LASTEXITCODE | Should -be 0
     }
     
@@ -76,12 +76,17 @@ Describe  'installed dependencies' {
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select-String -Pattern "339.0.0" | Should -BeLike "*339.0.0*"
+        gcloud --version | Select-String -Pattern "412.0.0" | Should -BeLike "*412.0.0*"
+        $LASTEXITCODE | Should -be 0
+    }
+    
+    It 'has gke-gcloud-auth-plugin installed' {
+        gke-gcloud-auth-plugin --version | Select -First 1 | Should -be 'Kubernetes v1.25.2-alpha+ae91c1fc0c443c464a4c878ffa2a4544483c6d1f'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has octo installed' {
-        octo --version | Should -Match '7.4.1'
+        octo --version | Should -Match '9.1.7'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -99,6 +104,6 @@ Describe  'installed dependencies' {
     It 'should have installed powershell core' {
         $output = & pwsh --version
         $LASTEXITCODE | Should -be 0
-        $output | Should -Match '^PowerShell 7\.0\.3*'
+        $output | Should -Match '^PowerShell 7\.3\.1*'
     }
 }

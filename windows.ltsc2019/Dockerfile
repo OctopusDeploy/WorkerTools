@@ -6,18 +6,19 @@ SHELL ["powershell", "-Command"]
 ARG Aws_Cli_Version=2.0.60
 ARG Aws_Iam_Authenticator_Version=0.5.3
 ARG Aws_Powershell_Version=4.1.2
-ARG Azure_Cli_Version=2.14.0
+ARG Azure_Cli_Version=2.44.0
 ARG Azure_Powershell_Version=4.5.0
 ARG Eks_Cli_Version=0.25.0
-ARG Google_Cloud_Cli_Version=339.0.0
+ARG Google_Cloud_Cli_Version=412.0.0
+ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=415.0.0-0
 ARG Helm_Version=3.7.1
 ARG Java_Jdk_Version=14.0.2
 ARG Kubectl_Version=1.18.8
 ARG Node_Version=14.17.2
-ARG Octopus_Cli_Version=7.4.1
+ARG Octopus_Cli_Version=9.1.7
 ARG Octopus_Client_Version=8.8.3
-ARG Powershell_Version=7.0.6
-ARG Python_Version=3.8.5
+ARG Powershell_Version=7.3.1
+ARG Python_Version=3.8.10
 ARG ScriptCs_Version=0.17.1
 ARG Terraform_Version=1.1.3
 ARG 7Zip_Version=19.0
@@ -81,7 +82,8 @@ RUN Invoke-WebRequest "https://dl.google.com/dl/cloudsdk/channels/rapid/download
     # # UNZIP AND INSTALL gcloud
     & '.\Program Files\7-Zip\7z.exe' x .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip; `
     .\google-cloud-sdk\install.bat --quiet; `
-    rm .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip
+    rm .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip `
+    gcloud components install gke-gcloud-auth-plugin
 
 # # Install ScriptCS
 RUN choco install scriptcs -y --version $Env:ScriptCs_Version --no-progress
