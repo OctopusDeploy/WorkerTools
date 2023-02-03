@@ -34,7 +34,7 @@
 * Node 14.17.2
 * Octopus CLI 9.1.7
 * Octopus Client 8.8.3
-* Powershell 7.3.1
+* Powershell 7.2.7
 * Python 3.8.10
 * ScriptCs 0.17.1
 * Terraform 1.1.3

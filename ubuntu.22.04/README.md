@@ -35,7 +35,7 @@
 * Kubectl 1.18.8-00
 * Octopus CLI 9.1.7
 * Octopus Client 8.8.3
-* Powershell 7.3.1-1.deb
+* Powershell 7.2.7-1.deb
 * Terraform 1.1.3
 * Umoci 0.4.6
 * wget - Latest

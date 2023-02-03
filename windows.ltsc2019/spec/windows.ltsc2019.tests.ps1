@@ -76,12 +76,12 @@ Describe  'installed dependencies' {
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select-String -Pattern "412.0.0" | Should -BeLike "*412.0.0*"
+        gcloud --version | Select-String -Pattern "412.0.0" | Should -BeLike "Google Cloud SDK 412.0.0"
         $LASTEXITCODE | Should -be 0
     }
     
     It 'has gke-gcloud-auth-plugin installed' {
-        gke-gcloud-auth-plugin --version | Select -First 1 | Should -be 'Kubernetes v1.25.2-alpha+ae91c1fc0c443c464a4c878ffa2a4544483c6d1f'
+        gcloud --version | Select-String -Pattern "0.4.0" | Should -BeLike "gke-gcloud-auth-plugin 0.4.0"
         $LASTEXITCODE | Should -be 0
     }
 
@@ -104,6 +104,6 @@ Describe  'installed dependencies' {
     It 'should have installed powershell core' {
         $output = & pwsh --version
         $LASTEXITCODE | Should -be 0
-        $output | Should -Match '^PowerShell 7\.3\.1*'
+        $output | Should -Match '^PowerShell 7\.2\.7*'
     }
 }

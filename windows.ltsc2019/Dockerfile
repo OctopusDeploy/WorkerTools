@@ -16,7 +16,7 @@ ARG Kubectl_Version=1.18.8
 ARG Node_Version=14.17.2
 ARG Octopus_Cli_Version=9.1.7
 ARG Octopus_Client_Version=8.8.3
-ARG Powershell_Version=7.3.1
+ARG Powershell_Version=7.2.7
 ARG Python_Version=3.8.5
 ARG ScriptCs_Version=0.17.1
 ARG Terraform_Version=1.1.3
@@ -102,5 +102,6 @@ RUN choco install powershell-core --yes --version $Env:Powershell_Version --no-p
 ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
 
-# gcloud requires python on path, update_path.cmd adds python to path
-RUN gcloud components install gke-gcloud-auth-plugin
+# gcloud requires python on path, update_path.cmd adds python to path. This created a .install\.backup folder that's required for rollbacks and takes ~1Gig. 
+RUN gcloud components install gke-gcloud-auth-plugin --quiet; `
+    Remove-Item -Path C:\google-cloud-sdk\.install\.backup -Force -Recurse
