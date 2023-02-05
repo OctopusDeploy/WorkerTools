@@ -35,7 +35,7 @@
 * Octopus CLI 9.1.7
 * Octopus Client 8.8.3
 * Powershell 7.2.7
-* Python 3.8.10
+* Python 3.8.5
 * ScriptCs 0.17.1
 * Terraform 1.1.3
 * 7Zip 19.0
