@@ -8,9 +8,9 @@
 
 ## Tags
 
-- `3.3.2-windows.ltsc2019`
-- `3.3-windows.ltsc2019`
-- `3-windows.ltsc2019`
+- `5.0.0-windows.ltsc2019`
+- `5.0-windows.ltsc2019`
+- `5-windows.ltsc2019`
 - `windows.ltsc2019`
 
 ## Digest

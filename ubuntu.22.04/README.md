@@ -8,9 +8,9 @@
 
 ## Tags
 
-- `3.3.2-ubuntu.22.04`
-- `3.3-ubuntu.22.04`
-- `3-ubuntu.22.04`
+- `5.0.0-ubuntu.22.04`
+- `5.0-ubuntu.22.04`
+- `5-ubuntu.22.04`
 - `ubuntu.22.04`
 
 ## Digest

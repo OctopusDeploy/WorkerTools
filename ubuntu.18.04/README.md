@@ -8,9 +8,9 @@
 
 ## Tags
 
-- `3.3.2-ubuntu.18.04`
-- `3.3-ubuntu.18.04`
-- `3-ubuntu.18.04`
+- `4.0.0-ubuntu.18.04`
+- `4.0-ubuntu.18.04`
+- `4-ubuntu.18.04`
 - `ubuntu.18.04`
 
 ## Digest
