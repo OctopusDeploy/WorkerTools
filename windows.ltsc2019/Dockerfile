@@ -15,7 +15,7 @@ ARG Java_Jdk_Version=14.0.2
 ARG Kubectl_Version=1.18.8
 ARG Node_Version=14.17.2
 ARG Octopus_Cli_Version=9.1.7
-ARG Octopus_Client_Version=8.8.3
+ARG Octopus_Client_Version=11.6.3644
 ARG Powershell_Version=7.2.7
 ARG Python_Version=3.8.5
 ARG ScriptCs_Version=0.17.1
@@ -91,6 +91,7 @@ RUN choco install octopustools -y --version $Env:Octopus_Cli_Version --no-progre
 
 # # Install Octopus Client
 RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion $Env:Octopus_Client_Version
+RUN Install-Package Octopus.Server.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion $Env:Octopus_Server_Client_Version
 
 # # Install eksctl
 RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress

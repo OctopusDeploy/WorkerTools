@@ -14,7 +14,7 @@ ARG Helm_Version=v3.7.1
 ARG Java_Jdk_Version=11.0.17+8-1ubuntu2~22.04
 ARG Kubectl_Version=1.18.8-00
 ARG Octopus_Cli_Version=9.1.7
-ARG Octopus_Client_Version=8.8.3
+ARG Octopus_Client_Version=11.6.3644
 ARG Powershell_Version=7.2.7-1.deb
 ARG Terraform_Version=1.1.3
 ARG Umoci_Version=0.4.6
@@ -45,7 +45,11 @@ RUN apt-get update && \
 # https://octopus.com/docs/octopus-rest-api/octopus.client
 RUN pwsh -c 'Install-Package -Force Octopus.Client -MaximumVersion "'${Octopus_Client_Version}'" -source https://www.nuget.org/api/v2 -SkipDependencies' && \
     octopusClientPackagePath=$(pwsh -c '(Get-Item ((Get-Package Octopus.Client).source)).Directory.FullName') && \
-    cp -r $octopusClientPackagePath/lib/netstandard2.0/* .
+    cp -r $octopusClientPackagePath/lib/netstandard2.0/* . 
+
+RUN pwsh -c 'Install-Package -Force Octopus.Server.Client -MaximumVersion "'${Octopus_Client_Version}'" -source https://www.nuget.org/api/v2 -SkipDependencies' && \
+    octopusServerClientPackagePath=$(pwsh -c '(Get-Item ((Get-Package Octopus.Server.Client).source)).Directory.FullName') && \
+    cp -r octopusServerClientPackagePath/lib/netstandard2.0/* .
 
 # Get AWS Powershell core modules
 # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-linux-mac.html
