@@ -79,9 +79,9 @@ RUN apt-get update && \
     apt-get install -y maven gradle
 
 # Get Libssl 1.1, required for Azure CLI as of Ubuntu 22.04. This can be removed when a proper Azure CLI ubuntu 22.04 version is avaliable
-RUN wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb && \
-    dpkg -i ./libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb && \
-    rm -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+RUN wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb && \
+    dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb && \
+    rm -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 
 # Get Azure CLI
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
