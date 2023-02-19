@@ -34,7 +34,8 @@
 * Java Jdk 11.0.17+8-1ubuntu2~22.04
 * Kubectl 1.18.8-00
 * Octopus CLI 9.1.7
-* Octopus Client 8.8.3
+* Octopus Client 11.6.3644
+* Octopus Server Client 11.6.3644
 * Powershell 7.2.7-1.deb
 * Terraform 1.1.3
 * Umoci 0.4.6

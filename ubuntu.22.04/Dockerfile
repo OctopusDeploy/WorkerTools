@@ -49,7 +49,7 @@ RUN pwsh -c 'Install-Package -Force Octopus.Client -MaximumVersion "'${Octopus_C
 
 RUN pwsh -c 'Install-Package -Force Octopus.Server.Client -MaximumVersion "'${Octopus_Client_Version}'" -source https://www.nuget.org/api/v2 -SkipDependencies' && \
     octopusServerClientPackagePath=$(pwsh -c '(Get-Item ((Get-Package Octopus.Server.Client).source)).Directory.FullName') && \
-    cp -r octopusServerClientPackagePath/lib/netstandard2.0/* .
+    cp -r $octopusServerClientPackagePath/lib/netstandard2.0/* .
 
 # Get AWS Powershell core modules
 # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-linux-mac.html
