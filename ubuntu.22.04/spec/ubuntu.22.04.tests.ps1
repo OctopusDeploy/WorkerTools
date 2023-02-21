@@ -12,11 +12,6 @@ Describe  'installed dependencies' {
         [Reflection.AssemblyName]::GetAssemblyName("/Octopus.Client.dll").Version.ToString() | Should -match "$expectedVersion.0"
     }
 
-    It 'has Octopus.Server.Client installed ' {
-        $expectedVersion = "11.6.3644"
-        [Reflection.AssemblyName]::GetAssemblyName("/Octopus.Server.Client.dll").Version.ToString() | Should -match "$expectedVersion.0"
-    }
-
     It 'has dotnet installed' {
         dotnet --version | Should -match '6.0.\d+'
         $LASTEXITCODE | Should -be 0
