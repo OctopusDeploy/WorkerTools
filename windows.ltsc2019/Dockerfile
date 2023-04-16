@@ -63,6 +63,9 @@ RUN choco install nodejs-lts -y --version $Env:Node_Version --no-progress
 RUN Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v${Env:Kubectl_Version}/bin/windows/amd64/kubectl.exe" -OutFile .\kubectl.exe; `
     mv .\kubectl.exe C:\Windows\system32\;
 
+# Get Kubelogin
+RUN az aks install-cli
+
 # # Install helm 3
 RUN choco install -y kubernetes-helm --version $Env:Helm_Version --no-progress
 
