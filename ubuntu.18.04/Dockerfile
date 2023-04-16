@@ -12,6 +12,7 @@ ARG Google_Cloud_Cli_Version=339.0.0-0
 ARG Helm_Version=v3.7.1
 ARG Java_Jdk_Version=11.0.17+8-1ubuntu2~18.04	
 ARG Kubectl_Version=1.18.8-00
+ARG Kubelogin_Version=v0.0.25
 ARG Octopus_Cli_Version=7.4.1
 ARG Octopus_Client_Version=8.8.3
 ARG Powershell_Version=7.0.10\*
@@ -91,7 +92,9 @@ RUN wget --quiet -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | ap
     apt-get update && apt-get install -y kubectl=${Kubectl_Version}
 
 # Get Kubelogin
-RUN az aks install-cli
+RUN wget --quiet -O - https://github.com/Azure/kubelogin/releases/download/${Kubelogin_Version}/kubelogin-linux-amd64.zip && \
+    unzip kubelogin-linux-amd64.zip && \
+    mv bin/linux_amd64 /usr/local/bin
 
 # Get Terraform
 # https://computingforgeeks.com/how-to-install-terraform-on-ubuntu-centos-7/

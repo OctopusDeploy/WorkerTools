@@ -13,6 +13,7 @@ ARG Google_Cloud_Cli_Version=412.0.0
 ARG Helm_Version=3.7.1
 ARG Java_Jdk_Version=14.0.2
 ARG Kubectl_Version=1.18.8
+ARG Kubelogin_Version=0.0.25
 ARG Node_Version=14.17.2
 ARG Octopus_Cli_Version=9.1.7
 ARG Octopus_Client_Version=11.6.3644
@@ -64,7 +65,7 @@ RUN Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release
     mv .\kubectl.exe C:\Windows\system32\;
 
 # Get Kubelogin
-RUN az aks install-cli
+RUN choco install azure-kubelogin --version $Env:Kubelogin_Version --no-progress
 
 # # Install helm 3
 RUN choco install -y kubernetes-helm --version $Env:Helm_Version --no-progress
