@@ -50,6 +50,11 @@ Describe  'installed dependencies' {
         $LASTEXITCODE | Should -be 0
     }
 
+    It 'has kubelogin installed' {
+        kubelogin –version | out-null
+        $LASTEXITCODE | Should -be 0
+    }
+
     It 'has helm installed' {
         helm version | Should -match '3.7.1'
         $LASTEXITCODE | Should -be 0

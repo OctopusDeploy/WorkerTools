@@ -90,6 +90,9 @@ RUN wget --quiet -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | ap
     echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list && \
     apt-get update && apt-get install -y kubectl=${Kubectl_Version}
 
+# Get Kubelogin
+RUN az aks install-cli
+
 # Get Terraform
 # https://computingforgeeks.com/how-to-install-terraform-on-ubuntu-centos-7/
 RUN wget https://releases.hashicorp.com/terraform/${Terraform_Version}/terraform_${Terraform_Version}_linux_amd64.zip && \
