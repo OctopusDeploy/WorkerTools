@@ -18,7 +18,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has java installed' {
-        java --version | Should -beLike "*11.0.17*"
+        java --version | Should -beLike "*11.0.18*"
         $LASTEXITCODE | Should -be 0
     }
 
@@ -51,7 +51,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has kubelogin installed' {
-        kubelogin –version | Should -match '0.0.28'
+        kubelogin –version | Should -match 'v0.0.28'
         $LASTEXITCODE | Should -be 0
     }
 
