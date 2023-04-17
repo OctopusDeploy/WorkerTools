@@ -92,7 +92,7 @@ RUN wget --quiet -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | ap
     apt-get update && apt-get install -y kubectl=${Kubectl_Version}
 
 # Get Kubelogin
-RUN wget --quiet -O - https://github.com/Azure/kubelogin/releases/download/${Kubelogin_Version}/kubelogin-linux-amd64.zip && \
+RUN wget --quiet https://github.com/Azure/kubelogin/releases/download/${Kubelogin_Version}/kubelogin-linux-amd64.zip && \
     unzip kubelogin-linux-amd64.zip && \
     mv bin/linux_amd64 /usr/local/bin
 
