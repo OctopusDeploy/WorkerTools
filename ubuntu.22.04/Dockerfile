@@ -104,8 +104,10 @@ RUN wget --quiet -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | ap
 
 # Get Kubelogin
 RUN wget --quiet https://github.com/Azure/kubelogin/releases/download/${Kubelogin_Version}/kubelogin-linux-amd64.zip && \
-    unzip kubelogin-linux-amd64.zip && \
-    mv bin/linux_amd64/kubelogin /usr/local/bin
+    unzip kubelogin-linux-amd64.zip -d kubelogin-linux-amd64 && \
+    mv kubelogin-linux-amd64/bin/linux_amd64/kubelogin /usr/local/bin && \
+    rm -rf kubelogin-linux-amd64 && \
+    rm kubelogin-linux-amd64.zip
 
 # Get Terraform
 # https://computingforgeeks.com/how-to-install-terraform-on-ubuntu-centos-7/
