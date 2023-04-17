@@ -65,7 +65,7 @@ RUN Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release
     mv .\kubectl.exe C:\Windows\system32\;
 
 # Get Kubelogin
-RUN choco install azure-kubelogin --version $Env:Kubelogin_Version --no-progress
+RUN choco install azure-kubelogin --version $Env:Kubelogin_Version --no-progress -y
 
 # # Install helm 3
 RUN choco install -y kubernetes-helm --version $Env:Helm_Version --no-progress
