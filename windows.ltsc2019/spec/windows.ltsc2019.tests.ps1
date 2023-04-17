@@ -61,7 +61,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has kubelogin installed' {
-        kubelogin –version | Should -match 'v0.0.25'
+        kubelogin –version | Select-Object -First 1 | Should -match 'v0.0.25'
         $LASTEXITCODE | Should -be 0
     }
 
