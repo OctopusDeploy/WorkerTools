@@ -35,6 +35,7 @@
 - Helm 3.7.1
 - Java Jdk 14.0.2
 - Kubectl 1.18.8
+- Kubelogin (azure-kubelogin) 0.0.25
 - Node 14.17.2
 - Octopus CLI 9.1.7
 - Octopus Client 11.6.3644

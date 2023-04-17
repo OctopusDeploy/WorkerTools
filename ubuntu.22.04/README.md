@@ -37,6 +37,7 @@
 - Helm v3.7.1
 - Java Jdk 11.0.17+8-1ubuntu2~22.04
 - Kubectl 1.18.8-00
+- Kubelogin v0.0.25
 - Octopus CLI 9.1.7
 - Octopus Client 11.6.3644
 - Powershell 7.2.7-1.deb
