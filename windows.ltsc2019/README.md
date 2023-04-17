@@ -26,9 +26,9 @@
 
 - Aws CLI 2.0.60
 - Aws Iam Authenticator 0.5.3
-- Aws Powershell 4.1.2
+- Aws Powershell 4.1.314
 - Azure CLI 2.44.0
-- Azure Powershell 4.5.0
+- Azure Powershell 5.1.2
 - Eks Ctl 0.25.0
 - Google Cloud CLI 412.0.0
 - Google Cloud GKE auth plugin 412.0.0-0

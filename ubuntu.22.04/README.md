@@ -26,9 +26,9 @@
 
 - Aws CLI 2.0.60
 - Aws Iam Authenticator 0.5.3
-- Aws Powershell 4.1.2
+- Aws Powershell 4.1.314
 - Azure CLI 2.44.1-1~bionic
-- Azure Powershell 4.5.0
+- Azure Powershell 5.1.2
 - Dotnet Sdk 3.1.401-1
 - Ecs CLI 1.20.0
 - Eks CTL 0.25.0

@@ -23,7 +23,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws powershell module installed' {
-        (Get-Module AWSPowerShell.NetCore -ListAvailable).Version.ToString() | should -be '4.1.2.0'
+        (Get-Module AWSPowerShell.NetCore -ListAvailable).Version.ToString() | should -be '4.1.314.0'
     }
 
     It 'has az installed' {
@@ -33,7 +33,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has az powershell module installed' {
-        (Get-Module Az -ListAvailable).Version.ToString() | should -be '4.5.0'
+        (Get-Module Az -ListAvailable).Version.ToString() | should -be '5.1.2'
     }
 
     It 'has aws cli installed' {

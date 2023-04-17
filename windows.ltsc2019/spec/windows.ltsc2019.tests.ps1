@@ -33,7 +33,7 @@ Describe  'installed dependencies' {
     }
     
     It 'has az powershell module installed' {
-        (Get-Module Az -ListAvailable).Version.ToString() | should -be '4.5.0'
+        (Get-Module Az -ListAvailable).Version.ToString() | should -be '5.1.2'
     }
 
     It 'has aws cli installed' {
@@ -42,7 +42,7 @@ Describe  'installed dependencies' {
 
     It 'has aws powershell installed' {
       Import-Module AWSPowerShell.NetCore
-      Get-AWSPowerShellVersion | Should -Match '4.1.2'
+      Get-AWSPowerShellVersion | Should -Match '4.1.314'
     }
     
     # There is no version command for aws-iam-authenticator, so we just check for the installed version.
