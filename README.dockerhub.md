@@ -1,3 +1,5 @@
+[//]: # (!!!!IF YOU MAKE CHANGES TO THIS FILE, REMEMBER TO UPDATE DOCKER HUB!!!!)
+
 # About This Image
 
 These images include common tools used for Octopus steps and are the recommended images to use when setting up [execution containers for workers](https://octopus.com/docs/deployment-process/execution-containers-for-workers).
