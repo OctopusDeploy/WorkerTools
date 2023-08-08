@@ -1,0 +1,118 @@
+08:52:18.979 | V |                      | ArgumentsFromParametersFile.OnBuildCreated (150)
+08:52:19.014 | V |                      | HandleReSharperSurrogateArguments.OnBuildCreated (150)
+08:52:19.015 | V |                      | InjectParameterValues.OnBuildCreated (100)
+08:52:19.024 | V |                      | HandleShellCompletion.OnBuildCreated (75)
+08:52:19.157 | V |                      | GenerateBuildServerConfigurations.OnBuildCreated (50)
+08:52:19.158 | V |                      | InvokeBuildServerConfigurationGeneration.OnBuildCreated (45)
+08:52:19.169 | V |                      | UpdateNotification.OnBuildCreated (10)
+08:52:19.169 | V |                      | UnsetVisualStudioEnvironmentVariables.OnBuildCreated (0)
+08:52:19.170 | V |                      | HandleVisualStudioDebugging.OnBuildCreated (0)
+08:52:19.171 | V |                      | EventInvoker.OnBuildCreated (-3.4028235E+38)
+08:52:19.191 | V |                      | HandlePlanRequests.OnBuildInitialized (10)
+08:52:19.191 | V |                      | HandleHelpRequests.OnBuildInitialized (5)
+08:52:19.191 | V |                      | Telemetry.OnBuildInitialized (0)
+08:52:19.687 | V |                      | Sending BuildStarted telemetry event ...
+08:52:19.690 | V |                      |   build_components         = 
+08:52:19.690 | V |                      |   build_type               = Project
+08:52:19.690 | V |                      |   compile_time             = 5
+08:52:19.690 | V |                      |   config_generators        = 
+08:52:19.690 | V |                      |   host                     = VSCode
+08:52:19.690 | V |                      |   num_custom_components    = 0
+08:52:19.690 | V |                      |   num_custom_extensions    = 0
+08:52:19.690 | V |                      |   num_partitioned_targets  = 0
+08:52:19.690 | V |                      |   num_secrets              = 0
+08:52:19.690 | V |                      |   num_targets              = 5
+08:52:19.690 | V |                      |   os_architecture          = X64
+08:52:19.690 | V |                      |   os_platform              = Windows
+08:52:19.690 | V |                      |   repo_branch              = <null>
+08:52:19.690 | V |                      |   repo_commit              = afb86c
+08:52:19.690 | V |                      |   repo_provider            = GitHub
+08:52:19.690 | V |                      |   repo_url                 = 73e2c1
+08:52:19.690 | V |                      |   target_framework         = .NETCoreApp,Version=v6.0
+08:52:19.690 | V |                      |   version_dotnet_sdk       = 7.0.203
+08:52:19.690 | V |                      |   version_nuke_common      = 7.0.2
+08:52:19.690 | V |                      |   version_nuke_global_tool = 6.0.3
+08:52:20.130 | V |                      | InjectNonParameterValues.OnBuildInitialized (-100)
+08:52:35.820 | W |                      | Could not inject value for Build.OctoVersionInfo
+System.Exception: Missing package reference/download.
+Run one of the following commands:
+  - nuke :add-package Octopus.OctoVersion.Tool --version 0.3.223
+ ---> System.ArgumentException: Could not find package 'Octopus.OctoVersion.Tool' using:
+ - Project assets file 'C:\Octopus\WorkerTools\build\obj\project.assets.json'
+ - NuGet packages config 'C:\Octopus\WorkerTools\build\_build.csproj'
+   at Nuke.Common.Assert.NotNull[T](T obj, String message, String argumentExpression) in /_/source/Nuke.Utilities/Assert.cs:line 73
+   at Nuke.Common.Tooling.NuGetToolPathResolver.GetPackageDirectory(String[] packageIds, String version) in /_/source/Nuke.Tooling/NuGetToolPathResolver.cs:line 85
+   --- End of inner exception stack trace ---
+   at Nuke.Common.Assert.Fail(String message, Exception exception) in /_/source/Nuke.Utilities/Assert.cs:line 28
+   at Nuke.Common.Tooling.NuGetToolPathResolver.GetPackageDirectory(String[] packageIds, String version) in /_/source/Nuke.Tooling/NuGetToolPathResolver.cs:line 145
+   at Nuke.Common.Tooling.NuGetToolPathResolver.GetPackageExecutable(String packageId, String packageExecutable, String version, String framework) in /_/source/Nuke.Tooling/NuGetToolPathResolver.cs:line 29
+   at Nuke.Common.Tools.OctoVersion.OctoVersionTasks.GetToolPath(String framework) in /_/source/Nuke.Common/Tools/OctoVersion/OctoVersionTasks.cs:line 33
+   at Nuke.Common.Tools.OctoVersion.OctoVersionGetVersionSettings.GetProcessToolPath() in /_/source/Nuke.Common/Tools/OctoVersion/OctoVersionTasks.cs:line 17
+   at Nuke.Common.Tools.OctoVersion.OctoVersionGetVersionSettings.get_ProcessToolPath() in /_/source/Nuke.Common/Tools/OctoVersion/OctoVersion.Generated.cs:line 216
+   at Nuke.Common.Tooling.ProcessTasks.StartProcess(ToolSettings toolSettings) in /_/source/Nuke.Tooling/ProcessTasks.cs:line 55
+   at Nuke.Common.Tools.OctoVersion.OctoVersionTasks.OctoVersionGetVersion(OctoVersionGetVersionSettings toolSettings) in /_/source/Nuke.Common/Tools/OctoVersion/OctoVersion.Generated.cs:line 71
+   at Nuke.Common.Tools.OctoVersion.OctoVersionTasks.OctoVersionGetVersion(Configure`1 configurator) in /_/source/Nuke.Common/Tools/OctoVersion/OctoVersion.Generated.cs:line 98
+   at Nuke.Common.Tools.OctoVersion.OctoVersionAttribute.GetValue(MemberInfo member, Object instance) in /_/source/Nuke.Common/Tools/OctoVersion/OctoVersionAttribute.cs:line 141
+   at Nuke.Common.ValueInjection.ValueInjectionAttributeBase.TryGetValue(MemberInfo member, Object instance) in /_/source/Nuke.Build/Execution/Extensibility/ValueInjectionAttributeBase.cs:line 26
+08:52:35.860 | V |                      | EventInvoker.OnBuildInitialized (-3.4028235E+38)
+08:52:35.875 | V | BuildAlpine318       | EventInvoker.OnTargetRunning (-3.4028235E+38)
+08:52:35.954 | I | BuildAlpine318       | > "C:\Program Files\Docker\Docker\resources\bin\docker.exe" build --tag octopusdeploy/worker-tools:alpine.3.18 alpine.3.18
+08:52:36.850 | E | BuildAlpine318       | #1 [internal] load build definition from Dockerfile
+08:52:36.851 | E | BuildAlpine318       | #1 sha256:c25bf3ac02772349f0d0c9d977349ed786ffbaa87a28788ec3ad272760719f81
+08:52:36.852 | E | BuildAlpine318       | #1 transferring dockerfile: 84B 0.0s done
+08:52:36.852 | E | BuildAlpine318       | #1 DONE 0.1s
+08:52:36.853 | E | BuildAlpine318       | 
+08:52:36.853 | E | BuildAlpine318       | #2 [internal] load .dockerignore
+08:52:36.853 | E | BuildAlpine318       | #2 sha256:96c5015aa53e1ed10b557b7a46d46a5616c82b71cce36a2c6baa73c7641f80ba
+08:52:36.854 | E | BuildAlpine318       | #2 transferring context: 2B done
+08:52:36.855 | E | BuildAlpine318       | #2 DONE 0.0s
+08:52:36.855 | E | BuildAlpine318       | 
+08:52:36.855 | E | BuildAlpine318       | #3 [internal] load metadata for docker.io/library/alpine:3.18
+08:52:36.856 | E | BuildAlpine318       | #3 sha256:4539bb2c6d923f2e44aa1a9dfbf4338a90cbfa6d32f4aab087d3779e8980fb11
+08:52:38.731 | E | BuildAlpine318       | #3 ...
+08:52:38.732 | E | BuildAlpine318       | 
+08:52:38.732 | E | BuildAlpine318       | #4 [auth] library/alpine:pull token for registry-1.docker.io
+08:52:38.733 | E | BuildAlpine318       | #4 sha256:93e0b6142b24816102648ba3d3a553fca41b349547ebd72aac5b0005d2299df0
+08:52:38.733 | E | BuildAlpine318       | #4 DONE 0.0s
+08:52:38.890 | E | BuildAlpine318       | 
+08:52:38.891 | E | BuildAlpine318       | #3 [internal] load metadata for docker.io/library/alpine:3.18
+08:52:38.891 | E | BuildAlpine318       | #3 sha256:4539bb2c6d923f2e44aa1a9dfbf4338a90cbfa6d32f4aab087d3779e8980fb11
+08:52:40.557 | E | BuildAlpine318       | #3 DONE 3.7s
+08:52:40.679 | E | BuildAlpine318       | 
+08:52:40.679 | E | BuildAlpine318       | #6 [1/2] FROM docker.io/library/alpine:3.18@sha256:82d1e9d7ed48a7523bdebc18cf6290bdb97b82302a8a9c27d4fe885949ea94d1
+08:52:40.680 | E | BuildAlpine318       | #6 sha256:d2d25f4b36cd2d70942bcfb1b33b38bc5fa2e4a61a4c83e1f421ace9719cff60
+08:52:40.680 | E | BuildAlpine318       | #6 resolve docker.io/library/alpine:3.18@sha256:82d1e9d7ed48a7523bdebc18cf6290bdb97b82302a8a9c27d4fe885949ea94d1 done
+08:52:40.681 | E | BuildAlpine318       | #6 sha256:c1aabb73d2339c5ebaa3681de2e9d9c18d57485045a4e311d9f8004bec208d67 1.47kB / 1.47kB done
+08:52:40.681 | E | BuildAlpine318       | #6 sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3 0B / 3.40MB 0.1s
+08:52:40.682 | E | BuildAlpine318       | #6 sha256:82d1e9d7ed48a7523bdebc18cf6290bdb97b82302a8a9c27d4fe885949ea94d1 1.64kB / 1.64kB done
+08:52:40.682 | E | BuildAlpine318       | #6 sha256:25fad2a32ad1f6f510e528448ae1ec69a28ef81916a004d3629874104f8a7f70 528B / 528B done
+08:52:41.079 | E | BuildAlpine318       | #6 sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3 1.05MB / 3.40MB 0.5s
+08:52:41.235 | E | BuildAlpine318       | #6 sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3 3.40MB / 3.40MB 0.5s done
+08:52:41.236 | E | BuildAlpine318       | #6 extracting sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3
+08:52:41.794 | E | BuildAlpine318       | #6 extracting sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3 0.5s done
+08:52:41.795 | E | BuildAlpine318       | #6 DONE 1.2s
+08:52:41.951 | E | BuildAlpine318       | 
+08:52:41.952 | E | BuildAlpine318       | #5 [2/2] RUN apk add --no-cache curl
+08:52:41.952 | E | BuildAlpine318       | #5 sha256:7944468a885d16a80bdb3ae7baf92b6dca14e50a469af974ab004a144489edf7
+08:52:42.264 | E | BuildAlpine318       | #5 0.347 fetch https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/APKINDEX.tar.gz
+08:52:42.868 | E | BuildAlpine318       | #5 1.074 fetch https://dl-cdn.alpinelinux.org/alpine/v3.18/community/x86_64/APKINDEX.tar.gz
+08:52:43.471 | E | BuildAlpine318       | #5 1.592 (1/7) Installing ca-certificates (20230506-r0)
+08:52:43.471 | E | BuildAlpine318       | #5 1.634 (2/7) Installing brotli-libs (1.0.9-r14)
+08:52:43.472 | E | BuildAlpine318       | #5 1.677 (3/7) Installing libunistring (1.1-r1)
+08:52:43.585 | E | BuildAlpine318       | #5 1.743 (4/7) Installing libidn2 (2.3.4-r1)
+08:52:43.585 | E | BuildAlpine318       | #5 1.767 (5/7) Installing nghttp2-libs (1.55.1-r0)
+08:52:43.586 | E | BuildAlpine318       | #5 1.791 (6/7) Installing libcurl (8.2.1-r0)
+08:52:43.717 | E | BuildAlpine318       | #5 1.823 (7/7) Installing curl (8.2.1-r0)
+08:52:43.718 | E | BuildAlpine318       | #5 1.850 Executing busybox-1.36.1-r0.trigger
+08:52:43.719 | E | BuildAlpine318       | #5 1.857 Executing ca-certificates-20230506-r0.trigger
+08:52:43.719 | E | BuildAlpine318       | #5 1.924 OK: 12 MiB in 22 packages
+08:52:43.862 | E | BuildAlpine318       | #5 DONE 2.0s
+08:52:43.862 | E | BuildAlpine318       | 
+08:52:43.863 | E | BuildAlpine318       | #7 exporting to image
+08:52:43.863 | E | BuildAlpine318       | #7 sha256:e8c613e07b0b7ff33893b694f7759a10d42e180f2b4dc349fb57dc6b71dcab00
+08:52:43.864 | E | BuildAlpine318       | #7 exporting layers 0.0s done
+08:52:43.870 | E | BuildAlpine318       | #7 writing image sha256:d90df3ecced7a7823b5a59d8615d9e61dd0daa273bbec95a29b19544ab1ae7f1 done
+08:52:43.871 | E | BuildAlpine318       | #7 naming to docker.io/octopusdeploy/worker-tools:alpine.3.18 done
+08:52:43.872 | E | BuildAlpine318       | #7 DONE 0.1s
+08:52:43.911 | V | BuildAlpine318       | Telemetry.OnTargetSucceeded (0)
+08:52:43.911 | V | BuildAlpine318       | EventInvoker.OnTargetSucceeded (-3.4028235E+38)
