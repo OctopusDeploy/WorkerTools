@@ -66,7 +66,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has python3 installed' {
-        python3 --version | Should -beLike '3\.10\.\d+'
+        python3 --version | Should -beLike '3.10.*'
         $LASTEXITCODE | Should -be 0
     }
 
