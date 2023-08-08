@@ -7,6 +7,12 @@
       "commands": [
         "nuke"
       ]
+    },
+    "octopus.octoversion.tool": {
+      "version": "0.3.223",
+      "commands": [
+        "octoversion"
+      ]
     }
   }
 }
