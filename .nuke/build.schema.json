@@ -80,11 +80,9 @@
           "items": {
             "type": "string",
             "enum": [
-              "BuildAlpine318",
-              "BuildUbuntu2204",
-              "Clean",
-              "Compile",
-              "Restore"
+              "BuildImage",
+              "PushImage",
+              "TestImage"
             ]
           }
         },
@@ -94,13 +92,15 @@
           "items": {
             "type": "string",
             "enum": [
-              "BuildAlpine318",
-              "BuildUbuntu2204",
-              "Clean",
-              "Compile",
-              "Restore"
+              "BuildImage",
+              "PushImage",
+              "TestImage"
             ]
           }
+        },
+        "UseLinux": {
+          "type": "boolean",
+          "description": "Whether to force use the Linux build"
         },
         "Verbosity": {
           "type": "string",
