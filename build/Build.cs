@@ -78,7 +78,8 @@ class Build : NukeBuild
         {
             DockerTasks.DockerBuild(x => x
                 .SetPath(OsName)
-                .SetTag(ImageName));
+                .SetTag(ImageName)
+                .EnableQuiet());
         });
     
     Target TestImage => _ => _
