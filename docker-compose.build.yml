@@ -9,7 +9,7 @@ services:
         working_dir: /app
         entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
 
-    windows.2019:
+    windows.ltsc2019:
         build: windows.ltsc2019
         image: docker.packages.octopushq.com/octopusdeploy/worker-tools:${BUILD_NUMBER?err}-windows.ltsc2019
         volumes:
