@@ -22,6 +22,8 @@ ARG Python_Version=3.8.5
 ARG ScriptCs_Version=0.17.1
 ARG Terraform_Version=1.1.3
 ARG 7Zip_Version=19.0
+ARG Git_Version=2.41.0
+ARG Argo_Cli_Version=2.8.0
 
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
@@ -104,6 +106,12 @@ RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress
 
 # # Install Powershell Core
 RUN choco install powershell-core --yes --version $Env:Powershell_Version --no-progress
+
+# Install Git
+RUN choco install git.install --yes --version $Env:Git_Version --no-progress
+
+# Install Argo CD
+RUN choco install argocd-cli --yes --version $Env:Argo_Cli_Version --no-progress
 
 # # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd

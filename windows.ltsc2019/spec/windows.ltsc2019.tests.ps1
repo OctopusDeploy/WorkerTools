@@ -111,4 +111,16 @@ Describe  'installed dependencies' {
         $LASTEXITCODE | Should -be 0
         $output | Should -Match '^PowerShell 7\.2\.7*'
     }
+
+    It 'should have installed git' {
+        $output = & git --version
+        $LASTEXITCODE | Should -be 0
+        $output | Should -Match '2.41.0'
+    }
+
+    It 'should have installed argo cli' {
+        $output = & argocd --version
+        $LASTEXITCODE | Should -be 0
+        $output | Should -Match '2.8.0'
+    }
 }
