@@ -119,7 +119,7 @@ Describe  'installed dependencies' {
     }
 
     It 'should have installed argo cli' {
-        $output = & argocd version --client
+        $output = (& argocd version --client) -join "`n"
         $LASTEXITCODE | Should -be 0
         $output | Should -Match '2.8.0'
     }
