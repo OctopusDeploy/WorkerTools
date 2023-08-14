@@ -185,6 +185,6 @@ RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/lib
     apt-get update && apt-get install -y skopeo
 
 # ArgoCD
-RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/v${Argocd_Version}/download/argocd-linux-amd64 \
-  install -m 555 argocd-linux-amd64 /usr/local/bin/argocd \
+RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/v${Argocd_Version}/download/argocd-linux-amd64 && \
+  install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && \
   rm argocd-linux-amd64
