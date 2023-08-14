@@ -131,4 +131,10 @@ Describe  'installed dependencies' {
         $LASTEXITCODE | Should -be 0
         $output | Should -match '^PowerShell 7\.0\.6*'
     }
+
+    It 'should have installed argo cli' {
+        $output = (& argocd version --client) -join "`n"
+        $LASTEXITCODE | Should -be 0
+        $output | Should -Match '2.8.0'
+    }
 }
