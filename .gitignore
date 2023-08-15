@@ -3,5 +3,6 @@
 /tools/GitVersion.CommandLine
 /tools/*
 !/tools/packages.config
+/build/**
 /**/PesterTestResults.xml
 .idea
