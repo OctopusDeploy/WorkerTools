@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 ARG Aws_Cli_Version=2.0.60
 ARG Aws_Iam_Authenticator_Version=0.5.3
 ARG Aws_Powershell_Version=4.1.2
-ARG Azure_Cli_Version=2.44.1-1~bionic
+ARG Azure_Cli_Version=2.51.0
 ARG Azure_Powershell_Version=4.5.0
 ARG Dotnet_Sdk_Version=6.0
 ARG Ecs_Cli_Version=1.20.0
@@ -20,7 +20,6 @@ ARG Powershell_Version=7.2.7-1.deb
 ARG Terraform_Version=1.1.3
 ARG Umoci_Version=0.4.6
 ARG Python2_Version=2.7.18-3
-ARG Argocd_Version=2.8.0
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
@@ -80,17 +79,15 @@ RUN apt-get install -y openjdk-11-jdk-headless=${Java_Jdk_Version}
 RUN apt-get update && \
     apt-get install -y maven gradle
 
-# Get Libssl 1.1, required for Azure CLI as of Ubuntu 22.04. This can be removed when a proper Azure CLI ubuntu 22.04 version is avaliable
-RUN wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb && \
-    dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb && \
-    rm -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
-
 # Get Azure CLI
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
-RUN wget --quiet -O - https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null && \
-    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main" | tee /etc/apt/sources.list.d/azure-cli.list && \
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/keyrings/microsoft.gpg > /dev/null && \
+    chmod go+r /etc/apt/keyrings/microsoft.gpg && \
+    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ jammy main" | tee /etc/apt/sources.list.d/azure-cli.list && \
     apt-get update && \
-    apt-get install -y azure-cli=${Azure_Cli_Version}
+    apt-get install azure-cli && \
+    apt-get autoremove
 
 # Get NodeJS
 # https://websiteforstudents.com/how-to-install-node-js-10-11-12-on-ubuntu-16-04-18-04-via-apt-and-snap/\
@@ -183,7 +180,3 @@ RUN add-apt-repository -y ppa:rmescandon/yq && \
 RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" && \
     wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_22.04/Release.key -O- | apt-key add - && \
     apt-get update && apt-get install -y skopeo
-
-RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${Argocd_Version}/argocd-linux-amd64 && \
-  install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && \
-  rm argocd-linux-amd64
