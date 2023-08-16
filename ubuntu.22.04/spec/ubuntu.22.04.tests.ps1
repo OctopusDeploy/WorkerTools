@@ -28,7 +28,7 @@ Describe  'installed dependencies' {
 
     It 'has az installed' {
       $output = (& az version) | convertfrom-json
-      $output.'azure-cli' | Should -be '2.44.1'
+      $output.'azure-cli' | Should -be '2.51.0'
       $LASTEXITCODE | Should -be 0
     }
 

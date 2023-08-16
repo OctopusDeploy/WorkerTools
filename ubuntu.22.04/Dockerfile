@@ -20,6 +20,7 @@ ARG Powershell_Version=7.2.7-1.deb
 ARG Terraform_Version=1.1.3
 ARG Umoci_Version=0.4.6
 ARG Python2_Version=2.7.18-3
+ARG Argocd_Version=2.8.0
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
