@@ -180,3 +180,7 @@ RUN add-apt-repository -y ppa:rmescandon/yq && \
 RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" && \
     wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_22.04/Release.key -O- | apt-key add - && \
     apt-get update && apt-get install -y skopeo
+
+RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${Argocd_Version}/argocd-linux-amd64 && \
+  install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && \
+  rm argocd-linux-amd64
