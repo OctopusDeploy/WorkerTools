@@ -6,7 +6,7 @@ SHELL ["powershell", "-Command"]
 ARG Aws_Cli_Version=2.0.60
 ARG Aws_Iam_Authenticator_Version=0.5.3
 ARG Aws_Powershell_Version=4.1.2
-ARG Azure_Cli_Version=2.44.0
+ARG Azure_Cli_Version=2.51.0
 ARG Azure_Powershell_Version=4.5.0
 ARG Eks_Cli_Version=0.25.0
 ARG Google_Cloud_Cli_Version=412.0.0
