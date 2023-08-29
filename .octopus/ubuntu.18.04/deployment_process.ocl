@@ -9,7 +9,7 @@ step "Push Docker image" {
             DockerPush.Target.Docker.Repository = "#{Docker.Registry.Target.Repository}"
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Template.Id = "ActionTemplates-2141"
-            Octopus.Action.Template.Version = "7"
+            Octopus.Action.Template.Version = "9"
         }
         worker_pool = "Hosted Ubuntu"
 
