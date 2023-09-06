@@ -159,7 +159,7 @@ Task("Test")
             };
         } else {
             processSettings = new ProcessSettings{
-                Arguments = $"run -v {currentDirectory}:c:\\app {testContainerName} pwsh -file /app/{dockerTag.imageDirectory}/scripts/run-tests.ps1"
+                Arguments = $"run -v {currentDirectory}:c:\\app {testContainerName} & /app/{dockerTag.imageDirectory}/scripts/run-tests.ps1"
             };
         }
 
