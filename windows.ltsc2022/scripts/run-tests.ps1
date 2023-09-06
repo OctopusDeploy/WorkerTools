@@ -5,7 +5,7 @@ try {
 
     Import-Module -Name "Pester"
 
-    Set-Location /app/windows.ltsc2019/spec
+    Set-Location /app/windows.ltsc2022/spec
 
     Write-Output "Running Pester Tests"
     $configuration = [PesterConfiguration]::Default
