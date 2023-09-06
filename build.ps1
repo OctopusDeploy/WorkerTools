@@ -46,7 +46,7 @@ http://cakebuild.net
 Param(
     [string]$Script = "build.cake",
     [string]$Target = "Default",
-    [string]$ImageDirectory = "windows.ltsc2019",
+    [string]$ImageDirectory = "windows.ltsc2022",
     [string]$DockerNamespace = "docker.packages.octopushq.com/octopusdeploy/worker-tools",
     [ValidateSet("Release", "Debug")]
     [string]$Configuration = "Release",
