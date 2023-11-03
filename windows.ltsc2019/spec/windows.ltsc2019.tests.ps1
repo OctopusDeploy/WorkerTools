@@ -90,7 +90,7 @@ Describe  'installed dependencies' {
         $LASTEXITCODE | Should -be 0
     }
 
-    It 'has octopus cli eap installed' {
+    It 'has octopus cli installed' {
         octopus version | Should -Match '1.7.1'
         $LASTEXITCODE | Should -be 0
     }        
