@@ -14,6 +14,7 @@ ARG Helm_Version=v3.7.1
 ARG Java_Jdk_Version=11.0.20.1+1-0ubuntu1~22.04
 ARG Kubectl_Version=1.18.8-00
 ARG Kubelogin_Version=v0.0.25
+ARG Octopus_Cli_Eap_Version=1.7.1
 ARG Octopus_Cli_Version=9.1.7
 ARG Octopus_Client_Version=11.6.3644
 ARG Powershell_Version=7.2.7-1.deb
@@ -33,6 +34,14 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsof
     apt-get update && \
     add-apt-repository universe && \
     apt-get install -y powershell=${Powershell_Version}
+
+# Get Octopus CLI EAP
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gnupg curl ca-certificates apt-transport-https && \
+    curl -sSfL https://apt.octopus.com/public.key | apt-key add - && \
+    sh -c "echo deb https://apt.octopus.com/ stable main > /etc/apt/sources.list.d/octopus.com.list" && \
+    apt-get update && \
+    apt-get install -y octopus-cli=${Octopus_Cli_Eap_Version}
 
 # Get Octo CLI
 # https://octopus.com/downloads/octopuscli#linux
