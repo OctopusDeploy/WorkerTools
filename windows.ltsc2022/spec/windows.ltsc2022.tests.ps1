@@ -37,7 +37,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws cli installed' {
-      aws --version 2>&1 | Should -Match '2.13.17'
+      aws --version 2>&1 | Should -Match '2.13.31'
     }
 
     It 'has aws powershell installed' {

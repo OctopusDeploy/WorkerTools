@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-ARG Aws_Cli_Version=2.0.60
+ARG Aws_Cli_Version=2.13.31
 ARG Aws_Iam_Authenticator_Version=0.5.3
 ARG Aws_Powershell_Version=4.1.2
 ARG Azure_Cli_Version=2.51.0-1~jammy

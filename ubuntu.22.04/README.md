@@ -24,7 +24,7 @@
 
 ## Installed Software
 
-- Aws CLI 2.0.60
+- Aws CLI 2.13.31
 - Aws Iam Authenticator 0.5.3
 - Aws Powershell 4.1.2
 - Azure CLI 2.51.0-1~jammy
