@@ -17,6 +17,7 @@ ARG Octopus_Client_Version=8.8.3
 ARG Powershell_Version=7.0.10\*
 ARG Terraform_Version=1.1.3
 ARG Umoci_Version=0.4.6
+ARG Argocd_Version=2.8.0
 
 # get `wget` & software-properties-common
 # https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
@@ -160,3 +161,8 @@ RUN add-apt-repository -y ppa:rmescandon/yq && \
 RUN sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list" && \
     wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O- | apt-key add - && \
     apt-get update && apt-get install -y skopeo
+
+# ArgoCD
+RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${Argocd_Version}/argocd-linux-amd64 && \
+  install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && \
+  rm argocd-linux-amd64

@@ -28,7 +28,7 @@ Describe  'installed dependencies' {
 
     It 'has az installed' {
       $output = (& az version) | convertfrom-json
-      $output.'azure-cli' | Should -Be '2.44.0'
+      $output.'azure-cli' | Should -Be '2.51.0'
       $LASTEXITCODE | Should -be 0
     }
     
@@ -110,5 +110,17 @@ Describe  'installed dependencies' {
         $output = & pwsh --version
         $LASTEXITCODE | Should -be 0
         $output | Should -Match '^PowerShell 7\.2\.7*'
+    }
+
+    It 'should have installed git' {
+        $output = & git --version
+        $LASTEXITCODE | Should -be 0
+        $output | Should -Match '2.41.0'
+    }
+
+    It 'should have installed argo cli' {
+        $output = (& argocd version --client) -join "`n"
+        $LASTEXITCODE | Should -be 0
+        $output | Should -Match '2.8.0'
     }
 }

@@ -1,12 +1,12 @@
 # escape=`
 
-FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-ltsc2019
+FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-20230214-windowsservercore-ltsc2019
 SHELL ["powershell", "-Command"]
 
 ARG Aws_Cli_Version=2.0.60
 ARG Aws_Iam_Authenticator_Version=0.5.3
 ARG Aws_Powershell_Version=4.1.2
-ARG Azure_Cli_Version=2.44.0
+ARG Azure_Cli_Version=2.51.0
 ARG Azure_Powershell_Version=4.5.0
 ARG Eks_Cli_Version=0.25.0
 ARG Google_Cloud_Cli_Version=412.0.0
@@ -22,6 +22,8 @@ ARG Python_Version=3.8.5
 ARG ScriptCs_Version=0.17.1
 ARG Terraform_Version=1.1.3
 ARG 7Zip_Version=19.0
+ARG Git_Version=2.41.0
+ARG Argo_Cli_Version=2.8.0
 
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
@@ -104,6 +106,12 @@ RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress
 
 # # Install Powershell Core
 RUN choco install powershell-core --yes --version $Env:Powershell_Version --no-progress
+
+# Install Git
+RUN choco install git.install --yes --version $Env:Git_Version --no-progress
+
+# Install Argo CD
+RUN choco install argocd-cli --yes --version $Env:Argo_Cli_Version --no-progress
 
 # # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
