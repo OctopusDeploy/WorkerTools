@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-ARG Aws_Cli_Version=2.0.60
+ARG Aws_Cli_Version=2.13.31
 ARG Aws_Iam_Authenticator_Version=0.5.3
 ARG Aws_Powershell_Version=4.1.2
 ARG Azure_Cli_Version=2.51.0-1~jammy
@@ -11,10 +11,11 @@ ARG Eks_Cli_Version=0.25.0
 ARG Google_Cloud_Cli_Version=412.0.0-0
 ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=412.0.0-0
 ARG Helm_Version=v3.7.1
-ARG Java_Jdk_Version=11.0.20+8-1ubuntu1~22.04
+ARG Java_Jdk_Version=11.0.20.1+1-0ubuntu1~22.04
 ARG Kubectl_Version=1.18.8-00
 ARG Kubelogin_Version=v0.0.25
-ARG Octopus_Cli_Version=9.1.7
+ARG Octopus_Cli_Version=1.7.1
+ARG Octopus_Cli_Legacy_Version=9.1.7
 ARG Octopus_Client_Version=11.6.3644
 ARG Powershell_Version=7.2.7-1.deb
 ARG Terraform_Version=1.1.3
@@ -34,6 +35,14 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsof
     add-apt-repository universe && \
     apt-get install -y powershell=${Powershell_Version}
 
+# Get Octopus CLI
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gnupg curl ca-certificates apt-transport-https && \
+    curl -sSfL https://apt.octopus.com/public.key | apt-key add - && \
+    sh -c "echo deb https://apt.octopus.com/ stable main > /etc/apt/sources.list.d/octopus.com.list" && \
+    apt-get update && \
+    apt-get install -y octopus-cli=${Octopus_Cli_Version}
+
 # Get Octo CLI
 # https://octopus.com/downloads/octopuscli#linux
 RUN apt-get update && \
@@ -41,7 +50,7 @@ RUN apt-get update && \
     curl -sSfL https://apt.octopus.com/public.key | apt-key add - && \
     sh -c "echo deb https://apt.octopus.com/ stable main > /etc/apt/sources.list.d/octopus.com.list" && \
     apt-get update && \
-    apt-get install -y octopuscli=${Octopus_Cli_Version}
+    apt-get install -y octopuscli=${Octopus_Cli_Legacy_Version}
 
 # Install Octopus Client
 # https://octopus.com/docs/octopus-rest-api/octopus.client

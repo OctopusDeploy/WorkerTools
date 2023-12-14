@@ -37,7 +37,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws cli installed' {
-      aws --version 2>&1 | Should -match '2.0.60'
+      aws --version 2>&1 | Should -match '2.13.31'
     }
 
     It 'has node installed' {
@@ -85,6 +85,11 @@ Describe  'installed dependencies' {
         gke-gcloud-auth-plugin --version | Select -First 1 | Should -be 'Kubernetes v1.25.2-alpha+ae91c1fc0c443c464a4c878ffa2a4544483c6d1f'
         $LASTEXITCODE | Should -be 0
     }
+
+    It 'has octopus cli installed' {
+        octopus version | Should -match '1.7.1'
+        $LASTEXITCODE | Should -be 0
+    }     
 
     It 'has octo installed' {
         octo --version | Should -match '9.1.7'

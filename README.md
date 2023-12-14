@@ -5,7 +5,7 @@ Officially sanctioned worker images for Octopus Deploy available on [docker hub]
 | Operating System         | Installed Tools and Versions                                                                                                                         |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Ubuntu 22.04              | [Installed tools](./ubuntu.22.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.22.04/Dockerfile))         |
-| Windows Server Core 2019 | [Installed tools](./windows.ltsc2019/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2019/Dockerfile)) |
+| Windows Server Core 2022 | [Installed tools](./windows.ltsc2022/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/Dockerfile)) |
 
 ## Management
 
@@ -61,10 +61,10 @@ Then within the running docker container
 #### Option 1: Build and Test scripts
 
 ```powershell
-build.ps1 -image-directory 'windows.ltsc2019'
+build.ps1 -image-directory 'windows.ltsc2022'
 ```
 
-Runs a build and test of the `windows.ltsc2019` container
+Runs a build and test of the `windows.ltsc2022` container
 
 #### Option 2: DIY
 

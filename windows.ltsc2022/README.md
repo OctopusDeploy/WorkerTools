@@ -9,10 +9,10 @@
 
 ## Tags
 
-- `5.0.0-windows.ltsc2019`
-- `5.0-windows.ltsc2019`
-- `5-windows.ltsc2019`
-- `windows.ltsc2019`
+- `6.0.0-windows.ltsc2022`
+- `6.0-windows.ltsc2022`
+- `6-windows.ltsc2022`
+- `windows.ltsc2022`
 
 ## Digest
 
@@ -20,7 +20,7 @@
 
 ## Base Image
 
-`mcr.microsoft.com/windows/servercore:ltsc2019-amd64`
+`mcr.microsoft.com/windows/servercore:ltsc2022-amd64`
 
 ## Installed Software
 

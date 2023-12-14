@@ -13,23 +13,23 @@ Pick an image that is suitable for your needs based on OS + distribution.
 | Operating System         | Installed Tools and Versions                                                                                                                         |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Ubuntu 22.04             | [Installed tools](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.22.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.22.04/Dockerfile))         |
-| Windows Server Core 2019 | [Installed tools](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2019/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2019/Dockerfile)) |
+| Windows Server Core 2022 | [Installed tools](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/Dockerfile)) |
 
 The images we publish have multiple release tracks, and are [semantically versioned](https://semver.org/). To ensure stability within your deployment processes, we recommend using the full `major.minor.patch` tag when using the `octopusdeploy/worker-tools` image - for example, use `2.0.2-ubuntu.22.04`, not `ubuntu.22.04`, unless you have a particular use-case that is more tolerant of changes.
 
 Release Track  | Ubuntu             | Windows 
 ---------|--------------------| ---
-latest | ubuntu.22.04       | windows.ltsc2019
-Major | 1-ubuntu.22.04     | 1-windows.ltsc2019
-Major.Minor | 1.0-ubuntu.22.04   | 1.0-windows.ltsc2019
-Major.Minor.Patch | 1.0.1-ubuntu.22.04 | 1.0.2-windows.ltsc2019
+latest | ubuntu.22.04       | windows.ltsc2022
+Major | 1-ubuntu.22.04     | 1-windows.ltsc2022
+Major.Minor | 1.0-ubuntu.22.04   | 1.0-windows.ltsc2022
+Major.Minor.Patch | 1.0.1-ubuntu.22.04 | 1.0.2-windows.ltsc2022
 
 # Full Tag Listing
 
-## Windows Server 2019 amd64 Tags
+## Windows Server 2022 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-windows.ltsc2019 | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2019/Dockerfile)
+windows.ltsc2022 | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/Dockerfile)
 
 ## Ubuntu Tags
 Tag | Dockerfile

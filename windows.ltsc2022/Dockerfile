@@ -1,27 +1,27 @@
 # escape=`
 
-FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-20230808-windowsservercore-ltsc2019
+FROM mcr.microsoft.com/dotnet/framework/runtime:4.8.1-20230808-windowsservercore-ltsc2022
 SHELL ["powershell", "-Command"]
 
 ARG Aws_Cli_Version=2.13.31
-ARG Aws_Iam_Authenticator_Version=0.5.3
-ARG Aws_Powershell_Version=4.1.2
-ARG Azure_Cli_Version=2.51.0
-ARG Azure_Powershell_Version=4.5.0
-ARG Eks_Cli_Version=0.25.0
-ARG Google_Cloud_Cli_Version=412.0.0
-ARG Helm_Version=3.7.1
+ARG Aws_Iam_Authenticator_Version=0.5.9
+ARG Aws_Powershell_Version=4.1.412
+ARG Azure_Cli_Version=2.52.0
+ARG Azure_Powershell_Version=10.3.0
+ARG Eks_Cli_Version=0.156.0
+ARG Google_Cloud_Cli_Version=445.0.0
+ARG Helm_Version=3.12.3
 ARG Java_Jdk_Version=14.0.2
-ARG Kubectl_Version=1.18.8
-ARG Kubelogin_Version=0.0.25
+ARG Kubectl_Version=1.28.1
+ARG Kubelogin_Version=0.0.30
 ARG Node_Version=14.17.2
 ARG Octopus_Cli_Legacy_Version=9.1.7
 ARG Octopus_Cli_Version=1.7.1
 ARG Octopus_Client_Version=11.6.3644
-ARG Powershell_Version=7.2.7
-ARG Python_Version=3.8.5
+ARG Powershell_Version=7.3.6
+ARG Python_Version=3.11.5
 ARG ScriptCs_Version=0.17.1
-ARG Terraform_Version=1.1.3
+ARG Terraform_Version=1.5.6
 ARG 7Zip_Version=19.0
 ARG Git_Version=2.41.0
 ARG Argo_Cli_Version=2.8.0
@@ -30,10 +30,10 @@ ARG Argo_Cli_Version=2.8.0
 RUN $ProgressPreference = 'SilentlyContinue'; `
     Set-ExecutionPolicy Bypass -Scope Process -Force; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
-    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 # Install dotnet 6.0+
-RUN Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
+RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
     [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', '1', 'Machine'); `
     .\dotnet-install.ps1 -Channel '6.0'; `
     rm dotnet-install.ps1

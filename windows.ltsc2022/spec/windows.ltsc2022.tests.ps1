@@ -28,12 +28,12 @@ Describe  'installed dependencies' {
 
     It 'has az installed' {
       $output = (& az version) | convertfrom-json
-      $output.'azure-cli' | Should -Be '2.51.0'
+      $output.'azure-cli' | Should -Be '2.52.0'
       $LASTEXITCODE | Should -be 0
     }
     
     It 'has az powershell module installed' {
-        (Get-Module Az -ListAvailable).Version.ToString() | should -be '4.5.0'
+        (Get-Module Az -ListAvailable).Version.ToString() | should -be '10.3.0'
     }
 
     It 'has aws cli installed' {
@@ -42,7 +42,7 @@ Describe  'installed dependencies' {
 
     It 'has aws powershell installed' {
       Import-Module AWSPowerShell.NetCore
-      Get-AWSPowerShellVersion | Should -Match '4.1.2'
+      Get-AWSPowerShellVersion | Should -Match '4.1.412'
     }
     
     # There is no version command for aws-iam-authenticator, so we just check for the installed version.
@@ -56,51 +56,52 @@ Describe  'installed dependencies' {
     }
 
     It 'has kubectl installed' {
-        kubectl version --client | Should -Match '1.18.8'
+        kubectl version --client | Select-String -Pattern "1.28.1" | Should -BeLike "Client Version: v1.28.1"
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has kubelogin installed' {
-        kubelogin --version | Select-Object -First  1 -Skip 1 | Should -match 'v0.0.25'
+        kubelogin --version | Select-Object -First  1 -Skip 1 | Should -match 'v0.0.30'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has helm installed' {
-        helm version | Should -Match '3.7.1'
+        helm version | Should -Match '3.12.3'
         $LASTEXITCODE | Should -be 0
     }
 
     # If the terraform version is not the latest, then `terraform version` returns multiple lines and a non-zero return code
     It 'has terraform installed' {
-        terraform version | Select-Object -First 1 | Should -Match '1.1.3'
+        terraform version | Select-Object -First 1 | Should -Match '1.5.6'
     }
 
     It 'has python installed' {
-        python --version | Should -Match '3.8.5'
+        python --version | Should -Match '3.11.5'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select-String -Pattern "412.0.0" | Should -BeLike "Google Cloud SDK 412.0.0"
+        gcloud --version | Select-String -Pattern "445.0.0" | Should -BeLike "Google Cloud SDK 445.0.0"
         $LASTEXITCODE | Should -be 0
     }
     
     It 'has gke-gcloud-auth-plugin installed' {
-        gcloud --version | Select-String -Pattern "0.4.0" | Should -BeLike "gke-gcloud-auth-plugin 0.4.0"
+        gcloud --version | Select-String -Pattern "0.5.5" | Should -BeLike "gke-gcloud-auth-plugin 0.5.5"
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has octopus cli installed' {
         octopus version | Should -Match '1.7.1'
         $LASTEXITCODE | Should -be 0
-    }        
+    }    
+
     It 'has octo installed' {
         octo --version | Should -Match '9.1.7'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has eksctl installed' {
-        eksctl version | Should -Match '0.25.0'
+        eksctl version | Should -Match '0.156.0'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -113,7 +114,7 @@ Describe  'installed dependencies' {
     It 'should have installed powershell core' {
         $output = & pwsh --version
         $LASTEXITCODE | Should -be 0
-        $output | Should -Match '^PowerShell 7\.2\.7*'
+        $output | Should -Match '^PowerShell 7\.3\.6*'
     }
 
     It 'should have installed git' {
