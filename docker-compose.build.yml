@@ -24,3 +24,11 @@ services:
           - "./windows.ltsc2019:c:\\app"
         working_dir: "c:\\app"
         entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
+
+    windows.ltsc2022:
+        build: windows.ltsc2022
+        image: docker.packages.octopushq.com/octopusdeploy/worker-tools:${BUILD_NUMBER?err}-windows.ltsc2022
+        volumes:
+          - "./windows.ltsc2022:c:\\app"
+        working_dir: "c:\\app"
+        entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
