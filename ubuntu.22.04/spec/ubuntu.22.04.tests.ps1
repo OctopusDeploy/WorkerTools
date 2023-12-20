@@ -23,7 +23,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws powershell module installed' {
-        (Get-Module AWSPowerShell.NetCore -ListAvailable).Version.ToString() | should -be '4.1.2.0'
+        (Get-Module AWSPowerShell.NetCore -ListAvailable).Version.ToString() | should -be '4.1.412.0'
     }
 
     It 'has az installed' {
@@ -46,12 +46,12 @@ Describe  'installed dependencies' {
     }
 
     It 'has kubectl installed' {
-        kubectl version --client | Should -match '1.18.8'
+        kubectl version --client | Should -match '1.28.1'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has kubelogin installed' {
-        kubelogin --version | Select-Object -First  1 -Skip 1 | Should -match 'v0.0.25'
+        kubelogin --version | Select-Object -First  1 -Skip 1 | Should -match 'v0.0.30'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -77,7 +77,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select -First 1 | Should -be 'Google Cloud SDK 412.0.0'
+        gcloud --version | Select -First 1 | Should -be 'Google Cloud SDK 445.0.0'
         $LASTEXITCODE | Should -be 0
     }
     
@@ -97,7 +97,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has eksctl installed' {
-        eksctl version | Should -match '0.25.0'
+        eksctl version | Should -match '0.156.0'
         $LASTEXITCODE | Should -be 0
     }
 

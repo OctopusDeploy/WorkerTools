@@ -25,19 +25,19 @@
 ## Installed Software
 
 - Aws CLI 2.13.31
-- Aws Iam Authenticator 0.5.3
-- Aws Powershell 4.1.2
+- Aws Iam Authenticator 0.5.9
+- Aws Powershell 4.1.412
 - Azure CLI 2.51.0-1~jammy
 - Azure Powershell 4.5.0
 - Dotnet Sdk 3.1.401-1
 - Ecs CLI 1.20.0
-- Eks CTL 0.25.0
-- Google Cloud CLI 412.0.0-0
+- Eks CTL 0.156.0
+- Google Cloud CLI 445.0.0-0
 - Google Cloud GKE auth plugin 412.0.0-0
 - Helm v3.7.1
 - Java Jdk 11.0.20.1+1-0ubuntu1~22.04
-- Kubectl 1.18.8-00
-- Kubelogin v0.0.25
+- Kubectl 1.28.1-00
+- Kubelogin v0.0.30
 - Octopus CLI 1.7.1
 - Octopus CLI Legacy 9.1.7
 - Octopus Client 11.6.3644
