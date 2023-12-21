@@ -5,12 +5,12 @@ try {
 
     Import-Module -Name "Pester"
 
-    Set-Location /app/windows.ltsc2019/spec
+    Set-Location /app/spec
 
     Write-Output "Running Pester Tests"
     $configuration = [PesterConfiguration]::Default
     $configuration.TestResult.Enabled = $true
-    $configuration.TestResult.OutputPath = '/app/windows.ltsc2019/spec/PesterTestResults.xml'
+    $configuration.TestResult.OutputPath = '/app/spec/PesterTestResults.xml'
     $configuration.TestResult.OutputFormat = 'NUnitXml'
     $configuration.Run.PassThru = $true
 
