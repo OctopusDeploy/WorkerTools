@@ -2,16 +2,16 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "octopus.octoversion.tool": {
-      "version": "0.3.223",
-      "commands": [
-        "octoversion"
-      ]
-    },
     "octonotes.tool": {
       "version": "0.1.171",
       "commands": [
         "octonotes"
+      ]
+    },
+    "gitversion.tool": {
+      "version": "5.12.0",
+      "commands": [
+        "dotnet-gitversion"
       ]
     }
   }
