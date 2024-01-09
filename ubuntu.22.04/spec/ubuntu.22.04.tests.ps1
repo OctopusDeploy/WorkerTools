@@ -23,7 +23,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws powershell module installed' {
-        (Get-Module AWSPowerShell.NetCore -ListAvailable).Version.ToString() | should -be '4.1.412.0'
+        (Get-Module AWSPowerShell.NetCore -ListAvailable).Version.ToString() | should -be '4.1.412'
     }
 
     It 'has az installed' {
