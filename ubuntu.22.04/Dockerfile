@@ -1,19 +1,19 @@
 FROM ubuntu:22.04
 
 ARG Aws_Cli_Version=2.13.31
-ARG Aws_Iam_Authenticator_Version=0.5.3
-ARG Aws_Powershell_Version=4.1.2
+ARG Aws_Iam_Authenticator_Version=0.5.9
+ARG Aws_Powershell_Version=4.1.412
 ARG Azure_Cli_Version=2.51.0-1~jammy
 ARG Azure_Powershell_Version=4.5.0
 ARG Dotnet_Sdk_Version=6.0
 ARG Ecs_Cli_Version=1.20.0
-ARG Eks_Cli_Version=0.25.0
-ARG Google_Cloud_Cli_Version=412.0.0-0
+ARG Eks_Cli_Version=v0.156.0
+ARG Google_Cloud_Cli_Version=445.0.0-0
 ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=412.0.0-0
 ARG Helm_Version=v3.7.1
 ARG Java_Jdk_Version=11.0.21+9-0ubuntu1~22.04
-ARG Kubectl_Version=1.18.8-00
-ARG Kubelogin_Version=v0.0.25
+ARG Kubectl_Version=1.28.1-00
+ARG Kubelogin_Version=v0.0.30
 ARG Octopus_Cli_Version=1.7.1
 ARG Octopus_Cli_Legacy_Version=9.1.7
 ARG Octopus_Client_Version=11.6.3644
