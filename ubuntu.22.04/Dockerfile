@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-ARG DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 ARG Aws_Cli_Version=2.13.31
 ARG Aws_Iam_Authenticator_Version=0.5.9
