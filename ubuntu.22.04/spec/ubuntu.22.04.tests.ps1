@@ -82,7 +82,7 @@ Describe  'installed dependencies' {
     }
     
     It 'has gke-gcloud-auth-plugin installed' {
-        gke-gcloud-auth-plugin --version | Select -First 1 | Should -be 'ubernetes v1.28.2-alpha+58ec6ae34b7dcd9699b37986ccb12b3bbac88f00'
+        gke-gcloud-auth-plugin --version | Select -First 1 | Should -be 'Kubernetes v1.28.2-alpha+58ec6ae34b7dcd9699b37986ccb12b3bbac88f00'
         $LASTEXITCODE | Should -be 0
     }
 
