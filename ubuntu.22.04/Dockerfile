@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
 
+ARG DEBIAN_FRONTEND noninteractive
+
 ARG Aws_Cli_Version=2.13.31
 ARG Aws_Iam_Authenticator_Version=0.5.9
 ARG Aws_Powershell_Version=4.1.412
@@ -12,7 +14,7 @@ ARG Google_Cloud_Cli_Version=445.0.0-0
 ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=412.0.0-0
 ARG Helm_Version=v3.7.1
 ARG Java_Jdk_Version=11.0.21+9-0ubuntu1~22.04
-ARG Kubectl_Version=1.28.1-00
+ARG Kubectl_Version=1.29
 ARG Kubelogin_Version=v0.0.30
 ARG Octopus_Cli_Version=1.7.1
 ARG Octopus_Cli_Legacy_Version=9.1.7
@@ -103,11 +105,11 @@ RUN mkdir -p /etc/apt/keyrings && \
 RUN wget --quiet -O - https://deb.nodesource.com/setup_14.x | bash && \
     apt-get install -y nodejs
 
-# Get Kubectl
-# https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management
-RUN wget --quiet -O - https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -  && \
-    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list && \
-    apt-get update && apt-get install -y kubectl=${Kubectl_Version}
+# Get kubectl
+# https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management
+RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/v${Kubectl_Version}/deb/Release.key" | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${Kubectl_Version}/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list && \
+    apt-get update && apt-get install -y kubectl
 
 # Get Kubelogin
 RUN wget --quiet https://github.com/Azure/kubelogin/releases/download/${Kubelogin_Version}/kubelogin-linux-amd64.zip && \
