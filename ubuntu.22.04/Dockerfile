@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG Argocd_Version=2.8.11
+ARG Argocd_Version=2.10.2
 ARG Aws_Cli_Version=2.15.26
 ARG Aws_Iam_Authenticator_Version=0.6.14
 ARG Aws_Powershell_Version=4.1.532
