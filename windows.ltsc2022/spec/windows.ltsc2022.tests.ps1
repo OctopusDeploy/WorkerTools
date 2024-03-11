@@ -11,38 +11,38 @@ Describe  'installed dependencies' {
     }
 
     It 'has Octopus.Client installed ' {
-        $expectedVersion = "11.6.3644"
+        $expectedVersion = "14.3.1248"
         Test-Path "C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net452\Octopus.Client.dll" | Should -Be $true
         [Reflection.AssemblyName]::GetAssemblyName("C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net452\Octopus.Client.dll").Version.ToString() | Should -Match "$expectedVersion.0"
     }
 
     It 'has dotnet installed' {
-        dotnet --version | Should -Match '6.0.\d+'
+        dotnet --version | Should -Match '8.0.\d+'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has java installed' {
-        java -version 2>&1 | Select-String -Pattern '14\.0\.2' | Should -BeLike "*14.0.2*"
+        java -version 2>&1 | Select-String -Pattern '21\.0\.2' | Should -BeLike "*21.0.2*"
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has az installed' {
       $output = (& az version) | convertfrom-json
-      $output.'azure-cli' | Should -Be '2.52.0'
+      $output.'azure-cli' | Should -Be '2.58.0'
       $LASTEXITCODE | Should -be 0
     }
     
     It 'has az powershell module installed' {
-        (Get-Module Az -ListAvailable).Version.ToString() | should -be '10.3.0'
+        (Get-Module Az -ListAvailable).Version.ToString() | should -be '11.3.0'
     }
 
     It 'has aws cli installed' {
-      aws --version 2>&1 | Should -Match '2.13.31'
+      aws --version 2>&1 | Should -Match '2.15.26'
     }
 
     It 'has aws powershell installed' {
       Import-Module AWSPowerShell.NetCore
-      Get-AWSPowerShellVersion | Should -Match '4.1.412'
+      Get-AWSPowerShellVersion | Should -Match '4.1.532'
     }
     
     # There is no version command for aws-iam-authenticator, so we just check for the installed version.
@@ -51,47 +51,47 @@ Describe  'installed dependencies' {
     }
 
     It 'has node installed' {
-        node --version | Should -Match '14.17.2'
+        node --version | Should -Match '20.11.1'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has kubectl installed' {
-        kubectl version --client | Select-String -Pattern "1.28.1" | Should -BeLike "Client Version: v1.28.1"
+        kubectl version --client | Select-String -Pattern "1.29.1" | Should -BeLike "Client Version: v1.29.1"
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has kubelogin installed' {
-        kubelogin --version | Select-Object -First  1 -Skip 1 | Should -match 'v0.0.30'
+        kubelogin --version | Select-Object -First  1 -Skip 1 | Should -match 'v0.1.0'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has helm installed' {
-        helm version | Should -Match '3.12.3'
+        helm version | Should -Match '3.14.1'
         $LASTEXITCODE | Should -be 0
     }
 
     # If the terraform version is not the latest, then `terraform version` returns multiple lines and a non-zero return code
     It 'has terraform installed' {
-        terraform version | Select-Object -First 1 | Should -Match '1.5.6'
+        terraform version | Select-Object -First 1 | Should -Match '1.7.4'
     }
 
     It 'has python installed' {
-        python --version | Should -Match '3.11.5'
+        python --version | Should -Match '3.12.2'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select-String -Pattern "445.0.0" | Should -BeLike "Google Cloud SDK 445.0.0"
+        gcloud --version | Select-String -Pattern "467.0.0" | Should -BeLike "Google Cloud SDK 467.0.0"
         $LASTEXITCODE | Should -be 0
     }
     
     It 'has gke-gcloud-auth-plugin installed' {
-        gcloud --version | Select-String -Pattern "0.5.5" | Should -BeLike "gke-gcloud-auth-plugin 0.5.5"
+        gcloud --version | Select-String -Pattern "467.0.0" | Should -BeLike "gke-gcloud-auth-plugin 467.0.0"
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has octopus cli installed' {
-        octopus version | Should -Match '1.7.1'
+        octopus version | Should -Match '2.1.0'
         $LASTEXITCODE | Should -be 0
     }    
 
@@ -101,31 +101,31 @@ Describe  'installed dependencies' {
     }
 
     It 'has eksctl installed' {
-        eksctl version | Should -Match '0.156.0'
+        eksctl version | Should -Match '0.173.0'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has 7zip installed' {
         $output = (& "C:\Program Files\7-Zip\7z.exe" --help) -join "`n"
-        $output | Should -Match '7-Zip 19.00'
+        $output | Should -Match '7-Zip 23.1'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'should have installed powershell core' {
         $output = & pwsh --version
         $LASTEXITCODE | Should -be 0
-        $output | Should -Match '^PowerShell 7\.3\.6*'
+        $output | Should -Match '^PowerShell 7\.4\.1*'
     }
 
     It 'should have installed git' {
         $output = & git --version
         $LASTEXITCODE | Should -be 0
-        $output | Should -Match '2.41.0'
+        $output | Should -Match '2.44.0'
     }
 
     It 'should have installed argo cli' {
         $output = (& argocd version --client) -join "`n"
         $LASTEXITCODE | Should -be 0
-        $output | Should -Match '2.8.0'
+        $output | Should -Match '2.10.2'
     }
 }
