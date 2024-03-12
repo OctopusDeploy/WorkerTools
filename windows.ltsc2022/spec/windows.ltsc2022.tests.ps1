@@ -12,8 +12,8 @@ Describe  'installed dependencies' {
 
     It 'has Octopus.Client installed ' {
         $expectedVersion = "14.3.1248"
-        Test-Path "C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net452\Octopus.Client.dll" | Should -Be $true
-        [Reflection.AssemblyName]::GetAssemblyName("C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net452\Octopus.Client.dll").Version.ToString() | Should -Match "$expectedVersion.0"
+        Test-Path "C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net462\Octopus.Client.dll" | Should -Be $true
+        [Reflection.AssemblyName]::GetAssemblyName("C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net462\Octopus.Client.dll").Version.ToString() | Should -Match "$expectedVersion.0"
     }
 
     It 'has dotnet installed' {
@@ -86,7 +86,7 @@ Describe  'installed dependencies' {
     }
     
     It 'has gke-gcloud-auth-plugin installed' {
-        gcloud --version | Select-String -Pattern "467.0.0" | Should -BeLike "gke-gcloud-auth-plugin 467.0.0"
+        gcloud --version | Select-String -Pattern "0.5.8" | Should -BeLike "gke-gcloud-auth-plugin 0.5.8"
         $LASTEXITCODE | Should -be 0
     }
 
@@ -107,7 +107,7 @@ Describe  'installed dependencies' {
 
     It 'has 7zip installed' {
         $output = (& "C:\Program Files\7-Zip\7z.exe" --help) -join "`n"
-        $output | Should -Match '7-Zip 23.1'
+        $output | Should -Match '7-Zip 23.01'
         $LASTEXITCODE | Should -be 0
     }
 

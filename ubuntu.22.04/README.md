@@ -24,26 +24,28 @@
 
 ## Installed Software
 
-- Aws CLI 2.13.31
-- Aws Iam Authenticator 0.5.9
-- Aws Powershell 4.1.412
-- Azure CLI 2.51.0-1~jammy
-- Azure Powershell 4.5.0
-- Dotnet Sdk 3.1.401-1
-- Ecs CLI 1.20.0
-- Eks CTL 0.156.0
-- Google Cloud CLI 445.0.0-0
-- Google Cloud GKE auth plugin 412.0.0-0
-- Helm v3.7.1
-- Java Jdk 11.0.20.1+1-0ubuntu1~22.04
-- Kubectl 1.28.1-00
-- Kubelogin v0.0.30
-- Octopus CLI 1.7.1
+- Argo CD CLI 2.10.2
+- Aws CLI 2.15.26
+- Aws Iam Authenticator 0.6.14
+- Aws Powershell 4.1.532
+- Azure CLI 2.58.0
+- Azure Powershell 11.3.0
+- Dotnet Sdk 8.0
+- Ecs CLI 1.21.0
+- Eksctl 0.173.0
+- Google Cloud CLI 445.0.0
+- Google Cloud GKE auth plugin 467.0.0
+- Helm v3.14.2
+- Java Jdk 21 (Distro latest)
+- Kubectl 1.29
+- Kubelogin v0.1.1
+- NodeJS 20 - Latest
+- Octopus CLI 2.1.0
 - Octopus CLI Legacy 9.1.7
-- Octopus Client 11.6.3644
-- Powershell 7.2.7-1.deb
-- Terraform 1.1.3
-- Umoci 0.4.6
+- Octopus Client 14.3.1248
+- Powershell 7.4.1
+- Terraform 1.7.4
+- Umoci 0.4.7
 - wget - Latest
 - unzip - Latest
 - apt-utils - Latest
@@ -51,12 +53,11 @@
 - software-properties-common - Latest
 - maven - Latest
 - gradle - Latest
-- Node 14 - Latest
+- Python2 - 2.7.18
 - Python3 - Latest
 - groff - Latest
 - Istio CLI - Latest
 - Linkerd CLI - Latest
-- umoci - Latest
 - jq - Latest
 - yq - Latest
 - openssh-client - Latest

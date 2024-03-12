@@ -24,25 +24,27 @@
 
 ## Installed Software
 
-- Aws CLI 2.13.31
-- Aws Iam Authenticator 0.5.3
-- Aws Powershell 4.1.2
-- Azure CLI 2.51.0
-- Azure Powershell 4.5.0
-- Eks Ctl 0.25.0
-- Google Cloud CLI 412.0.0
-- Google Cloud GKE auth plugin 412.0.0-0
-- Helm 3.7.1
-- Java Jdk 14.0.2
-- Kubectl 1.18.8
-- Kubelogin (azure-kubelogin) 0.0.25
-- Node 14.17.2
+- Argo CD CLI 2.10.2
+- Aws CLI 2.15.26
+- Aws Iam Authenticator 0.5.9
+- Aws PowerShell Modules 4.1.532
+- Azure CLI 2.58.0
+- Azure PowerShell 4.5.0
+- Azure PowerShell Modules 11.3.0
+- Eksctl 0.173.0
+- Google Cloud CLI 467.0.0
+- Google Cloud GKE auth plugin 467.0.0-0 / 0.5.8
+- Helm 3.14.1
+- Java Jdk 21.0.2
+- Kubectl 1.29.1
+- Kubelogin (azure-kubelogin) 0.1.0
+- Node 20.11.1
 - Octopus CLI Legacy 9.1.7
-- Octopus CLI 1.7.1
-- Octopus Client 11.6.3644
-- Powershell 7.2.7
-- Python 3.8.5
+- Octopus CLI 2.1.0
+- Octopus Client 14.3.1248
+- Powershell 7.4.1
+- Python 3.12.2
 - ScriptCs 0.17.1
-- Terraform 1.1.3
-- 7Zip 19.0
+- Terraform 1.7.4
+- 7Zip 23.1
 - Chocolatey - Latest
