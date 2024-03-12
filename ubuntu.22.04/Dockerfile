@@ -125,7 +125,7 @@ RUN wget --quiet https://releases.hashicorp.com/terraform/${Terraform_Version}/t
 # https://cloud.google.com/sdk/docs/downloads-apt-get
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-    apt-get update && apt-get install -y google-cloud-sdk=${Google_Cloud_Cli_Version} google-cloud-sdk-gke-gcloud-auth-plugin=${Google_Cloud_Gke_Cloud_Auth_Plugin_Version} && \
+    apt-get update && apt-get install -y google-cloud-sdk=${Google_Cloud_Cli_Version} google-cloud-cli=${Google_Cloud_Cli_Version} google-cloud-sdk-gke-gcloud-auth-plugin=${Google_Cloud_Gke_Cloud_Auth_Plugin_Version} && \
     rm -rf /var/lib/apt/lists/*
 
 # Install pip & groff
