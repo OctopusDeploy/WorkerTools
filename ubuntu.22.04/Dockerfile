@@ -198,3 +198,7 @@ RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases
 RUN add-apt-repository -y ppa:rmescandon/yq && \
     apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools && \
     rm -rf /var/lib/apt/lists/*
+
+
+# Install the stress test
+RUN apt-get update && apt-get install -y stress && rm -rf /var/lib/apt/lists/*
