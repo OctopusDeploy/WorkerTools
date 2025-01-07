@@ -92,7 +92,6 @@ RUN curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor 
     apt-get install -y azure-cli=${Azure_Cli_Version} && \
     rm -rf /var/lib/apt/lists/*
 
-
 # Install NodeJS
 RUN wget --quiet -O - https://deb.nodesource.com/setup_${NodeJs_Version}.x | bash && \
     apt-get install -y nodejs && \
@@ -119,7 +118,6 @@ RUN wget --quiet https://releases.hashicorp.com/terraform/${Terraform_Version}/t
     unzip terraform_${Terraform_Version}_linux_amd64.zip && \
     mv terraform /usr/local/bin && \
     rm terraform_${Terraform_Version}_linux_amd64.zip
-
 
 # Install Google Cloud CLI
 # https://cloud.google.com/sdk/docs/downloads-apt-get
@@ -179,8 +177,6 @@ RUN curl -sL https://run.linkerd.io/install | sh && \
 RUN curl --silent --location https://github.com/opencontainers/umoci/releases/download/v${Umoci_Version}/umoci.amd64 -o /usr/local/bin/umoci && \
     chmod +x /usr/local/bin/umoci
 
-
-
 # Install Skopeo
 RUN apt-get update && \
     apt-get install -y skopeo && \
@@ -198,3 +194,6 @@ RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases
 RUN add-apt-repository -y ppa:rmescandon/yq && \
     apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools && \
     rm -rf /var/lib/apt/lists/*
+
+# remove az cli warning - https://github.com/Azure/arm-deploy/issues/173
+RUN az config set bicep.use_binary_from_path=false
