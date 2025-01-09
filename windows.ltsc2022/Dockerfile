@@ -44,7 +44,9 @@ RUN choco install openjdk --allow-empty-checksums --y --no-progress --version $E
     Update-SessionEnvironment
 
 # Install Azure CLI
-RUN choco install azure-cli -y --version $Env:Azure_Cli_Version --no-progress
+RUN choco install azure-cli -y --version $Env:Azure_Cli_Version --no-progress `
+    # remove az cli warning - https://github.com/Azure/arm-deploy/issues/173
+    az config set bicep.use_binary_from_path=false 
 
 # Install the AWS CLI
 RUN choco install awscli -y --version $Env:Aws_Cli_Version --no-progress
@@ -124,6 +126,3 @@ RUN .\update_path.cmd;
 # gcloud requires python on path, update_path.cmd adds python to path. This created a .install\.backup folder that's required for rollbacks and takes ~1Gig. 
 RUN gcloud components install gke-gcloud-auth-plugin --quiet; `
     Remove-Item -Path C:\google-cloud-sdk\.install\.backup -Force -Recurse
-
-# remove az cli warning - https://github.com/Azure/arm-deploy/issues/173
-RUN az config set bicep.use_binary_from_path=false
