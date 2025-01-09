@@ -121,6 +121,7 @@ RUN choco install argocd-cli --yes --version $Env:Argo_Cli_Version --no-progress
 ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
 
-# gcloud requires python on path, update_path.cmd adds python to path. This created a .install\.backup folder that's required for rollbacks and takes ~1Gig. 
+# gcloud requires python on path, update_path.cmd adds python to path. Delete any backup files that exist (~1gb)
 RUN gcloud components install gke-gcloud-auth-plugin --quiet; `
-    Remove-Item -Path C:\google-cloud-sdk\.install\.backup -Force -Recurse
+    if (Test-Path C:\google-cloud-sdk\.install\.backup) {Remove-Item -Path C:\google-cloud-sdk\.install\.backup -Force -Recurse}
+    
