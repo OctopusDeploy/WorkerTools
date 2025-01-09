@@ -15,7 +15,7 @@ ARG Git_Version=2.47.1
 ARG Google_Cloud_Cli_Version=505.0.0
 ARG Helm_Version=3.16.4
 ARG Java_Jdk_Version=21.0.5
-ARG Kubectl_Version=1.31.1
+ARG Kubectl_Version=1.32.0
 ARG Kubelogin_Version=0.1.6
 ARG Node_Version=22.11.0
 ARG Octopus_Cli_Legacy_Version=9.1.7
@@ -66,7 +66,7 @@ RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion
 RUN choco install nodejs-lts -y --version $Env:Node_Version --no-progress
 
 # Install kubectl
-RUN Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v${Env:Kubectl_Version}/bin/windows/amd64/kubectl.exe" -OutFile .\kubectl.exe; `
+RUN Invoke-WebRequest "https://dl.k8s.io/release/v${Env:Kubectl_Version}/bin/windows/amd64/kubectl.exe" -OutFile .\kubectl.exe; `
     mv .\kubectl.exe C:\Windows\system32\;
 
 # Install Kubelogin

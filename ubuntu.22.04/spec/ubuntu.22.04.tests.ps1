@@ -46,7 +46,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has kubectl installed' {
-        kubectl version --client | Select-Object -First 1 | Should -match '1.31.\d+'
+        kubectl version --client | Select-Object -First 1 | Should -match '1.32.\d+'
         $LASTEXITCODE | Should -be 0
     }
 

@@ -15,7 +15,7 @@ ARG Google_Cloud_Cli_Version=505.0.0-0
 ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=505.0.0-0
 ARG Helm_Version=v3.16.4
 ARG Java_Jdk_Version=21
-ARG Kubectl_Version=1.31.1
+ARG Kubectl_Version=1.32
 ARG Kubelogin_Version=v0.1.6
 ARG NodeJs_Version=22
 ARG Octopus_Cli_Legacy_Version=9.1.7
@@ -123,7 +123,7 @@ RUN wget --quiet https://releases.hashicorp.com/terraform/${Terraform_Version}/t
 # https://cloud.google.com/sdk/docs/downloads-apt-get
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-    apt-get update && apt-get install -y google-cloud-sdk=${Google_Cloud_Cli_Version} google-cloud-cli=${Google_Cloud_Cli_Version} google-cloud-sdk-gke-gcloud-auth-plugin=${Google_Cloud_Gke_Cloud_Auth_Plugin_Version} && \
+    apt-get update && apt-get install -y google-cloud-cli=${Google_Cloud_Cli_Version} google-cloud-cli-gke-gcloud-auth-plugin=${Google_Cloud_Gke_Cloud_Auth_Plugin_Version} && \
     rm -rf /var/lib/apt/lists/*
 
 # Install pip & groff
