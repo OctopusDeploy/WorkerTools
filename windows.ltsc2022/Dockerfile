@@ -44,9 +44,10 @@ RUN choco install openjdk --allow-empty-checksums --y --no-progress --version $E
     Update-SessionEnvironment
 
 # Install Azure CLI
-RUN choco install azure-cli -y --version $Env:Azure_Cli_Version --no-progress `
-    # remove az cli warning - https://github.com/Azure/arm-deploy/issues/173
-    az config set bicep.use_binary_from_path=false 
+RUN choco install azure-cli -y --version $Env:Azure_Cli_Version --no-progress
+
+# remove az cli warning - https://github.com/Azure/arm-deploy/issues/173
+RUN az config set bicep.use_binary_from_path=false 
 
 # Install the AWS CLI
 RUN choco install awscli -y --version $Env:Aws_Cli_Version --no-progress
