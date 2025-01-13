@@ -2,28 +2,28 @@ FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG Argocd_Version=2.10.2
-ARG Aws_Cli_Version=2.15.26
-ARG Aws_Iam_Authenticator_Version=0.6.14
-ARG Aws_Powershell_Version=4.1.532
-ARG Azure_Cli_Version=2.58.0-1~jammy
-ARG Azure_Powershell_Version=12.3.0
+ARG Argocd_Version=2.13.3
+ARG Aws_Cli_Version=2.22.31
+ARG Aws_Iam_Authenticator_Version=0.6.29
+ARG Aws_Powershell_Version=4.1.732
+ARG Azure_Cli_Version=2.67.0-1~jammy
+ARG Azure_Powershell_Version=13.0.0
 ARG Dotnet_Sdk_Version=8.0
 ARG Ecs_Cli_Version=1.21.0
-ARG Eks_Cli_Version=v0.173.0
-ARG Google_Cloud_Cli_Version=467.0.0-0
-ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=467.0.0-0
-ARG Helm_Version=v3.14.2
+ARG Eks_Cli_Version=v0.200.0
+ARG Google_Cloud_Cli_Version=505.0.0-0
+ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=505.0.0-0
+ARG Helm_Version=v3.16.4
 ARG Java_Jdk_Version=21
-ARG Kubectl_Version=1.29
-ARG Kubelogin_Version=v0.1.1
-ARG NodeJs_Version=20
-ARG Octopus_Cli_Version=2.1.0
+ARG Kubectl_Version=1.32
+ARG Kubelogin_Version=v0.1.6
+ARG NodeJs_Version=22
 ARG Octopus_Cli_Legacy_Version=9.1.7
-ARG Octopus_Client_Version=14.3.1248
-ARG Powershell_Version=7.4.1-1.deb
+ARG Octopus_Cli_Version=2.14.0
+ARG Octopus_Client_Version=14.3.1789
+ARG Powershell_Version=7.4.6-1.deb
 ARG Python2_Version=2.7.18-3
-ARG Terraform_Version=1.7.4
+ARG Terraform_Version=1.10.4
 ARG Umoci_Version=0.4.7
 
 
@@ -125,7 +125,7 @@ RUN wget --quiet https://releases.hashicorp.com/terraform/${Terraform_Version}/t
 # https://cloud.google.com/sdk/docs/downloads-apt-get
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-    apt-get update && apt-get install -y google-cloud-sdk=${Google_Cloud_Cli_Version} google-cloud-cli=${Google_Cloud_Cli_Version} google-cloud-sdk-gke-gcloud-auth-plugin=${Google_Cloud_Gke_Cloud_Auth_Plugin_Version} && \
+    apt-get update && apt-get install -y google-cloud-cli=${Google_Cloud_Cli_Version} google-cloud-cli-gke-gcloud-auth-plugin=${Google_Cloud_Gke_Cloud_Auth_Plugin_Version} && \
     rm -rf /var/lib/apt/lists/*
 
 # Install pip & groff
@@ -175,7 +175,7 @@ RUN curl -sL https://run.linkerd.io/install | sh && \
     rm -rf /root/.linkerd2
 
 # Install umoci
-# https://github.com/openSUSE/umoci
+# https://github.com/opencontainers/umoci
 RUN curl --silent --location https://github.com/opencontainers/umoci/releases/download/v${Umoci_Version}/umoci.amd64 -o /usr/local/bin/umoci && \
     chmod +x /usr/local/bin/umoci
 
@@ -188,7 +188,6 @@ RUN apt-get update && \
 RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${Argocd_Version}/argocd-linux-amd64 && \
   install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && \
   rm argocd-linux-amd64
-
 
 # Get common utilities for scripting
 # https://mikefarah.gitbook.io/yq/

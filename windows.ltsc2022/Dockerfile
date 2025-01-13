@@ -3,28 +3,28 @@
 FROM mcr.microsoft.com/dotnet/framework/runtime:4.8.1-20230808-windowsservercore-ltsc2022
 SHELL ["powershell", "-Command"]
 
-ARG Aws_Cli_Version=2.15.26
-ARG Aws_Iam_Authenticator_Version=0.5.9
-ARG Aws_Powershell_Version=4.1.532
-ARG Azure_Cli_Version=2.58.0
-ARG Azure_Powershell_Version=12.3.0
-ARG Eks_Cli_Version=0.173.0
-ARG Google_Cloud_Cli_Version=467.0.0
-ARG Helm_Version=3.14.1
+ARG 7Zip_Version=24.9.0
+ARG Argo_Cli_Version=2.13.3
+ARG Aws_Cli_Version=2.22.31
+ARG Aws_Iam_Authenticator_Version=0.6.29
+ARG Aws_Powershell_Version=4.1.732
+ARG Azure_Cli_Version=2.67.0
+ARG Azure_Powershell_Version=13.0.0
+ARG Eks_Cli_Version=0.200.0
+ARG Git_Version=2.47.1
+ARG Google_Cloud_Cli_Version=505.0.0
+ARG Helm_Version=3.16.4
 ARG Java_Jdk_Version=21.0.2
-ARG Kubectl_Version=1.29.1
-ARG Kubelogin_Version=0.1.0
-ARG Node_Version=20.11.1
+ARG Kubectl_Version=1.32.0
+ARG Kubelogin_Version=0.1.6
+ARG Node_Version=22.11.0
 ARG Octopus_Cli_Legacy_Version=9.1.7
-ARG Octopus_Cli_Version=2.1.0
-ARG Octopus_Client_Version=14.3.1248
-ARG Powershell_Version=7.4.1
-ARG Python_Version=3.12.2
+ARG Octopus_Cli_Version=2.14.0
+ARG Octopus_Client_Version=14.3.1789
+ARG Powershell_Version=7.4.6
+ARG Python_Version=3.13.1
 ARG ScriptCs_Version=0.17.1
-ARG Terraform_Version=1.7.4
-ARG 7Zip_Version=23.1.0
-ARG Git_Version=2.44.0
-ARG Argo_Cli_Version=2.10.2
+ARG Terraform_Version=1.10.4
 
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
@@ -69,7 +69,7 @@ RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion
 RUN choco install nodejs-lts -y --version $Env:Node_Version --no-progress
 
 # Install kubectl
-RUN Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v${Env:Kubectl_Version}/bin/windows/amd64/kubectl.exe" -OutFile .\kubectl.exe; `
+RUN Invoke-WebRequest "https://dl.k8s.io/release/v${Env:Kubectl_Version}/bin/windows/amd64/kubectl.exe" -OutFile .\kubectl.exe; `
     mv .\kubectl.exe C:\Windows\system32\;
 
 # Install Kubelogin
@@ -124,6 +124,6 @@ RUN choco install argocd-cli --yes --version $Env:Argo_Cli_Version --no-progress
 ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
 
-# gcloud requires python on path, update_path.cmd adds python to path. This created a .install\.backup folder that's required for rollbacks and takes ~1Gig. 
+# gcloud requires python on path, update_path.cmd adds python to path. Delete any backup files that exist (~1gb)
 RUN gcloud components install gke-gcloud-auth-plugin --quiet; `
-    Remove-Item -Path C:\google-cloud-sdk\.install\.backup -Force -Recurse
+    if (Test-Path C:\google-cloud-sdk\.install\.backup) {Remove-Item -Path C:\google-cloud-sdk\.install\.backup -Force -Recurse}
