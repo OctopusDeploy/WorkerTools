@@ -90,8 +90,9 @@ RUN curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor 
     echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ jammy main" | tee /etc/apt/sources.list.d/azure-cli.list && \
     apt-get update && \
     apt-get install -y azure-cli=${Azure_Cli_Version} && \
-    rm -rf /var/lib/apt/lists/*
-
+    rm -rf /var/lib/apt/lists/* && \
+    # remove az cli warning - https://github.com/Azure/arm-deploy/issues/173
+    az config set bicep.use_binary_from_path=false
 
 # Install NodeJS
 RUN wget --quiet -O - https://deb.nodesource.com/setup_${NodeJs_Version}.x | bash && \
@@ -119,7 +120,6 @@ RUN wget --quiet https://releases.hashicorp.com/terraform/${Terraform_Version}/t
     unzip terraform_${Terraform_Version}_linux_amd64.zip && \
     mv terraform /usr/local/bin && \
     rm terraform_${Terraform_Version}_linux_amd64.zip
-
 
 # Install Google Cloud CLI
 # https://cloud.google.com/sdk/docs/downloads-apt-get
@@ -178,8 +178,6 @@ RUN curl -sL https://run.linkerd.io/install | sh && \
 # https://github.com/openSUSE/umoci
 RUN curl --silent --location https://github.com/opencontainers/umoci/releases/download/v${Umoci_Version}/umoci.amd64 -o /usr/local/bin/umoci && \
     chmod +x /usr/local/bin/umoci
-
-
 
 # Install Skopeo
 RUN apt-get update && \
