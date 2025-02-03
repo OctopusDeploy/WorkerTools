@@ -1,3 +1,5 @@
+force_package_download = true
+
 connectivity_policy {
     allow_deployments_to_no_targets = true
 }
