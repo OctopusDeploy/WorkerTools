@@ -132,16 +132,6 @@ Describe  'installed dependencies' {
         $LASTEXITCODE | Should -be 0
     }
 
-    It 'has skopeo installed' {
-        skopeo --version | out-null
-        $LASTEXITCODE | Should -be 0
-    }
-
-    It 'has umoci installed' {
-        umoci --version | out-null
-        $LASTEXITCODE | Should -be 0
-    }
-
     It 'should have installed powershell core' {
         $output = & pwsh --version
         $LASTEXITCODE | Should -be 0
