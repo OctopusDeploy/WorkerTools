@@ -24,7 +24,6 @@ ARG Octopus_Client_Version=14.3.1789
 ARG Powershell_Version=7.4.6-1.deb
 ARG Python2_Version=2.7.18-3
 ARG Terraform_Version=1.10.4
-ARG Umoci_Version=0.4.7
 
 
 
@@ -173,16 +172,6 @@ RUN curl -sL https://istio.io/downloadIstioctl | sh - && \
 RUN curl -sL https://run.linkerd.io/install | sh && \
     cp /root/.linkerd2/bin/linkerd /usr/local/bin && \
     rm -rf /root/.linkerd2
-
-# Install umoci
-# https://github.com/opencontainers/umoci
-RUN curl --silent --location https://github.com/opencontainers/umoci/releases/download/v${Umoci_Version}/umoci.amd64 -o /usr/local/bin/umoci && \
-    chmod +x /usr/local/bin/umoci
-
-# Install Skopeo
-RUN apt-get update && \
-    apt-get install -y skopeo && \
-    rm -rf /var/lib/apt/lists/*
 
 # Install Argo CD
 RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${Argocd_Version}/argocd-linux-amd64 && \
