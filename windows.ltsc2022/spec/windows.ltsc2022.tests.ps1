@@ -11,7 +11,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has Octopus.Client installed ' {
-        $expectedVersion = "14.3.1789"
+        $expectedVersion = "14.3.1916"
         Test-Path "C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net462\Octopus.Client.dll" | Should -Be $true
         [Reflection.AssemblyName]::GetAssemblyName("C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net462\Octopus.Client.dll").Version.ToString() | Should -Match "$expectedVersion.0"
     }
