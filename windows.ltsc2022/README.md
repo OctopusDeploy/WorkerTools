@@ -41,7 +41,7 @@
 - Node 20.11.1
 - Octopus CLI Legacy 9.1.7
 - Octopus CLI 2.1.0
-- Octopus Client 14.3.1248
+- Octopus Client 14.3.1916
 - Powershell 7.4.1
 - Python 3.12.2
 - ScriptCs 0.17.1
