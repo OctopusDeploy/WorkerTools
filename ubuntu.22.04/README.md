@@ -42,7 +42,7 @@
 - NodeJS 20 - Latest
 - Octopus CLI 2.1.0
 - Octopus CLI Legacy 9.1.7
-- Octopus Client 14.3.1248
+- Octopus Client 14.3.1916
 - Powershell 7.4.1
 - Terraform 1.7.4
 - Umoci 0.4.7

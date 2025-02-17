@@ -8,7 +8,7 @@ Write-Host 'Running tests with Pester v'+$($pesterModules[0].Version)
 
 Describe  'installed dependencies' {
     It 'has Octopus.Client installed ' {
-        $expectedVersion = "14.3.1789"
+        $expectedVersion = "14.3.1916"
         [Reflection.AssemblyName]::GetAssemblyName("/Octopus.Client.dll").Version.ToString() | Should -match "$expectedVersion.0"
     }
 
