@@ -15,7 +15,7 @@ step "push-docker-image" {
 
         container {
             feed = "docker-packages-octopushq"
-            image = "octopusdeploy/tool-containers/tool-skopeo-cli"
+            image = "octopusdeploy/tool-skopeo-cli"
         }
     }
 }
