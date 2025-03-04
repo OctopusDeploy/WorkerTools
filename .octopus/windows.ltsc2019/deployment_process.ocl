@@ -8,7 +8,6 @@ step "push-docker-image" {
             DockerPush.Target.Docker.Registry.Password = "#{Docker.Registry.Target.Password}"
             DockerPush.Target.Docker.Registry.Username = "#{Docker.Registry.Target.Username}"
             DockerPush.Target.Docker.Repository = "#{Docker.Registry.Target.Repository}"
-            Octopus.Action.RunOnServer = "true"
             Octopus.Action.Template.Id = "ActionTemplates-2141"
             Octopus.Action.Template.Version = "11"
         }
@@ -31,9 +30,8 @@ step "create-docker-manifest" {
             DockerPush.Target.Docker.Registry.Password = "#{Docker.Registry.Target.Password}"
             DockerPush.Target.Docker.Registry.Username = "#{Docker.Registry.Target.Username}"
             DockerPush.Target.Docker.Repository = "#{Docker.Registry.Target.Repository}"
-            Octopus.Action.RunOnServer = "true"
             Octopus.Action.Template.Id = "ActionTemplates-2741"
-            Octopus.Action.Template.Version = "4"
+            Octopus.Action.Template.Version = "6"
         }
         worker_pool = "hosted-ubuntu"
     }
