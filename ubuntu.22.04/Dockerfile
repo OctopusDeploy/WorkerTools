@@ -3,9 +3,9 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG Argocd_Version=2.13.3
-ARG Aws_Cli_Version=2.22.31
+ARG Aws_Cli_Version=2.24.10
 ARG Aws_Iam_Authenticator_Version=0.6.29
-ARG Aws_Powershell_Version=4.1.732
+ARG Aws_Powershell_Version=4.1.734
 ARG Azure_Cli_Version=2.67.0-1~jammy
 ARG Azure_Powershell_Version=13.0.0
 ARG Dotnet_Sdk_Version=8.0
