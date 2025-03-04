@@ -37,7 +37,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws cli installed' {
-      aws --version 2>&1 | Should -match '2.22.31'
+      aws --version 2>&1 | Should -match '2.24.10'
     }
 
     It 'has node installed' {

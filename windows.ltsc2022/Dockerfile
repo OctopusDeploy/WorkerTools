@@ -5,7 +5,7 @@ SHELL ["powershell", "-Command"]
 
 ARG 7Zip_Version=24.9.0
 ARG Argo_Cli_Version=2.13.3
-ARG Aws_Cli_Version=2.22.31
+ARG Aws_Cli_Version=2.24.10
 ARG Aws_Iam_Authenticator_Version=0.6.29
 ARG Aws_Powershell_Version=4.1.734
 ARG Azure_Cli_Version=2.67.0
