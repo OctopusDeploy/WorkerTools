@@ -182,5 +182,5 @@ RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases
 # https://mikefarah.gitbook.io/yq/
 # https://augeas.net/
 RUN add-apt-repository -y ppa:rmescandon/yq && \
-    apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools && \
+    apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools xxd && \
     rm -rf /var/lib/apt/lists/*
