@@ -154,7 +154,7 @@ RUN curl --silent --location https://github.com/opencontainers/umoci/releases/do
 # https://mikefarah.gitbook.io/yq/
 # https://augeas.net/
 RUN add-apt-repository -y ppa:rmescandon/yq && \
-    apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools
+    apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools xxd
 
 # Skopeo
 # https://github.com/containers/skopeo/blob/master/install.md

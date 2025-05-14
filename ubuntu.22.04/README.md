@@ -64,3 +64,4 @@
 - rsync - Latest
 - git - Latest
 - augeas-tools - Latest
+- xxd - Latest
