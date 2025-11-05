@@ -24,6 +24,8 @@ ARG Octopus_Client_Version=14.3.1789
 ARG Powershell_Version=7.4.6
 ARG Python_Version=3.13.1
 ARG ScriptCs_Version=0.17.1
+# Dotnet version depends on .NET runtime (currently 8.0)
+ARG Dotnet_Script_Version=1.5.0
 ARG Terraform_Version=1.10.4
 
 # Install Choco
@@ -98,6 +100,9 @@ RUN Invoke-WebRequest "https://dl.google.com/dl/cloudsdk/channels/rapid/download
 
 # Install ScriptCS
 RUN choco install scriptcs -y --version $Env:ScriptCs_Version --no-progress
+
+# Install dotnet-script
+RUN dotnet tool install -g dotnet-script --version $Env:Dotnet_Script_Version
 
 # Install Octopus CLI
 RUN choco install octopus-cli -y --version $Env:Octopus_Cli_Version --no-progress
