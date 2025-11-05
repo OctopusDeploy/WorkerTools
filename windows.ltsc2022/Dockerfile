@@ -101,9 +101,6 @@ RUN Invoke-WebRequest "https://dl.google.com/dl/cloudsdk/channels/rapid/download
 # Install ScriptCS
 RUN choco install scriptcs -y --version $Env:ScriptCs_Version --no-progress
 
-# Install dotnet-script
-RUN dotnet tool install -g dotnet-script --version $Env:Dotnet_Script_Version
-
 # Install Octopus CLI
 RUN choco install octopus-cli -y --version $Env:Octopus_Cli_Version --no-progress
 
@@ -128,6 +125,9 @@ RUN choco install argocd-cli --yes --version $Env:Argo_Cli_Version --no-progress
 # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
+
+# Install dotnet-script, requires dotnet on path
+RUN dotnet tool install -g dotnet-script --version $Env:Dotnet_Script_Version
 
 # gcloud requires python on path, update_path.cmd adds python to path. Delete any backup files that exist (~1gb)
 RUN gcloud components install gke-gcloud-auth-plugin --quiet; `
