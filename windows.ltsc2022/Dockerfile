@@ -37,6 +37,7 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
 # Install dotnet 8.0+
 RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
     [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', '1', 'Machine'); `
+    [Environment]::SetEnvironmentVariable('DOTNET_ROOT', 'C:\Users\ContainerAdministrator\AppData\Local\Microsoft\dotnet', 'Machine'); `
     .\dotnet-install.ps1 -Channel '8.0'; `
     rm dotnet-install.ps1
 
