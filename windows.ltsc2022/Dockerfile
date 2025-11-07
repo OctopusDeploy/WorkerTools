@@ -135,6 +135,9 @@ RUN Write-Host "Checking if dotnet-script.exe exists..."; `
     Write-Host "Current machine PATH from registry:"; `
     [Environment]::GetEnvironmentVariable('PATH', 'Machine')
 
+# Update path again to add dotnet-script to PATH
+RUN .\update_path.cmd;
+
 # gcloud requires python on path, update_path.cmd adds python to path. Delete any backup files that exist (~1gb)
 RUN gcloud components install gke-gcloud-auth-plugin --quiet; `
     if (Test-Path C:\google-cloud-sdk\.install\.backup) {Remove-Item -Path C:\google-cloud-sdk\.install\.backup -Force -Recurse}
