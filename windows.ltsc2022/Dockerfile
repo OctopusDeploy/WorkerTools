@@ -127,11 +127,13 @@ ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
 
 # Install dotnet-script, requires dotnet on path
-RUN dotnet tool install -g dotnet-script --version $Env:Dotnet_Script_Version --add-source https://api.nuget.org/v3/index.json; `
-    Write-Host "Installed dotnet-script, checking location..."; `
-    Get-ChildItem C:\Users\ContainerAdministrator\.dotnet\tools -ErrorAction SilentlyContinue; `
-    .\update_path.cmd; `
-    Write-Host "PATH after update: $env:PATH"
+RUN dotnet tool install -g dotnet-script --version $Env:Dotnet_Script_Version --add-source https://api.nuget.org/v3/index.json
+
+# Verify installation
+RUN Write-Host "Checking if dotnet-script.exe exists..."; `
+    Test-Path C:\Users\ContainerAdministrator\.dotnet\tools\dotnet-script.exe; `
+    Write-Host "Current machine PATH from registry:"; `
+    [Environment]::GetEnvironmentVariable('PATH', 'Machine')
 
 # gcloud requires python on path, update_path.cmd adds python to path. Delete any backup files that exist (~1gb)
 RUN gcloud components install gke-gcloud-auth-plugin --quiet; `
