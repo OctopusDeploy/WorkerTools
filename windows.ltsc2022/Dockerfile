@@ -28,6 +28,9 @@ ARG ScriptCs_Version=0.17.1
 ARG Dotnet_Script_Version=1.5.0
 ARG Terraform_Version=1.10.4
 
+# Dotnet installation directory (matches path in update_path.cmd)
+ARG Dotnet_Install_Dir=C:\Users\ContainerAdministrator\AppData\Local\Microsoft\dotnet
+
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
     Set-ExecutionPolicy Bypass -Scope Process -Force; `
@@ -35,9 +38,10 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Install dotnet 8.0+
+# DOTNET_ROOT is required for dotnet tools to locate the runtime
 RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
     [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', '1', 'Machine'); `
-    [Environment]::SetEnvironmentVariable('DOTNET_ROOT', 'C:\Users\ContainerAdministrator\AppData\Local\Microsoft\dotnet', 'Machine'); `
+    [Environment]::SetEnvironmentVariable('DOTNET_ROOT', $Env:Dotnet_Install_Dir, 'Machine'); `
     .\dotnet-install.ps1 -Channel '8.0'; `
     rm dotnet-install.ps1
 
@@ -129,15 +133,6 @@ RUN .\update_path.cmd;
 
 # Install dotnet-script, requires dotnet on path
 RUN dotnet tool install -g dotnet-script --version $Env:Dotnet_Script_Version --add-source https://api.nuget.org/v3/index.json
-
-# Verify installation
-RUN Write-Host "Checking if dotnet-script.exe exists..."; `
-    Test-Path C:\Users\ContainerAdministrator\.dotnet\tools\dotnet-script.exe; `
-    Write-Host "Current machine PATH from registry:"; `
-    [Environment]::GetEnvironmentVariable('PATH', 'Machine')
-
-# Update path again to add dotnet-script to PATH
-RUN .\update_path.cmd;
 
 # gcloud requires python on path, update_path.cmd adds python to path. Delete any backup files that exist (~1gb)
 RUN gcloud components install gke-gcloud-auth-plugin --quiet; `
