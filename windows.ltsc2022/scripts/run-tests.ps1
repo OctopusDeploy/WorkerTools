@@ -13,6 +13,7 @@ try {
     $configuration.TestResult.OutputPath = '/app/spec/PesterTestResults.xml'
     $configuration.TestResult.OutputFormat = 'NUnitXml'
     $configuration.Run.PassThru = $true
+    $configuration.Output.Verbosity = "Detailed"
 
     Invoke-Pester -configuration $configuration
 } catch {

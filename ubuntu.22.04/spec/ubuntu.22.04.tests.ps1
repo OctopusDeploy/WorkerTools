@@ -1,8 +1,5 @@
 $ErrorActionPreference = "Continue"
 
-Install-Module Pester -Force
-Import-Module Pester
-
 $pesterModules = @( Get-Module -Name "Pester");
 Write-Host 'Running tests with Pester v'+$($pesterModules[0].Version)
 
@@ -123,7 +120,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has istioctl installed' {
-        istioctl version | out-null
+        istioctl version --remote=false | out-null
         $LASTEXITCODE | Should -be 0
     }
 
