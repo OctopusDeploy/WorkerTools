@@ -24,7 +24,12 @@ ARG Octopus_Client_Version=14.3.1789
 ARG Powershell_Version=7.4.6
 ARG Python_Version=3.13.1
 ARG ScriptCs_Version=0.17.1
+# Dotnet version depends on .NET runtime (currently 8.0)
+ARG Dotnet_Script_Version=1.5.0
 ARG Terraform_Version=1.10.4
+
+# Dotnet installation directory (matches path in update_path.cmd)
+ARG Dotnet_Install_Dir=C:\Users\ContainerAdministrator\AppData\Local\Microsoft\dotnet
 
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
@@ -33,8 +38,10 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Install dotnet 8.0+
+# DOTNET_ROOT is required for dotnet tools to locate the runtime
 RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
     [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', '1', 'Machine'); `
+    [Environment]::SetEnvironmentVariable('DOTNET_ROOT', $Env:Dotnet_Install_Dir, 'Machine'); `
     .\dotnet-install.ps1 -Channel '8.0'; `
     rm dotnet-install.ps1
 
@@ -123,6 +130,9 @@ RUN choco install argocd-cli --yes --version $Env:Argo_Cli_Version --no-progress
 # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
+
+# Install dotnet-script, requires dotnet on path
+RUN dotnet tool install -g dotnet-script --version $Env:Dotnet_Script_Version --add-source https://api.nuget.org/v3/index.json
 
 # gcloud requires python on path, update_path.cmd adds python to path. Delete any backup files that exist (~1gb)
 RUN gcloud components install gke-gcloud-auth-plugin --quiet; `

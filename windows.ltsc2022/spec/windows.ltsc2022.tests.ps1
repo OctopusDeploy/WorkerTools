@@ -21,6 +21,11 @@ Describe  'installed dependencies' {
         $LASTEXITCODE | Should -be 0
     }
 
+    It 'has dotnet-script installed' {
+        dotnet-script --version | Should -Match '1.5.0'
+        $LASTEXITCODE | Should -be 0
+    }
+
     It 'has java installed' {
         java -version 2>&1 | Select-String -Pattern '21\.0\.2' | Should -BeLike "*21.0.2*"
         $LASTEXITCODE | Should -be 0

@@ -31,6 +31,7 @@
 - Azure CLI 2.58.0
 - Azure PowerShell 4.5.0
 - Azure PowerShell Modules 11.3.0
+- Dotnet Script 1.5.0
 - Eksctl 0.173.0
 - Google Cloud CLI 467.0.0
 - Google Cloud GKE auth plugin 467.0.0-0 / 0.5.8
