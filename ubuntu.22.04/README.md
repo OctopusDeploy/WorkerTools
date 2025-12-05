@@ -40,7 +40,7 @@
 - Kubectl 1.29
 - Kubelogin v0.1.1
 - NodeJS 20 - Latest
-- Octopus CLI 2.1.0
+- Octopus CLI 2.20.1
 - Octopus CLI Legacy 9.1.7
 - Octopus Client 14.3.1248
 - Powershell 7.4.1

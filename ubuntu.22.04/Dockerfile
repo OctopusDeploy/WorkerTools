@@ -19,7 +19,7 @@ ARG Kubectl_Version=1.32
 ARG Kubelogin_Version=v0.1.6
 ARG NodeJs_Version=22
 ARG Octopus_Cli_Legacy_Version=9.1.7
-ARG Octopus_Cli_Version=2.14.0
+ARG Octopus_Cli_Version=2.20.1
 ARG Octopus_Client_Version=14.3.1789
 ARG Powershell_Version=7.4.6-1.deb
 ARG Python2_Version=2.7.18-3
@@ -30,6 +30,7 @@ ARG Terraform_Version=1.10.4
 # Install common tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget unzip apt-utils curl software-properties-common iputils-ping gnupg ca-certificates apt-transport-https && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install PowerShell
@@ -38,6 +39,7 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsof
     apt-get update && \
     add-apt-repository universe && \
     apt-get install -y powershell=${Powershell_Version} &&\
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Octopus/Octo CLI
@@ -46,6 +48,7 @@ RUN apt-get update && \
     echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/octopus.gpg] https://apt.octopus.com/ stable main" | tee /etc/apt/sources.list.d/octopus.list > /dev/null && \
     apt-get update && \
     apt-get install -y octopus-cli=${Octopus_Cli_Version} octopuscli=${Octopus_Cli_Legacy_Version} && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Octopus Client
@@ -74,6 +77,7 @@ RUN DOTNET_CLI_TELEMETRY_OPTOUT=1 && \
     echo "export DOTNET_CLI_TELEMETRY_OPTOUT=1" > /etc/profile.d/set-dotnet-env-vars.sh && \
     apt-get update && \
     apt-get install -y dotnet-sdk-${Dotnet_Sdk_Version} && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install JDK / Tools
@@ -81,6 +85,7 @@ RUN DOTNET_CLI_TELEMETRY_OPTOUT=1 && \
 # https://packages.ubuntu.com/bionic/openjdk-11-dbg
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openjdk-${Java_Jdk_Version}-jdk-headless maven gradle && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Azure CLI
@@ -89,6 +94,7 @@ RUN curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor 
     echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ jammy main" | tee /etc/apt/sources.list.d/azure-cli.list && \
     apt-get update && \
     apt-get install -y azure-cli=${Azure_Cli_Version} && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     # remove az cli warning - https://github.com/Azure/arm-deploy/issues/173
     az config set bicep.use_binary_from_path=false
@@ -104,6 +110,7 @@ RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/v${Kubectl_Version}/deb/Releas
     echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${Kubectl_Version}/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list && \
     apt-get update && \ 
     apt-get install -y kubectl=${Kubectl_Version}.* && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Kubelogin
@@ -125,18 +132,22 @@ RUN wget --quiet https://releases.hashicorp.com/terraform/${Terraform_Version}/t
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     apt-get update && apt-get install -y google-cloud-cli=${Google_Cloud_Cli_Version} google-cloud-cli-gke-gcloud-auth-plugin=${Google_Cloud_Gke_Cloud_Auth_Plugin_Version} && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install pip & groff
 RUN apt-get update && \
     apt-get install -y python3-pip groff && \
     python3 -m pip install pycryptodome --user && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install python2
 RUN apt-get update && \
     apt-get install -y python2-minimal=${Python2_Version} && \
-    ln -s /usr/bin/python2 /usr/bin/python
+    ln -s /usr/bin/python2 /usr/bin/python && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install AWS CLI
 # https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html#install-linux-awscli
@@ -183,4 +194,7 @@ RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases
 # https://augeas.net/
 RUN add-apt-repository -y ppa:rmescandon/yq && \
     apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools xxd && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN rm -rf /usr/share/doc /usr/share/man /usr/share/info /var/cache/*
