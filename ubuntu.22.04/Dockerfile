@@ -29,7 +29,7 @@ ARG Terraform_Version=1.10.4
 
 # Install common tools
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget unzip apt-utils curl iputils-ping gnupg ca-certificates apt-transport-https && \
+    apt-get install -y --no-install-recommends wget unzip apt-utils curl software-properties-common iputils-ping gnupg ca-certificates apt-transport-https && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
