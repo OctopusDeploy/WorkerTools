@@ -85,7 +85,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has octopus cli installed' {
-        octopus version | Should -match '2.14.0'
+        octopus version | Should -match '2.20.1'
         $LASTEXITCODE | Should -be 0
     }     
 
