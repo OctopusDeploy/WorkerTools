@@ -23,7 +23,6 @@ ARG Java_Jdk_Version=21
 ARG Kubectl_Version=1.32
 ARG Kubelogin_Version=v0.1.6
 ARG NodeJs_Version=22
-ARG Octopus_Cli_Legacy_Version=9.1.7
 ARG Octopus_Cli_Version=2.20.1
 ARG Octopus_Client_Version=14.3.1789
 ARG Powershell_Version=7.5.4
