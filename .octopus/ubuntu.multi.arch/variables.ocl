@@ -8,3 +8,57 @@ variable "Docker.Registry.Target.Hostname" {
         environment = ["staging"]
     }
 }
+
+variable "WorkerTools.Version.MajorMinor" {
+    value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}" {}
+}
+
+variable "WorkerTools.Version.Major" {
+    value "#{Octopus.Release.Number | VersionMajor}" {}
+}
+
+variable "WorkerTools.Version.Full" {
+    value "#{Octopus.Release.Number}" {}
+}
+
+variable "WorkerTools.Tags.Os" {
+    value "ubuntu.24.04" {}
+}
+
+variable "WorkerTools.Tags.FullyQualified" {
+    value "#{Octopus.Release.Number}-ubuntu.24.04" {}
+}
+
+variable "Promoter.OsSuffix" {
+    value "ubuntu.24.04" {}
+}
+
+variable "Docker.Registry.Target.Username" {
+    value "#{DockerHubDockerRegistry.Username}" {
+        environment = ["production"]
+    }
+
+    value "#{OctopusDockerRegistry.Username}" {
+        environment = ["staging"]
+    }
+}
+
+variable "Docker.Registry.Target.Repository" {
+    value "docker.io/octopusdeploy/worker-tools" {
+        environment = ["production"]
+    }
+
+    value "docker.packages.octopushq.com/octopusdeploy/worker-tools" {
+        environment = ["staging"]
+    }
+}
+
+variable "Docker.Registry.Target.Password" {
+    value "#{DockerHubDockerRegistry.Password}" {
+        environment = ["production"]
+    }
+
+    value "#{OctopusDockerRegistry.Password}" {
+        environment = ["staging"]
+    }
+}
