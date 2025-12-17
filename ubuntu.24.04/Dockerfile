@@ -234,10 +234,10 @@ RUN curl -sL https://istio.io/downloadIstioctl | sh - && \
     rm -rf /root/.istioctl
 
 # Install Linkerd CLI
-# https://linkerd.io/2/getting-started/
-RUN curl -sL https://run.linkerd.io/install | sh && \
-    cp /root/.linkerd2/bin/linkerd /usr/local/bin && \
-    rm -rf /root/.linkerd2
+# https://linkerd.io/2-edge/getting-started/
+RUN curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh && \
+    export PATH=$HOME/.linkerd2/bin:$PATH
+
 
 # Install Argo CD
 RUN case "$TARGETPLATFORM" in \
