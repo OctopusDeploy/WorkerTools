@@ -48,26 +48,14 @@ RUN case "$TARGETPLATFORM" in \
     rm powershell-${Powershell_Version}-linux-${PWSH_ARCH}.tar.gz
 
 # Install Octopus/Octo CLI
-# RUN apt-get update && \
-#     curl -fsSL https://apt.octopus.com/public.key | gpg --dearmor -o /etc/apt/keyrings/octopus.gpg && \
-#     ARCH=$(dpkg --print-architecture) && \
-#     printf "deb [arch=%s signed-by=/etc/apt/keyrings/octopus.gpg] https://apt.octopus.com/ stable main\n" "$ARCH" > /etc/apt/sources.list.d/octopus.list && \
-#     apt-get update && \
-#     apt-get install -y octopus-cli=${Octopus_Cli_Version} && \
-#     apt-get clean && \
-#     rm -rf /var/lib/apt/lists/*
-
-# Install Octopus CLI Direct from GitHub (temporary)
-# https://github.com/OctopusDeploy/cli
-RUN case "$TARGETPLATFORM" in \
-        "linux/amd64") OCTO_ARCH="x64" ;; \
-        "linux/arm64") OCTO_ARCH="arm64" ;; \
-        *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
-    esac && \
-    wget --quiet https://github.com/OctopusDeploy/cli/releases/download/v${Octopus_Cli_Version}/octopus_${Octopus_Cli_Version}_Linux_${OCTO_ARCH}.tar.gz && \
-    tar -xzf octopus_${Octopus_Cli_Version}_Linux_${OCTO_ARCH}.tar.gz -C /usr/local/bin octopus && \
-    rm octopus_${Octopus_Cli_Version}_Linux_${OCTO_ARCH}.tar.gz && \
-    ln -s /usr/local/bin/octopus /usr/local/bin/octo
+RUN apt-get update && \
+    curl -fsSL https://apt.octopus.com/public.key | gpg --dearmor -o /etc/apt/keyrings/octopus.gpg && \
+    ARCH=$(dpkg --print-architecture) && \
+    printf "deb [arch=%s signed-by=/etc/apt/keyrings/octopus.gpg] https://apt.octopus.com/ stable main\n" "$ARCH" > /etc/apt/sources.list.d/octopus.list && \
+    apt-get update && \
+    apt-cache madison apt-get install -y octopus-cli=${Octopus_Cli_Version} && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Octopus Client
 # https://octopus.com/docs/octopus-rest-api/octopus.client
