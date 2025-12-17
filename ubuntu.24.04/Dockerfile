@@ -16,8 +16,8 @@ ARG Azure_Powershell_Version=13.0.0
 ARG Dotnet_Sdk_Version=8.0
 ARG Ecs_Cli_Version=1.21.0
 ARG Eks_Cli_Version=v0.220.0
-ARG Google_Cloud_Cli_Version=505.0.0-0
-ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=505.0.0-0
+ARG Google_Cloud_Cli_Version=550.0.0-0
+ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=550.0.0-0
 ARG Helm_Version=v3.16.4
 ARG Java_Jdk_Version=21
 ARG Kubectl_Version=1.32
@@ -48,19 +48,26 @@ RUN case "$TARGETPLATFORM" in \
     rm powershell-${Powershell_Version}-linux-${PWSH_ARCH}.tar.gz
 
 # Install Octopus/Octo CLI
+# RUN apt-get update && \
+#     curl -fsSL https://apt.octopus.com/public.key | gpg --dearmor -o /etc/apt/keyrings/octopus.gpg && \
+#     ARCH=$(dpkg --print-architecture) && \
+#     printf "deb [arch=%s signed-by=/etc/apt/keyrings/octopus.gpg] https://apt.octopus.com/ stable main\n" "$ARCH" > /etc/apt/sources.list.d/octopus.list && \
+#     apt-get update && \
+#     apt-get install -y octopus-cli=${Octopus_Cli_Version} && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
+
+# Install Octopus CLI Direct from GitHub (temporary)
+# https://github.com/OctopusDeploy/cli
 RUN case "$TARGETPLATFORM" in \
-        "linux/amd64") OCTO_CLI_ARCH="amd64" ;; \
-        "linux/arm64") OCTO_CLI_ARCH="arm64" ;; \
+        "linux/amd64") OCTO_ARCH="x64" ;; \
+        "linux/arm64") OCTO_ARCH="arm64" ;; \
         *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
-    esac && \ 
-    apt-get update && \
-    curl -fsSL https://apt.octopus.com/public.key | gpg --dearmor -o /etc/apt/keyrings/octopus.gpg && \
-    echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/octopus.gpg] https://apt.octopus.com/ stable main" | tee /etc/apt/sources.list.d/octopus.list > /dev/null && \
-    apt-get update && \
-    apt-get install -y octopus-cli=${Octopus_Cli_Version} && \
-    # octopuscli=${Octopus_Cli_Legacy_Version} Not sure if we have an ARM version of this
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    esac && \
+    wget --quiet https://github.com/OctopusDeploy/cli/releases/download/v${Octopus_Cli_Version}/octopus_${Octopus_Cli_Version}_Linux_${OCTO_ARCH}.tar.gz && \
+    tar -xzf octopus_${Octopus_Cli_Version}_Linux_${OCTO_ARCH}.tar.gz -C /usr/local/bin octopus && \
+    rm octopus_${Octopus_Cli_Version}_Linux_${OCTO_ARCH}.tar.gz && \
+    ln -s /usr/local/bin/octopus /usr/local/bin/octo
 
 # Install Octopus Client
 # https://octopus.com/docs/octopus-rest-api/octopus.client
@@ -156,6 +163,10 @@ RUN case "$TARGETPLATFORM" in \
         "linux/arm64") GCLOUD_ARCH="arm" ;; \
         *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
     esac && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+
+
     curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-${GCLOUD_ARCH}.tar.gz && \
     tar -xf google-cloud-cli-linux-${GCLOUD_ARCH}.tar.gz && \
     ./google-cloud-sdk/install.sh --quiet --usage-reporting false --path-update true && \
@@ -180,7 +191,7 @@ RUN case "$TARGETPLATFORM" in \
         "linux/arm64") AWS_CLI_ARCH="aarch64" ;; \
         *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
     esac && \
-    curl -L "https://awscli.amazonaws.com/awscli-exe-${AWS_CLI_ARCH}-${Aws_Cli_Version}.zip" -o "awscliv2.zip" && \
+    curl -L "https://awscli.amazonaws.com/awscli-exe-linux-${AWS_CLI_ARCH}-${Aws_Cli_Version}.zip" -o "awscliv2.zip" && \
     unzip -q awscliv2.zip && \
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli && \
     rm -f awscliv2.zip && \

@@ -35,8 +35,8 @@
 - Dotnet Sdk 8.0
 - Ecs CLI 1.21.0
 - Eksctl 0.220.0
-- Google Cloud CLI 505.0.0
-- Google Cloud GKE auth plugin 505.0.0
+- Google Cloud CLI 550.0.0
+- Google Cloud GKE auth plugin 550.0.0
 - Helm v3.16.4
 - Java Jdk 21
 - Kubectl 1.32
