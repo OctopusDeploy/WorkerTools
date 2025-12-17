@@ -1,0 +1,10 @@
+variable "Docker.Registry.Target.Hostname" {
+    value "#{DockerHubDockerRegistry.Hostname}" {
+        environment = ["production"]
+    }
+
+    value "#{OctopusDockerRegistry.Hostname}" {
+        description = ""
+        environment = ["staging"]
+    }
+}
