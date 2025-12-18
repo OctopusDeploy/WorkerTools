@@ -7,7 +7,20 @@ services:
         working_dir: /app
         entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
 
+    ubuntu.22.04:
+        build: ubuntu.22.04
+        image: docker.packages.octopushq.com/octopusdeploy/worker-tools:${BUILD_NUMBER?err}-ubuntu.22.04
+        volumes:
+          - ./ubuntu.22.04:/app
+        working_dir: /app
+        entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
+  
+    # Use a buildx build for x-plat build unlike the above
     ubuntu.24.04-amd64:
+      build:
+        context: ./ubuntu.24.04
+        args:
+          TARGETPLATFORM: linux/amd64
       image: docker.packages.octopushq.com/octopusdeploy/worker-tools:${BUILD_NUMBER?err}-ubuntu.24.04-amd64
       volumes:
         - ./ubuntu.24.04:/app
@@ -15,6 +28,10 @@ services:
       entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
 
     ubuntu.24.04-arm64:
+      build:
+        context: ./ubuntu.24.04
+        args:
+          TARGETPLATFORM: linux/arm64
       image: docker.packages.octopushq.com/octopusdeploy/worker-tools:${BUILD_NUMBER?err}-ubuntu.24.04-arm64
       volumes:
         - ./ubuntu.24.04:/app
