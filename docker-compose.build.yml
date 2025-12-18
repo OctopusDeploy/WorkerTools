@@ -15,7 +15,6 @@ services:
         working_dir: /app
         entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
   
-    # Use a buildx build for x-plat build unlike the above
     ubuntu.24.04-amd64:
       build:
         context: ./ubuntu.24.04
