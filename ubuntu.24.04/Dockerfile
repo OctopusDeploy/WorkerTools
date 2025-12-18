@@ -53,7 +53,7 @@ RUN apt-get update && \
     ARCH=$(dpkg --print-architecture) && \
     printf "deb [arch=%s signed-by=/etc/apt/keyrings/octopus.gpg] https://apt.octopus.com/ stable main\n" "$ARCH" > /etc/apt/sources.list.d/octopus.list && \
     apt-get update && \
-    apt-cache madison apt-get install -y octopus-cli=${Octopus_Cli_Version} && \
+    apt-get install -y octopus-cli=${Octopus_Cli_Version} && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
