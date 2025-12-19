@@ -1,1 +1,5 @@
 mode: ContinuousDeployment
+
+branches:
+  pull-request:
+    tag: pr
