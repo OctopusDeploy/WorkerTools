@@ -20,3 +20,77 @@ step "push-docker-image" {
         }
     }
 }
+
+step "tag-and-re-push-docker-image" {
+    name = "Tag and Re-push Docker Image"
+
+    action {
+        action_type = "Octopus.Script"
+        environments = ["staging", "production"]
+        properties = {
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                #!/bin/bash
+                echo "##octopus[stderr-progress]"
+                set -eux
+                
+                sourceHostName=$(get_octopusvariable "OctopusDockerRegistry.Hostname")
+                targetHostName=$(get_octopusvariable "Docker.Registry.Target.Hostname")
+                
+                echo "Source Registry Name: $sourceHostName"
+                echo "Target Registry Name: $targetHostName"
+                
+                retry --times=3 --delay=5 -- skopeo login -u $(get_octopusvariable "OctopusDockerRegistry.Username") -p $(get_octopusvariable "OctopusDockerRegistry.Password") $sourceHostName
+                retry --times=3 --delay=5 -- skopeo login -u $(get_octopusvariable "Docker.Registry.Target.Username") -p $(get_octopusvariable "Docker.Registry.Target.Password") $targetHostName
+                
+                repositoryTagsJson=$(retry --times=3 --delay=5 -- skopeo list-tags docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"))
+                
+                # Up to here
+                osSuffix=$(get_octopusvariable "WorkerTools.Tags.Os")
+                fullyQualifiedTag=$(get_octopusvariable "WorkerTools.Version.Full")-${osSuffix}
+                
+                semVerRegex="[0-9]+\.[0-9]+\.[0-9]+\-.*"
+                if ! [[ $fullyQualifiedTag =~ $semVerRegex ]]; then
+                    echo "The tag $fullyQualifiedTag should be a fully qualified SemVer tag"
+                    exit 1
+                fi
+                
+                matchingSourceTag=$(jq -r --arg fullyQualifiedTag "$fullyQualifiedTag" '.Tags[] | select(.==$fullyQualifiedTag)' <<<"$repositoryTagsJson")
+                
+                if [ "$fullyQualifiedTag" != "$matchingSourceTag" ]; then
+                    echo "The tag $fullyQualifiedTag could not be found in $sourceHostName"
+                    exit 1
+                fi
+                
+                # We apply a pre-release tag for now if pushing to public repo
+                prereleaseTag=$(get_octopusvariable "WorkerTools.Tags.Prerelease")
+                latestTag=${osSuffix}
+                latestMajorTag=$(get_octopusvariable "WorkerTools.Version.Major")-${osSuffix}
+                latestMinorTag=$(get_octopusvariable "WorkerTools.Version.MajorMinor")-${osSuffix}
+                
+                echo "Image tag for promotion: $fullyQualifiedTag"
+                
+                if [ "$sourceHostName" != "$targetHostName" ]; then
+                	echo "Pushing $fullyQualifiedTag tag to target registry"
+                	retry --times=6 --delay=10 -- skopeo copy --all docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"):$fullyQualifiedTag docker://$(get_octopusvariable "Docker.Registry.Target.Repository"):$fullyQualifiedTag
+                fi
+                
+                echo "Pushing floating tags to target registry:"
+                echo $latestMajorTag
+                echo $latestMinorTag
+                echo $latestTag
+                retry --times=6 --delay=10 -- skopeo copy --all docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"):$fullyQualifiedTag docker://$(get_octopusvariable "Docker.Registry.Target.Repository"):$latestMajorTag
+                retry --times=6 --delay=10 -- skopeo copy --all docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"):$fullyQualifiedTag docker://$(get_octopusvariable "Docker.Registry.Target.Repository"):$latestMinorTag
+                retry --times=6 --delay=10 -- skopeo copy --all docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"):$fullyQualifiedTag docker://$(get_octopusvariable "Docker.Registry.Target.Repository"):$latestTag
+                EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "hosted-ubuntu"
+
+        container {
+            feed = "docker-packages-octopushq"
+            image = "octopusdeploy/tool-containers/tool-skopeo-cli"
+        }
+    }
+}
