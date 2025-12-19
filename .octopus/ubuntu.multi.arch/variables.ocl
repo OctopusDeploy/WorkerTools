@@ -62,3 +62,13 @@ variable "Docker.Registry.Target.Password" {
         environment = ["staging"]
     }
 }
+
+variable "WorkerTools.Tags.Prerelease" {
+    value "-beta" {
+        environment = ["production"]
+    }
+
+    value {
+        environment = ["staging"]
+    }
+}
