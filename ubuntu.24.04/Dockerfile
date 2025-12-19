@@ -212,15 +212,16 @@ RUN curl -sL https://istio.io/downloadIstioctl | sh - && \
     rm -rf /root/.istioctl
 
 # Install Linkerd CLI
-# https://linkerd.io/2-edge/getting-started/
-RUN curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh && \
-    export PATH=$HOME/.linkerd2/bin:$PATH
+# https://linkerd.io/2/getting-started/
+RUN curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh
+ENV LINKERD_HOME=/root/.linkerd2
+ENV PATH="${LINKERD_HOME}/bin:${PATH}"
 
 
 # Install Argo CD
 RUN case "$TARGETPLATFORM" in \
         "linux/amd64") ARGO_ARCH="amd64" ;; \
-        "linux/arm64") AROG_ARCH="arm64" ;; \
+        "linux/arm64") ARGO_ARCH="arm64" ;; \
         *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
     esac && \ 
     curl -sSL -o argocd-linux-${ARGO_ARCH} https://github.com/argoproj/argo-cd/releases/download/v${Argocd_Version}/argocd-linux-${ARGO_ARCH} && \
