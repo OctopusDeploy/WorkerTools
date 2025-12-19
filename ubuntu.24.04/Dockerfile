@@ -145,22 +145,12 @@ RUN case "$TARGETPLATFORM" in \
     rm terraform_${Terraform_Version}_linux_${TERRAFORM_ARCH}.zip
 
 # Install Google Cloud CLI - Architecture-specific recommended install method
-# https://docs.cloud.google.com/sdk/docs/install-sdk
-RUN case "$TARGETPLATFORM" in \
-        "linux/amd64") GCLOUD_ARCH="x86_64" ;; \
-        "linux/arm64") GCLOUD_ARCH="arm" ;; \
-        *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
-    esac && \
-    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
+# https://docs.cloud.google.com/sdk/docs/install-sdk#deb
+RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-
-
-    curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-${GCLOUD_ARCH}.tar.gz && \
-    tar -xf google-cloud-cli-linux-${GCLOUD_ARCH}.tar.gz && \
-    ./google-cloud-sdk/install.sh --quiet --usage-reporting false --path-update true && \
-    ln -s /google-cloud-sdk/bin/gcloud /usr/local/bin/gcloud && \
-    ln -s /google-cloud-sdk/bin/gsutil /usr/local/bin/gsutil && \
-    rm google-cloud-cli-linux-${GCLOUD_ARCH}.tar.gz
+    apt-get update && apt-get install -y --no-install-recommends google-cloud-cli=${Google_Cloud_Cli_Version} google-cloud-cli-gke-gcloud-auth-plugin=${Google_Cloud_Gke_Cloud_Auth_Plugin_Version} && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install pip & groff
 # Ubuntu 24.04 requires --break-system-packages due to PEP 668
@@ -233,9 +223,9 @@ RUN case "$TARGETPLATFORM" in \
         "linux/arm64") AROG_ARCH="arm64" ;; \
         *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
     esac && \ 
-curl -sSL -o argocd-linux-${ARGO_ARCH} https://github.com/argoproj/argo-cd/releases/download/v${Argocd_Version}/argocd-linux-${ARGO_ARCH} && \
-install -m 555 argocd-linux-${ARGO_ARCH} /usr/local/bin/argocd && \
-rm argocd-linux-${ARGO_ARCH}
+    curl -sSL -o argocd-linux-${ARGO_ARCH} https://github.com/argoproj/argo-cd/releases/download/v${Argocd_Version}/argocd-linux-${ARGO_ARCH} && \
+    install -m 555 argocd-linux-${ARGO_ARCH} /usr/local/bin/argocd && \
+    rm argocd-linux-${ARGO_ARCH}
 
 # Get common utilities for scripting
 # https://mikefarah.gitbook.io/yq/
