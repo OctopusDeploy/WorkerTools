@@ -3,6 +3,7 @@ step "push-docker-image" {
 
     action {
         environments = ["staging", "production"]
+        is_disabled = true
         properties = {
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
             DockerPush.Target.Docker.Registry.Password = "#{Docker.Registry.Target.Password}"
