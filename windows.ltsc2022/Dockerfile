@@ -3,28 +3,28 @@
 FROM mcr.microsoft.com/dotnet/framework/runtime:4.8.1-20230808-windowsservercore-ltsc2022
 SHELL ["powershell", "-Command"]
 
-ARG 7Zip_Version=24.9.0
-ARG Argo_Cli_Version=2.13.3
-ARG Aws_Cli_Version=2.24.10
-ARG Aws_Iam_Authenticator_Version=0.6.29
-ARG Aws_Powershell_Version=4.1.734
-ARG Azure_Cli_Version=2.67.0
-ARG Azure_Powershell_Version=13.0.0
-ARG Eks_Cli_Version=0.200.0
-ARG Git_Version=2.47.1
-ARG Google_Cloud_Cli_Version=505.0.0
-ARG Helm_Version=3.16.4
-ARG Java_Jdk_Version=21.0.2
-ARG Kubectl_Version=1.32.0
-ARG Kubelogin_Version=0.1.6
-ARG Node_Version=22.11.0
+ARG 7Zip_Version=25.1.0
+ARG Argo_Cli_Version=3.2.3
+ARG Aws_Cli_Version=2.32.28
+ARG Aws_Iam_Authenticator_Version=0.7.10
+ARG Aws_Powershell_Version=5.0.128
+ARG Azure_Cli_Version=2.81.0
+ARG Azure_Powershell_Version=15.1.0
+ARG Eks_Cli_Version=0.221.0
+ARG Git_Version=2.52.1
+ARG Google_Cloud_Cli_Version=550.0.0
+ARG Helm_Version=3.19.0
+ARG Java_Jdk_Version=25.0.0.1
+ARG Kubectl_Version=1.35.0
+ARG Kubelogin_Version=0.2.13
+ARG Node_Version=24.12.0
 ARG Octopus_Cli_Legacy_Version=9.1.7
-ARG Octopus_Cli_Version=2.14.0
-ARG Octopus_Client_Version=14.3.1789
-ARG Powershell_Version=7.4.6
-ARG Python_Version=3.13.1
+ARG Octopus_Cli_Version=2.20.1
+ARG Octopus_Client_Version=20.3.2503
+ARG Powershell_Version=7.5.4
+ARG Python_Version=3.14.2
 ARG ScriptCs_Version=0.17.1
-ARG Terraform_Version=1.10.4
+ARG Terraform_Version=1.14.3
 
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
