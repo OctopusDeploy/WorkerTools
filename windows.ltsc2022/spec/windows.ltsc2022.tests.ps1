@@ -22,7 +22,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has java installed' {
-        java -version 2>&1 | Select-String -Pattern '21\.0\.2' | Should -BeLike "*21.0.2*"
+        java -version 2>&1 | Select-String -Pattern '25' | Should -BeLike "*25*"
         $LASTEXITCODE | Should -be 0
     }
 
@@ -86,7 +86,7 @@ Describe  'installed dependencies' {
     }
     
     It 'has gke-gcloud-auth-plugin installed' {
-        gcloud --version | Select-String -Pattern "0.5.9" | Should -BeLike "gke-gcloud-auth-plugin 0.5.9"
+        gke-gcloud-auth-plugin --version | Select -First 1 | Should -BeLike "Kubernetes v1.30.0"
         $LASTEXITCODE | Should -be 0
     }
 
@@ -107,7 +107,7 @@ Describe  'installed dependencies' {
 
     It 'has 7zip installed' {
         $output = (& "C:\Program Files\7-Zip\7z.exe" --help) -join "`n"
-        $output | Should -Match '7-Zip 25.1'
+        $output | Should -Match '7-Zip 25.01'
         $LASTEXITCODE | Should -be 0
     }
 

@@ -90,11 +90,8 @@ RUN choco install -y python3 --version $Env:Python_Version --no-progress; `
 RUN choco install 7zip -y --version $Env:7Zip_Version --no-progress
 
 # Install gcloud
-RUN Invoke-WebRequest "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${Env:Google_Cloud_Cli_Version}-windows-x86_64.zip" -OutFile google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip; `
-    # # UNZIP AND INSTALL gcloud
-    & '.\Program Files\7-Zip\7z.exe' x .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip; `
-    .\google-cloud-sdk\install.bat --quiet; `
-    rm .\google-cloud-sdk-$Env:Google_Cloud_Cli_Version-windows-x86_64.zip
+RUN choco install gcloudsdk -y --version $Env:Google_Cloud_Cli_Version --no-progress; `
+    gcloud components install gke-gcloud-auth-plugin --quiet
 
 # Install ScriptCS
 RUN choco install scriptcs -y --version $Env:ScriptCs_Version --no-progress
@@ -123,7 +120,3 @@ RUN choco install argocd-cli --yes --version $Env:Argo_Cli_Version --no-progress
 # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
 RUN .\update_path.cmd;
-
-# gcloud requires python on path, update_path.cmd adds python to path. Delete any backup files that exist (~1gb)
-RUN gcloud components install gke-gcloud-auth-plugin --quiet; `
-    if (Test-Path C:\google-cloud-sdk\.install\.backup) {Remove-Item -Path C:\google-cloud-sdk\.install\.backup -Force -Recurse}
