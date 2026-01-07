@@ -90,8 +90,10 @@ RUN choco install -y python3 --version $Env:Python_Version --no-progress; `
 RUN choco install 7zip -y --version $Env:7Zip_Version --no-progress
 
 # Install gcloud
-RUN choco install gcloudsdk -y --version $Env:Google_Cloud_Cli_Version --no-progress; `
-    gcloud components install gke-gcloud-auth-plugin --quiet
+RUN choco install gcloudsdk -y --version $Env:Google_Cloud_Cli_Version --no-progress
+
+# Install gcloud kubectl auth
+RUN gcloud components install gke-gcloud-auth-plugin --quiet
 
 # Install ScriptCS
 RUN choco install scriptcs -y --version $Env:ScriptCs_Version --no-progress
