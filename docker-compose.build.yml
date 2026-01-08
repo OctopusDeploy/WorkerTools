@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     ubuntu.18.04:
         build: ubuntu.18.04
@@ -16,6 +14,28 @@ services:
           - ./ubuntu.22.04:/app
         working_dir: /app
         entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
+  
+    ubuntu.24.04-amd64:
+      build:
+        context: ./ubuntu.24.04
+        args:
+          TARGETPLATFORM: linux/amd64
+      image: docker.packages.octopushq.com/octopusdeploy/worker-tools:${BUILD_NUMBER?err}-ubuntu.24.04-amd64
+      volumes:
+        - ./ubuntu.24.04:/app
+      working_dir: /app
+      entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
+
+    ubuntu.24.04-arm64:
+      build:
+        context: ./ubuntu.24.04
+        args:
+          TARGETPLATFORM: linux/arm64
+      image: docker.packages.octopushq.com/octopusdeploy/worker-tools:${BUILD_NUMBER?err}-ubuntu.24.04-arm64
+      volumes:
+        - ./ubuntu.24.04:/app
+      working_dir: /app
+      entrypoint: ["pwsh", "-file", "scripts/run-tests.ps1"]
 
     windows.ltsc2019:
         build: windows.ltsc2019
