@@ -76,7 +76,10 @@ RUN Invoke-WebRequest "https://dl.k8s.io/release/v${Env:Kubectl_Version}/bin/win
 RUN choco install azure-kubelogin --version $Env:Kubelogin_Version --no-progress -y
 
 # Install helm 3
-RUN choco install -y kubernetes-helm --version $Env:Helm_Version --no-progress
+RUN Invoke-WebRequest "https://get.helm.sh/helm-v${Env:Helm_Version}-windows-amd64.zip" -OutFile helm.zip; `
+    Expand-Archive helm.zip -DestinationPath helm; `
+    mv helm\windows-amd64\helm.exe C:\Windows\system32\; `
+    Remove-Item -Recurse -Force helm, helm.zip
 
 # Install Terraform
 RUN choco install -y terraform --version $Env:Terraform_Version --no-progress
