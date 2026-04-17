@@ -23,6 +23,7 @@ ARG Octopus_Cli_Version=2.20.1
 ARG Octopus_Client_Version=20.3.2503
 ARG Powershell_Version=7.5.4-1.deb
 ARG Python2_Version=2.7.18-3
+ARG Istio_Version=1.29.2
 ARG Terraform_Version=1.14.3
 
 # Install common tools
@@ -172,7 +173,7 @@ RUN curl --silent --location https://github.com/kubernetes-sigs/aws-iam-authenti
 
 ## Install Istio CLI
 ## https://istio.io/docs/ops/diagnostic-tools/istioctl/
-RUN curl -sL https://istio.io/downloadIstioctl | sh - && \
+RUN curl -sL https://istio.io/downloadIstioctl | ISTIO_VERSION=${Istio_Version} sh - && \
     mv /root/.istioctl/bin/istioctl /usr/local/bin/istioctl && \
     rm -rf /root/.istioctl
 
