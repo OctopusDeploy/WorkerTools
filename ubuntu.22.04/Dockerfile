@@ -13,7 +13,7 @@ ARG Ecs_Cli_Version=1.21.0
 ARG Eks_Cli_Version=v0.221.0
 ARG Google_Cloud_Cli_Version=550.0.0-0
 ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=550.0.0-0
-ARG Helm_Version=v3.19.0
+ARG Helm_Version=v3.20.2
 ARG Java_Jdk_Version=25
 ARG Kubectl_Version=1.35
 ARG Kubelogin_Version=v0.2.13
@@ -23,6 +23,7 @@ ARG Octopus_Cli_Version=2.20.1
 ARG Octopus_Client_Version=20.3.2503
 ARG Powershell_Version=7.5.4-1.deb
 ARG Python2_Version=2.7.18-3
+ARG Istio_Version=1.29.2
 ARG Terraform_Version=1.14.3
 
 # Install common tools
@@ -172,7 +173,7 @@ RUN curl --silent --location https://github.com/kubernetes-sigs/aws-iam-authenti
 
 ## Install Istio CLI
 ## https://istio.io/docs/ops/diagnostic-tools/istioctl/
-RUN curl -sL https://istio.io/downloadIstioctl | sh - && \
+RUN curl -sL https://istio.io/downloadIstioctl | ISTIO_VERSION=${Istio_Version} sh - && \
     mv /root/.istioctl/bin/istioctl /usr/local/bin/istioctl && \
     rm -rf /root/.istioctl
 
