@@ -4,7 +4,7 @@ Officially sanctioned worker images for Octopus Deploy available on [docker hub]
 
 | Operating System         | Installed Tools and Versions                                                                                                                         |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Ubuntu 22.04              | [Installed tools](./ubuntu.22.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.22.04/Dockerfile))         |
+| Ubuntu 24.04              | [Installed tools](./ubuntu.24.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.24.04/Dockerfile))         |
 | Windows Server Core 2022 | [Installed tools](./windows.ltsc2022/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/Dockerfile)) |
 
 ## Management
@@ -19,7 +19,7 @@ If the tools or the way they are managed don't fit your particular use case, it 
 
 See the docs to get started using the `octopusdeploy/worker-tools` image as an [execution container for workers](https://octopus.com/docs/deployment-process/execution-containers-for-workers).
 
-The images we publish are [semantically versioned](https://semver.org/). To ensure stability within your deployment processes, we recommend using the full `major.minor.patch` tag when using the `octopusdeploy/worker-tools` image - for example, use `2.0.2-ubuntu.22.04`, not `ubuntu.22.04`.
+The images we publish are [semantically versioned](https://semver.org/). To ensure stability within your deployment processes, we recommend using the full `major.minor.patch` tag when using the `octopusdeploy/worker-tools` image - for example, use `6.5.2-ubuntu.24.04`, not `ubuntu.24.04`.
 
 ## Contributing
 
@@ -36,15 +36,15 @@ Our tests are implemented in `Pester`, which relies on `PowerShell`.
 #### Option 1: Build and Test scripts
 
 ```bash
-./build.sh --image-directory='ubuntu.22.04'
+./build.sh --image-directory='ubuntu.24.04'
 ```
 
-Runs a build and test of the `ubuntu.22.04` container
+Runs a build and test of the `ubuntu.24.04` container
 
 #### Option 2: DIY
 
 ```bash
-cd ubuntu.22.04
+cd ubuntu.24.04
 docker build . -t worker-tools
 docker build . -t worker-tools-tests -f Tests.Dockerfile --build-arg ContainerUnderTest=worker-tools
 docker run -it -v `pwd`:/app worker-tools-tests pwsh
