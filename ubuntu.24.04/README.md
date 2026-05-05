@@ -52,6 +52,7 @@ MultiArch
 - Octopus CLI 2.21.0
 - Octopus Client 21.6.26529
 - Powershell 7.6.1
+- Python3 3.14.4
 - Terraform 1.15.1
 - wget - Latest
 - unzip - Latest
@@ -60,7 +61,6 @@ MultiArch
 - software-properties-common - Latest
 - maven - Latest
 - gradle - Latest
-- Python3 - Latest
 - groff - Latest
 - Istio CLI - Latest
 - Linkerd CLI - Latest
