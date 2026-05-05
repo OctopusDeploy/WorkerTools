@@ -36,7 +36,7 @@ MultiArch
 - Argo CD CLI 3.3.9
 - Aws CLI 2.34.42
 - Aws Iam Authenticator 0.7.14
-- Aws Powershell 5.3.1
+- Aws Powershell 5.0.207
 - Azure CLI 2.85.0
 - Azure Powershell 15.5.0
 - Dotnet Sdk 10.0

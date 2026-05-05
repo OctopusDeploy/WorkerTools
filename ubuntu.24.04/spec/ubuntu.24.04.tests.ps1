@@ -5,7 +5,7 @@ Write-Host 'Running tests with Pester v'+$($pesterModules[0].Version)
 
 Describe  'installed dependencies' {
     It 'has Octopus.Client installed ' {
-        $expectedVersion = "14.3.1789"
+        $expectedVersion = "21.6.2652"
         [Reflection.AssemblyName]::GetAssemblyName("/Octopus.Client.dll").Version.ToString() | Should -match "$expectedVersion.0"
     }
 
@@ -20,12 +20,12 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws powershell module installed' {
-        (Get-Module AWSPowerShell.NetCore -ListAvailable).Version.ToString() | should -be '5.3.1'
+        (Get-Module AWSPowerShell.NetCore -ListAvailable).Version.ToString() | should -be '5.0.207'
     }
 
     It 'has az installed' {
         $output = (& az version) | convertfrom-json
-        $output.'azure-cli' | Should -be '2.67.0'
+        $output.'azure-cli' | Should -be '2.85.0'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -74,7 +74,7 @@ Describe  'installed dependencies' {
     
     It 'has gke-gcloud-auth-plugin installed' {
         #We use belike here as the hash after the 'alpha+' changes and isn't that important
-        gke-gcloud-auth-plugin --version | Select -First 1 | Should -beLike 'Kubernetes v1.32.0*'
+        gke-gcloud-auth-plugin --version | Select -First 1 | Should -beLike 'Kubernetes v1.35.0*'
         $LASTEXITCODE | Should -be 0
     }
 
