@@ -26,7 +26,7 @@ ARG NodeJs_Version=24
 ARG Octopus_Cli_Version=2.21.0
 ARG Octopus_Client_Version=21.6.2652
 ARG Powershell_Version=7.6.1
-ARG Python_Version=3.14.4
+ARG Python_Version=3.14
 ARG Terraform_Version=1.15.1
 
 # Install common tools
