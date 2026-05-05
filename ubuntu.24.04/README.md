@@ -52,7 +52,7 @@ MultiArch
 - Octopus CLI 2.21.0
 - Octopus Client 21.6.26529
 - Powershell 7.6.1
-- Python3 3.14.4
+- Python3 3.14
 - Terraform 1.15.1
 - wget - Latest
 - unzip - Latest
