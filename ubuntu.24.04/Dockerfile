@@ -26,7 +26,6 @@ ARG NodeJs_Version=24
 ARG Octopus_Cli_Version=2.21.0
 ARG Octopus_Client_Version=21.6.2652
 ARG Powershell_Version=7.6.1
-ARG Python_Version=3.14
 ARG Terraform_Version=1.15.1
 
 # Install common tools
@@ -153,19 +152,14 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Python 3 from deadsnakes PPA & groff
-# Using deadsnakes PPA to avoid PEP 668 system package restrictions
-# We then switch the symlink from the System version of Python
-# to the user space version
+# Install pip & groff
+# Ubuntu 24.04 requires --break-system-packages due to PEP 668
+# https://peps.python.org/pep-0668/
+# There is a way to update python, but there are currently issues because of an ongoing DDoS attack affecting launchpad
+# TODO: Comeback and fix this
 RUN apt-get update && \
-    apt-get install -y software-properties-common groff && \
-    add-apt-repository ppa:deadsnakes/ppa -y && \
-    apt-get update && \
-    apt-get install -y python${Python_Version} python${Python_Version}-venv python${Python_Version}-dev && \
-    curl -sS https://bootstrap.pypa.io/get-pip.py | python${Python_Version} && \
-    ln -sf /usr/bin/python${Python_Version} /usr/local/bin/python3 && \
-    ln -sf /usr/local/bin/pip${Python_Version} /usr/local/bin/pip3 && \
-    python${Python_Version} -m pip install pycryptodome && \
+    apt-get install -y python3-pip groff && \
+    python3 -m pip install pycryptodome --user --break-system-packages && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
