@@ -182,7 +182,7 @@ RUN case "$TARGETPLATFORM" in \
         "linux/arm64") EKS_CLI_ARCH="arm64" ;; \
         *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
     esac && \
-    curl --silent --location "https://github.com/eksctl-io/eksctl/releases/download/${Eks_Cli_Version}}/eksctl_Linux_${EKS_CLI_ARCH}.tar.gz" | tar xz -C /tmp && \
+    curl --silent --location "https://github.com/eksctl-io/eksctl/releases/download/${Eks_Cli_Version}/eksctl_Linux_${EKS_CLI_ARCH}.tar.gz" | tar xz -C /tmp && \
     mv /tmp/eksctl /usr/local/bin
 
 # Install ECS CLI
