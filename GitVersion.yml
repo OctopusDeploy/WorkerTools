@@ -2,4 +2,5 @@ mode: ContinuousDeployment
 
 branches:
   pull-request:
+    mode: ContinuousDeployment
     label: pr-{Number}
