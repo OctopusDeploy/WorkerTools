@@ -15,7 +15,7 @@ Pick an image that is suitable for your needs based on OS + distribution.
 | Ubuntu 24.04             | [Installed tools](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.24.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.24.04/Dockerfile))         |
 | Windows Server Core 2022 | [Installed tools](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/Dockerfile)) |
 
-The images we publish have multiple release tracks, and are [semantically versioned](https://semver.org/). To ensure stability within your deployment processes, we recommend using the full `major.minor.patch` tag when using the `octopusdeploy/worker-tools` image - for example, use `5.6.1-ubuntu.24.04`, not `ubuntu.24.04`, unless you have a particular use-case that is more tolerant of changes.
+The images we publish have multiple release tracks, and are [semantically versioned](https://semver.org/). To ensure stability within your deployment processes, we recommend using the full `major.minor.patch` tag when using the `octopusdeploy/worker-tools` image - for example, use `6.6.0-ubuntu.24.04`, not `ubuntu.24.04`, unless you have a particular use-case that is more tolerant of changes.
 
 Release Track  | Ubuntu             | Windows 
 ---------|--------------------| ---
