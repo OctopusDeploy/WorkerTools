@@ -30,7 +30,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has az powershell module installed' {
-        (Get-Module Az -ListAvailable).Version.ToString() | should -be '12.5.0'
+        (Get-Module Az -ListAvailable).Version.ToString() | should -be '15.5.0'
     }
 
     It 'has aws cli installed' {
