@@ -74,7 +74,7 @@ Describe  'installed dependencies' {
     
     It 'has gke-gcloud-auth-plugin installed' {
         #We use belike here as the hash after the 'alpha+' changes and isn't that important
-        gke-gcloud-auth-plugin --version | Select -First 1 | Should -beLike 'Kubernetes v1.35.*'
+        gke-gcloud-auth-plugin --version | Select -First 1 | Should -beLike 'Kubernetes v35.0.1*'
         $LASTEXITCODE | Should -be 0
     }
 
