@@ -41,9 +41,9 @@ if [[ "$is_nightly" == "true" ]]; then
     local_today=$(date +%Y%m%d)
     build_number="${nuget_version}-nightly-${local_today}"
 else
-    # Populate GitVersion_* env vars for downstream TeamCity steps.
-    dotnet dotnet-gitversion /output buildserver
     build_number="$nuget_version"
 fi
 
+echo "GitVersion FullSemVer: ${full_sem_ver}"
+echo "Computed build number: ${build_number}"
 echo "##teamcity[buildNumber '${build_number}']"
