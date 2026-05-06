@@ -15,8 +15,13 @@ set -euo pipefail
 # Inputs:
 #   $1 (optional) - "true" if this is a nightly build; suffixes the version with
 #                   "-nightly-YYYYMMDD". Pass %Nightly.Build% from TeamCity.
+#   $2 (optional) - the branch ref to pass to GitVersion (e.g. refs/pull/119/head
+#                   or refs/heads/master). TeamCity checks out PR refs in detached
+#                   state, so GitVersion can't infer the branch on its own — pass
+#                   %teamcity.build.branch% from TeamCity.
 
 is_nightly="${1:-false}"
+target_branch="${2:-}"
 
 format_nuget_version() {
     local version="$1"
@@ -34,7 +39,19 @@ format_nuget_version() {
 
 dotnet tool restore
 
-full_sem_ver=$(dotnet dotnet-gitversion /showvariable FullSemVer)
+gitversion_args=(/showvariable FullSemVer)
+if [[ -n "$target_branch" ]]; then
+    # Strip refs/heads/ and refs/tags/ prefixes; for refs/pull/* keep the `pull/` segment
+    # so GitVersion's pull-request regex (^(pull-requests|pull|pr)[/-]) matches.
+    case "$target_branch" in
+        refs/heads/*) target_branch="${target_branch#refs/heads/}" ;;
+        refs/tags/*)  target_branch="${target_branch#refs/tags/}" ;;
+        refs/*)       target_branch="${target_branch#refs/}" ;;
+    esac
+    gitversion_args+=(/b "$target_branch")
+fi
+
+full_sem_ver=$(dotnet dotnet-gitversion "${gitversion_args[@]}")
 nuget_version=$(format_nuget_version "$full_sem_ver")
 
 if [[ "$is_nightly" == "true" ]]; then
