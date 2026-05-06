@@ -155,8 +155,7 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -
 # Install pip & groff
 # Ubuntu 24.04 requires --break-system-packages due to PEP 668
 # https://peps.python.org/pep-0668/
-# There is a way to update python, but there are currently issues because of an ongoing DDoS attack affecting launchpad
-# TODO: Comeback and fix this
+# This is fine for now given the short lived nature of WorkerTools containers
 RUN apt-get update && \
     apt-get install -y python3-pip groff && \
     python3 -m pip install pycryptodome --user --break-system-packages && \
