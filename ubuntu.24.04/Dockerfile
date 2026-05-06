@@ -7,26 +7,26 @@ ARG TARGETPLATFORM
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG Argocd_Version=2.14.21
-ARG Aws_Cli_Version=2.24.10
-ARG Aws_Iam_Authenticator_Version=0.7.9
-ARG Aws_Powershell_Version=4.1.734
-ARG Azure_Cli_Version=2.67.0-1~noble
-ARG Azure_Powershell_Version=13.0.0
-ARG Dotnet_Sdk_Version=8.0
+ARG Argocd_Version=3.3.9
+ARG Aws_Cli_Version=2.34.42
+ARG Aws_Iam_Authenticator_Version=0.7.14
+ARG Aws_Powershell_Version=5.0.207
+ARG Azure_Cli_Version=2.85.0-1~noble
+ARG Azure_Powershell_Version=15.5.0
+ARG Dotnet_Sdk_Version=10.0
 ARG Ecs_Cli_Version=1.21.0
-ARG Eks_Cli_Version=v0.220.0
-ARG Google_Cloud_Cli_Version=550.0.0-0
-ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=550.0.0-0
-ARG Helm_Version=v3.16.4
+ARG Eks_Cli_Version=v0.226.0
+ARG Google_Cloud_Cli_Version=566.0.0-0
+ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=566.0.0-0
+ARG Helm_Version=v3.20.2
 ARG Java_Jdk_Version=21
-ARG Kubectl_Version=1.32
-ARG Kubelogin_Version=v0.1.6
-ARG NodeJs_Version=22
-ARG Octopus_Cli_Version=2.20.1
-ARG Octopus_Client_Version=14.3.1789
-ARG Powershell_Version=7.5.4
-ARG Terraform_Version=1.10.4
+ARG Kubectl_Version=1.36
+ARG Kubelogin_Version=v0.2.17
+ARG NodeJs_Version=24
+ARG Octopus_Cli_Version=2.21.0
+ARG Octopus_Client_Version=21.6.2652
+ARG Powershell_Version=7.6.1
+ARG Terraform_Version=1.15.1
 
 # Install common tools
 RUN apt-get update && \
@@ -155,6 +155,7 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -
 # Install pip & groff
 # Ubuntu 24.04 requires --break-system-packages due to PEP 668
 # https://peps.python.org/pep-0668/
+# This is fine for now given the short lived nature of WorkerTools containers
 RUN apt-get update && \
     apt-get install -y python3-pip groff && \
     python3 -m pip install pycryptodome --user --break-system-packages && \
@@ -182,7 +183,7 @@ RUN case "$TARGETPLATFORM" in \
         "linux/arm64") EKS_CLI_ARCH="arm64" ;; \
         *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
     esac && \
-    curl --silent --location "https://github.com/eksctl-io/eksctl/releases/download/v0.220.0/eksctl_Linux_${EKS_CLI_ARCH}.tar.gz" | tar xz -C /tmp && \
+    curl --silent --location "https://github.com/eksctl-io/eksctl/releases/download/${Eks_Cli_Version}/eksctl_Linux_${EKS_CLI_ARCH}.tar.gz" | tar xz -C /tmp && \
     mv /tmp/eksctl /usr/local/bin
 
 # Install ECS CLI
