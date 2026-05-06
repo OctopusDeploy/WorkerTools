@@ -2,14 +2,14 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "octonotes.tool": {
-      "version": "0.1.171",
+    "Octopus.OctoNotes.Tool": {
+      "version": "1.0.87",
       "commands": [
         "octonotes"
       ]
     },
     "gitversion.tool": {
-      "version": "5.12.0",
+      "version": "6.7.0",
       "commands": [
         "dotnet-gitversion"
       ]
