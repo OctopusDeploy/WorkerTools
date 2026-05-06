@@ -34,7 +34,7 @@ format_nuget_version() {
 
 dotnet tool restore
 
-full_sem_ver=$(dotnet dotnet-gitversion /output json | jq -r '.FullSemVer')
+full_sem_ver=$(dotnet dotnet-gitversion /showvariable FullSemVer)
 nuget_version=$(format_nuget_version "$full_sem_ver")
 
 if [[ "$is_nightly" == "true" ]]; then
