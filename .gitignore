@@ -6,3 +6,4 @@
 /build/**
 /**/PesterTestResults.xml
 .idea
+.claude/
