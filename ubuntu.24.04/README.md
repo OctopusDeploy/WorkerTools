@@ -30,7 +30,6 @@ MultiArch
 
 `ubuntu:24.04`
 
-
 ## Installed Software
 
 - Argo CD CLI 3.3.9
