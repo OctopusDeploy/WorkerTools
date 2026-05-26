@@ -1,0 +1,57 @@
+# TEMPORARY: validates the Windows LTSC 2025 image build for PR #122.
+# Remove this file before/after merging to main.
+name: windows-ltsc2025-test
+
+on:
+  push:
+    branches:
+      - cal/md-1763-add-a-windowsltsc2025-workertools-build
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: windows-2025
+    timeout-minutes: 120
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: windows.ltsc2025
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Docker info
+        run: |
+          docker version
+          docker info
+
+      - name: Build worker-tools image
+        run: |
+          docker build `
+            --tag octopusdeploy/worker-tools:ci-windows.ltsc2025 `
+            .
+
+      - name: Build tests image
+        run: |
+          docker build `
+            --build-arg ContainerUnderTest=octopusdeploy/worker-tools:ci-windows.ltsc2025 `
+            --tag worker-tools-tests:ci-windows.ltsc2025 `
+            --file Tests.Dockerfile `
+            .
+
+      - name: Run Pester tests
+        run: |
+          docker run --rm `
+            -v "${{ github.workspace }}\windows.ltsc2025:C:\app" `
+            -w "C:\app" `
+            worker-tools-tests:ci-windows.ltsc2025 `
+            pwsh -File scripts/run-tests.ps1
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pester-results-windows-ltsc2025
+          path: windows.ltsc2025/spec/PesterTestResults.xml
+          if-no-files-found: ignore
