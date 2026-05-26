@@ -11,6 +11,6 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Build the Docker image
       run: docker build windows.ltsc2025 --file windows.ltsc2025/Dockerfile --tag worker-tools-windows-ltsc2025:${{ github.run_number }}
