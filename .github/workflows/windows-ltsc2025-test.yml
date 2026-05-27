@@ -38,7 +38,7 @@ jobs:
             if (-not $svc) {
               throw "docker service is not installed on this runner."
             }
-            Write-Host "Attempt $attempt: docker service status is $($svc.Status)"
+            Write-Host "Attempt ${attempt}: docker service status is $($svc.Status)"
             if ($svc.Status -ne 'Running') {
               Start-Service -Name docker -ErrorAction SilentlyContinue
               Start-Sleep -Seconds 3
