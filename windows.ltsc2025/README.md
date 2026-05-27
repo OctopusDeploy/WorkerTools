@@ -33,7 +33,7 @@
 - Eksctl 0.226.0
 - Google Cloud CLI 569.0.0
 - Google Cloud GKE auth plugin 569.0.0-0
-- Helm 4.2.0
+- Helm 3.21.0
 - Java Jdk 25.0.0.1
 - Kubectl 1.36.1
 - Kubelogin (azure-kubelogin) 0.2.17
