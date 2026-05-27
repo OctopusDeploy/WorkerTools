@@ -21,8 +21,57 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show Docker info
+      - name: Ensure Docker daemon is running
+        shell: pwsh
+        working-directory: .
         run: |
+          # Workaround for actions/runner-images#13729:
+          # On Windows runners the docker service is sometimes left in the Stopped
+          # state at job start because the Hyper-V virtual switch fails to
+          # initialise during the runner's resume from a saved image. Starting
+          # the service (with retries) recovers the daemon.
+          $ErrorActionPreference = 'Continue'
+
+          $ready = $false
+          for ($attempt = 1; $attempt -le 5; $attempt++) {
+            $svc = Get-Service -Name docker -ErrorAction SilentlyContinue
+            if (-not $svc) {
+              throw "docker service is not installed on this runner."
+            }
+            Write-Host "Attempt $attempt: docker service status is $($svc.Status)"
+            if ($svc.Status -ne 'Running') {
+              Start-Service -Name docker -ErrorAction SilentlyContinue
+              Start-Sleep -Seconds 3
+            }
+
+            $deadline = (Get-Date).AddSeconds(60)
+            while ((Get-Date) -lt $deadline) {
+              docker version --format '{{.Server.Version}}' *> $null
+              if ($LASTEXITCODE -eq 0) { $ready = $true; break }
+              Start-Sleep -Seconds 2
+            }
+
+            if ($ready) {
+              Write-Host "Docker daemon is responsive."
+              break
+            }
+
+            Write-Host "Daemon did not respond on attempt $attempt; restarting service."
+            Stop-Service -Name docker -Force -ErrorAction SilentlyContinue
+            Start-Sleep -Seconds 2
+          }
+
+          if (-not $ready) {
+            Write-Host "::group::Docker service state"
+            Get-Service -Name docker | Format-List *
+            Write-Host "::endgroup::"
+            Write-Host "::group::Recent Application event log (docker)"
+            Get-EventLog -LogName Application -Source docker -Newest 20 -ErrorAction SilentlyContinue |
+              Format-List TimeGenerated, EntryType, Message
+            Write-Host "::endgroup::"
+            throw "Docker daemon did not become ready after 5 attempts."
+          }
+
           docker version
           docker info
 
