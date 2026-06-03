@@ -24,6 +24,8 @@
 
 ## Installed Software
 
+- .NET SDK 10.0.300
+- .NET Framework 4.8.1
 - Argo CD CLI 3.4.2
 - Aws CLI 2.34.53
 - Aws Iam Authenticator 0.7.16
