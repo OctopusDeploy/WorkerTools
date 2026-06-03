@@ -1,0 +1,83 @@
+variable "Docker.Registry.Target.Hostname" {
+    value "#{DockerHubDockerRegistry.Hostname}" {
+        environment = ["production"]
+    }
+
+    value "#{OctopusDockerRegistry.Hostname}" {
+        environment = ["staging"]
+    }
+}
+
+variable "Docker.Registry.Target.Password" {
+    value "#{DockerHubDockerRegistry.Password}" {
+        environment = ["production"]
+    }
+
+    value "#{OctopusDockerRegistry.Password}" {
+        environment = ["staging"]
+    }
+}
+
+variable "Docker.Registry.Target.Repository" {
+    value "docker.packages.octopushq.com/octopusdeploy/worker-tools" {
+        environment = ["staging"]
+    }
+
+    value "docker.io/octopusdeploy/worker-tools" {
+        environment = ["production"]
+    }
+}
+
+variable "Docker.Registry.Target.Username" {
+    value "#{DockerHubDockerRegistry.Username}" {
+        environment = ["production"]
+    }
+
+    value "#{OctopusDockerRegistry.Username}" {
+        environment = ["staging"]
+    }
+}
+
+variable "Promoter.DynamicWorker.ProjectId" {
+    value "Projects-7941" {}
+}
+
+variable "Promoter.OsSuffix" {
+    value "windows.ltsc2025" {}
+}
+
+variable "Promoter.TeamCity.ProjectName" {
+    value "CloudPlatform_DynamicWorkers_DynamicWorkerVmImages_WindowsServer2025" {}
+}
+
+variable "WorkerTools.Tags.FullyQualified" {
+    value "#{Octopus.Release.Number}-windows.ltsc2025" {}
+}
+
+variable "WorkerTools.Tags.Latest" {
+    value "windows.ltsc2025" {}
+}
+
+variable "WorkerTools.Tags.LatestMajor" {
+    value "#{Octopus.Release.Number | VersionMajor}-windows.ltsc2025" {}
+}
+
+variable "WorkerTools.Tags.LatestMinor" {
+    value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}-windows.ltsc2025" {}
+}
+
+variable "WorkerTools.Tags.Os" {
+    value "windows.ltsc2025" {}
+}
+
+variable "WorkerTools.Version.Full" {
+    value "#{Octopus.Release.Number}" {}
+}
+
+variable "WorkerTools.Version.Major" {
+    value "#{Octopus.Release.Number | VersionMajor}" {}
+}
+
+variable "WorkerTools.Version.MajorMinor" {
+    value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}" {}
+}
