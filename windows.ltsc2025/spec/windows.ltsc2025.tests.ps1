@@ -61,8 +61,15 @@ Describe  'installed dependencies' {
     }
 
     It 'has kubectl installed' {
-        kubectl version --client | Select-String -Pattern "1.36.1" | Should -BeLike "Client Version: v1.36.1"
+        kubectl version --client | Select-String -Pattern "1.35.1" | Should -BeLike "Client Version: v1.35.1"
         $LASTEXITCODE | Should -be 0
+    }
+
+    It 'has multiple kubectl versions available' {
+        foreach ($v in @('1.32.12', '1.33.8', '1.34.4', '1.35.1')) {
+            Test-Path "C:\kubectl\kubectl-$v.exe" | Should -Be $true
+            (& "C:\kubectl\kubectl-$v.exe" version --client) | Select-String -Pattern $v | Should -BeLike "*v$v"
+        }
     }
 
     It 'has kubelogin installed' {
@@ -71,7 +78,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has helm installed' {
-        helm version | Should -Match '3.21.0'
+        helm version | Should -Match '3.20.1'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -86,7 +93,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select-String -Pattern "569.0.0" | Should -BeLike "Google Cloud SDK 569.0.0"
+        gcloud --version | Select-String -Pattern "566.0.0" | Should -BeLike "Google Cloud SDK 566.0.0"
         $LASTEXITCODE | Should -be 0
     }
 
@@ -133,5 +140,19 @@ Describe  'installed dependencies' {
         $output = (& argocd version --client) -join "`n"
         $LASTEXITCODE | Should -be 0
         $output | Should -Match '3.4.2'
+    }
+
+    It 'has nuget cli installed' {
+        $output = & nuget help
+        $LASTEXITCODE | Should -be 0
+        $output | Select-Object -First 1 | Should -Match '7.6.0'
+    }
+
+    It 'has Microsoft Service Fabric runtime installed' {
+        (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Service Fabric' -Name FabricVersion).FabricVersion | Should -Match '10.1.2338'
+    }
+
+    It 'has Microsoft Service Fabric SDK installed' {
+        Test-Path 'C:\Program Files\Microsoft SDKs\Service Fabric' | Should -Be $true
     }
 }

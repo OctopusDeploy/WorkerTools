@@ -6,24 +6,28 @@ SHELL ["powershell", "-Command"]
 ARG 7Zip_Version=26.0.0
 ARG Argo_Cli_Version=3.4.2
 ARG Aws_Cli_Version=2.34.53
-ARG Aws_Iam_Authenticator_Version=0.7.16
+ARG Aws_Iam_Authenticator_Version=0.7.17
 ARG Aws_Powershell_Version=5.0.218
 ARG Azure_Cli_Version=2.86.0
 ARG Azure_Powershell_Version=15.6.1
 ARG Eks_Cli_Version=0.226.0
 ARG Git_Version=2.54.0
-ARG Google_Cloud_Cli_Version=569.0.0
-ARG Helm_Version=3.21.0
+ARG Google_Cloud_Cli_Version=566.0.0
+ARG Helm_Version=3.20.1
 ARG Java_Jdk_Version=25.0.0.1
-ARG Kubectl_Version=1.36.1
+ARG Kubectl_Version=1.35.1
+ARG Kubectl_Versions=1.32.12,1.33.8,1.34.4,1.35.1
 ARG Kubelogin_Version=0.2.17
 ARG Node_Version=24.16.0
+ARG Nuget_Cli_Version=7.6.0
 ARG Octopus_Cli_Legacy_Version=9.1.7
 ARG Octopus_Cli_Version=2.21.1
 ARG Octopus_Client_Version=21.11.2726
 ARG Powershell_Version=7.6.1
 ARG Python_Version=3.14.5
 ARG ScriptCs_Version=0.17.1
+ARG Service_Fabric_Version=10.1.2338.9590
+ARG Service_Fabric_Sdk_Version=7.1.2338
 ARG Terraform_Version=1.15.4
 
 # Install Choco
@@ -66,8 +70,11 @@ RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion
 RUN choco install nodejs-lts -y --version $Env:Node_Version --no-progress
 
 # Install kubectl
-RUN Invoke-WebRequest "https://dl.k8s.io/release/v${Env:Kubectl_Version}/bin/windows/amd64/kubectl.exe" -OutFile .\kubectl.exe; `
-    mv .\kubectl.exe C:\Windows\system32\;
+RUN New-Item -ItemType Directory -Path C:\kubectl -Force | Out-Null; `
+    foreach ($v in ($Env:Kubectl_Versions -split ',')) { `
+        Invoke-WebRequest "https://dl.k8s.io/release/v$v/bin/windows/amd64/kubectl.exe" -OutFile "C:\kubectl\kubectl-$v.exe"; `
+    } `
+    Copy-Item "C:\kubectl\kubectl-$($Env:Kubectl_Version).exe" C:\Windows\system32\kubectl.exe;
 
 # Install Kubelogin
 RUN choco install azure-kubelogin --version $Env:Kubelogin_Version --no-progress -y
@@ -109,6 +116,19 @@ RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDep
     
 # Install eksctl
 RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress
+
+# Install NuGet CLI
+RUN choco install nuget.commandline -y --version $Env:Nuget_Cli_Version --no-progress
+
+# Install Microsoft Service Fabric runtime
+RUN Invoke-WebRequest "https://download.microsoft.com/download/b/8/a/b8a2fb98-0ec1-41e5-be98-9d8b5abf7856/MicrosoftServiceFabric.${Env:Service_Fabric_Version}.exe" -OutFile sf-runtime.exe; `
+    Start-Process .\sf-runtime.exe -ArgumentList '/accepteula', '/force', '/quiet' -Wait; `
+    Remove-Item sf-runtime.exe
+
+# Install Microsoft Service Fabric SDK
+RUN Invoke-WebRequest "https://download.microsoft.com/download/b/8/a/b8a2fb98-0ec1-41e5-be98-9d8b5abf7856/MicrosoftServiceFabricSDK.${Env:Service_Fabric_Sdk_Version}.msi" -OutFile sf-sdk.msi; `
+    Start-Process msiexec.exe -ArgumentList '/i', 'sf-sdk.msi', '/quiet', '/norestart' -Wait; `
+    Remove-Item sf-sdk.msi
 
 # PowerShell 7 is provided by the .NET SDK base image (see Powershell_Version ARG)
 
