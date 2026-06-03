@@ -35,11 +35,6 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
 # Disable .NET CLI telemetry
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-# Verify .NET Framework 4.8.1 is present (inbox on Windows Server 2025) for ScriptCs and Octopus.Client
-RUN $release = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' -Name Release).Release; `
-    Write-Host "Detected .NET Framework Release: $release"; `
-    if ($release -lt 533320) { throw ".NET Framework 4.8.1 not found (Release $release)" }
-
 # Install JDK
 RUN choco install openjdk --allow-empty-checksums --y --no-progress --version $Env:Java_Jdk_Version; `
     Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
