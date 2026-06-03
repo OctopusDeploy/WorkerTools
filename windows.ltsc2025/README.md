@@ -39,8 +39,6 @@
 - Java Jdk 25.0.0.1
 - Kubectl 1.35.1 (also 1.34.4, 1.33.8, 1.32.12 in C:\kubectl)
 - Kubelogin (azure-kubelogin) 0.2.17
-- Microsoft Service Fabric 10.1.2338.9590
-- Microsoft Service Fabric SDK 7.1.2338
 - Node 24.16.0
 - Nuget CLI 7.6.0
 - Octopus CLI Legacy 9.1.7

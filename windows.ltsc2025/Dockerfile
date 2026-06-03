@@ -26,8 +26,6 @@ ARG Octopus_Client_Version=21.11.2726
 ARG Powershell_Version=7.6.1
 ARG Python_Version=3.14.5
 ARG ScriptCs_Version=0.17.1
-ARG Service_Fabric_Version=10.1.2338.9590
-ARG Service_Fabric_Sdk_Version=7.1.2338
 ARG Terraform_Version=1.15.4
 
 # Install Choco
@@ -119,16 +117,6 @@ RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress
 
 # Install NuGet CLI
 RUN choco install nuget.commandline -y --version $Env:Nuget_Cli_Version --no-progress
-
-# Install Microsoft Service Fabric runtime
-RUN Invoke-WebRequest "https://download.microsoft.com/download/b/8/a/b8a2fb98-0ec1-41e5-be98-9d8b5abf7856/MicrosoftServiceFabric.${Env:Service_Fabric_Version}.exe" -OutFile sf-runtime.exe; `
-    Start-Process .\sf-runtime.exe -ArgumentList '/accepteula', '/force', '/quiet' -Wait; `
-    Remove-Item sf-runtime.exe
-
-# Install Microsoft Service Fabric SDK
-RUN Invoke-WebRequest "https://download.microsoft.com/download/b/8/a/b8a2fb98-0ec1-41e5-be98-9d8b5abf7856/MicrosoftServiceFabricSDK.${Env:Service_Fabric_Sdk_Version}.msi" -OutFile sf-sdk.msi; `
-    Start-Process msiexec.exe -ArgumentList '/i', 'sf-sdk.msi', '/quiet', '/norestart' -Wait; `
-    Remove-Item sf-sdk.msi
 
 # PowerShell 7 is provided by the .NET SDK base image (see Powershell_Version ARG)
 

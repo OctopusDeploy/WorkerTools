@@ -147,12 +147,4 @@ Describe  'installed dependencies' {
         $LASTEXITCODE | Should -be 0
         $output | Select-Object -First 1 | Should -Match '7.6.0'
     }
-
-    It 'has Microsoft Service Fabric runtime installed' {
-        (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Service Fabric' -Name FabricVersion).FabricVersion | Should -Match '10.1.2338'
-    }
-
-    It 'has Microsoft Service Fabric SDK installed' {
-        Test-Path 'C:\Program Files\Microsoft SDKs\Service Fabric' | Should -Be $true
-    }
 }
