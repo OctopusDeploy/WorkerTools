@@ -17,8 +17,13 @@ Describe  'installed dependencies' {
     }
 
     It 'has dotnet installed' {
-        dotnet --version | Should -Match '8.0.\d+'
+        dotnet --version | Should -Match '10.0.\d+'
         $LASTEXITCODE | Should -be 0
+    }
+
+    It 'has .NET Framework 4.8.1 installed' {
+        $release = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' -Name Release).Release
+        $release | Should -BeGreaterOrEqual 533320
     }
 
     It 'has java installed' {

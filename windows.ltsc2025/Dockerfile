@@ -1,6 +1,6 @@
 # escape=`
 
-FROM mcr.microsoft.com/dotnet/framework/runtime:4.8.1-20260512-windowsservercore-ltsc2025
+FROM mcr.microsoft.com/dotnet/sdk:10.0.300-windowsservercore-ltsc2025
 SHELL ["powershell", "-Command"]
 
 ARG 7Zip_Version=26.0.0
@@ -32,11 +32,13 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Install dotnet 8.0+
-RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
-    [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', '1', 'Machine'); `
-    .\dotnet-install.ps1 -Channel '8.0'; `
-    rm dotnet-install.ps1
+# Disable .NET CLI telemetry
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+# Verify .NET Framework 4.8.1 is present (inbox on Windows Server 2025) for ScriptCs and Octopus.Client
+RUN $release = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' -Name Release).Release; `
+    Write-Host "Detected .NET Framework Release: $release"; `
+    if ($release -lt 533320) { throw ".NET Framework 4.8.1 not found (Release $release)" }
 
 # Install JDK
 RUN choco install openjdk --allow-empty-checksums --y --no-progress --version $Env:Java_Jdk_Version; `
@@ -113,8 +115,7 @@ RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDep
 # Install eksctl
 RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress
 
-# Install Powershell Core
-RUN choco install powershell-core --yes --version $Env:Powershell_Version --no-progress
+# PowerShell 7 is provided by the .NET SDK base image (see Powershell_Version ARG)
 
 # Install Git
 RUN choco install git.install --yes --version $Env:Git_Version --no-progress
