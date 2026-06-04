@@ -38,17 +38,6 @@ variable "Docker.Registry.Target.Username" {
     }
 }
 
-variable "Promoter.DynamicWorker.ProjectId" {
-    value "Projects-7941" {}
-}
-
-variable "Promoter.OsSuffix" {
-    value "windows.ltsc2025" {}
-}
-
-variable "Promoter.TeamCity.ProjectName" {
-    value "CloudPlatform_DynamicWorkers_DynamicWorkerVmImages_WindowsServer2025" {}
-}
 
 variable "WorkerTools.Tags.FullyQualified" {
     value "#{Octopus.Release.Number}-windows.ltsc2025" {}
