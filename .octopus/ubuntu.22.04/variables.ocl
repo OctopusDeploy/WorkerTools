@@ -38,18 +38,6 @@ variable "Docker.Registry.Target.Username" {
     }
 }
 
-variable "Promoter.DynamicWorker.ProjectId" {
-    value "Projects-7242" {}
-}
-
-variable "Promoter.OsSuffix" {
-    value "ubuntu.22.04" {}
-}
-
-variable "Promoter.TeamCity.ProjectName" {
-    value "CloudPlatform_DynamicWorkers_DynamicWorkerVmImages_Ubuntu2204" {}
-}
-
 variable "WorkerTools.Tags.FullyQualified" {
     value "#{Octopus.Release.Number}-ubuntu.22.04" {}
 }

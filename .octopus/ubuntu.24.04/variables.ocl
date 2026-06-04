@@ -29,9 +29,6 @@ variable "WorkerTools.Tags.FullyQualified" {
     value "#{Octopus.Release.Number}-ubuntu.24.04" {}
 }
 
-variable "Promoter.OsSuffix" {
-    value "ubuntu.24.04" {}
-}
 
 variable "Docker.Registry.Target.Username" {
     value "#{DockerHubDockerRegistry.Username}" {
