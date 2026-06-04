@@ -10,14 +10,24 @@ Describe  'installed dependencies' {
         $output | Should -Match '^5\.1\.'
     }
 
+    It 'has chocolatey installed' {
+        choco --version | Should -Match '2.7.2'
+        $LASTEXITCODE | Should -be 0
+    }
+
     It 'has Octopus.Client installed ' {
-        $expectedVersion = "21.11.2726"
+        $expectedVersion = "21.12.2734"
         Test-Path "C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net462\Octopus.Client.dll" | Should -Be $true
         [Reflection.AssemblyName]::GetAssemblyName("C:\Program Files\PackageManagement\NuGet\Packages\Octopus.Client.$expectedVersion\lib\net462\Octopus.Client.dll").Version.ToString() | Should -Match "$expectedVersion.0"
     }
 
     It 'has dotnet installed' {
         dotnet --version | Should -Match '10.0.\d+'
+        $LASTEXITCODE | Should -be 0
+    }
+
+    It 'has the .NET 8 runtime installed' {
+        (dotnet --list-runtimes) | Select-String -Pattern 'Microsoft.NETCore.App 8.0.27' | Should -Not -BeNullOrEmpty
         $LASTEXITCODE | Should -be 0
     }
 
@@ -61,12 +71,12 @@ Describe  'installed dependencies' {
     }
 
     It 'has kubectl installed' {
-        kubectl version --client | Select-String -Pattern "1.35.1" | Should -BeLike "Client Version: v1.35.1"
+        kubectl version --client | Select-String -Pattern "1.36.1" | Should -BeLike "Client Version: v1.36.1"
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has multiple kubectl versions available' {
-        foreach ($v in @('1.32.12', '1.33.8', '1.34.4', '1.35.1')) {
+        foreach ($v in @('1.32.12', '1.33.8', '1.34.4', '1.35.1', '1.36.1')) {
             Test-Path "C:\kubectl\kubectl-$v.exe" | Should -Be $true
             (& "C:\kubectl\kubectl-$v.exe" version --client) | Select-String -Pattern $v | Should -BeLike "*v$v"
         }
@@ -89,6 +99,11 @@ Describe  'installed dependencies' {
 
     It 'has python installed' {
         python --version | Should -Match '3.14.5'
+        $LASTEXITCODE | Should -be 0
+    }
+
+    It 'has pip installed and working' {
+        pip --version | Should -Match 'pip 26.1.2'
         $LASTEXITCODE | Should -be 0
     }
 

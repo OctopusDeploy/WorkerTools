@@ -5,6 +5,8 @@ SHELL ["powershell", "-Command"]
 
 ARG 7Zip_Version=26.0.0
 ARG Argo_Cli_Version=3.4.2
+ARG Chocolatey_Version=2.7.2
+ARG Dotnet_Runtime_Version=8.0.27
 ARG Aws_Cli_Version=2.34.53
 ARG Aws_Iam_Authenticator_Version=0.7.17
 ARG Aws_Powershell_Version=5.0.218
@@ -15,14 +17,15 @@ ARG Git_Version=2.54.0
 ARG Google_Cloud_Cli_Version=566.0.0
 ARG Helm_Version=3.20.1
 ARG Java_Jdk_Version=25.0.0.1
-ARG Kubectl_Version=1.35.1
-ARG Kubectl_Versions=1.32.12,1.33.8,1.34.4,1.35.1
+ARG Kubectl_Version=1.36.1
+ARG Kubectl_Versions=1.32.12,1.33.8,1.34.4,1.35.1,1.36.1
 ARG Kubelogin_Version=0.2.17
 ARG Node_Version=24.16.0
 ARG Nuget_Cli_Version=7.6.0
 ARG Octopus_Cli_Legacy_Version=9.1.7
 ARG Octopus_Cli_Version=2.21.1
-ARG Octopus_Client_Version=21.11.2726
+ARG Octopus_Client_Version=21.12.2734
+ARG Pip_Version=26.1.2
 ARG Powershell_Version=7.6.1
 ARG Python_Version=3.14.5
 ARG ScriptCs_Version=0.17.1
@@ -30,12 +33,18 @@ ARG Terraform_Version=1.15.4
 
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
+    $Env:chocolateyVersion = $Env:Chocolatey_Version; `
     Set-ExecutionPolicy Bypass -Scope Process -Force; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Disable .NET CLI telemetry
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+# Install the .NET 8 runtime alongside the .NET 10 SDK from the base image
+RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
+    .\dotnet-install.ps1 -Version $Env:Dotnet_Runtime_Version -Runtime dotnet -InstallDir 'C:\Program Files\dotnet'; `
+    rm dotnet-install.ps1
 
 # Install JDK
 RUN choco install openjdk --allow-empty-checksums --y --no-progress --version $Env:Java_Jdk_Version; `
@@ -91,6 +100,9 @@ RUN choco install -y python3 --version $Env:Python_Version --no-progress; `
     Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
     Update-SessionEnvironment
 
+# Install Pip
+RUN python -m pip install --upgrade pip==$Env:Pip_Version
+
 # Install 7ZIP because gcloud
 RUN choco install 7zip -y --version $Env:7Zip_Version --no-progress
 
@@ -118,7 +130,7 @@ RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress
 # Install NuGet CLI
 RUN choco install nuget.commandline -y --version $Env:Nuget_Cli_Version --no-progress
 
-# PowerShell 7 is provided by the .NET SDK base image (see Powershell_Version ARG)
+# PowerShell 7 is provided by the .NET SDK base image
 
 # Install Git
 RUN choco install git.install --yes --version $Env:Git_Version --no-progress

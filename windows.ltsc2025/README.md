@@ -25,6 +25,7 @@
 ## Installed Software
 
 - .NET SDK 10.0.300
+- .NET Runtime 8.0.27
 - .NET Framework 4.8.1
 - Argo CD CLI 3.4.2
 - Aws CLI 2.34.53
@@ -37,16 +38,17 @@
 - Google Cloud GKE auth plugin 566.0.0-0
 - Helm 3.20.1
 - Java Jdk 25.0.0.1
-- Kubectl 1.35.1 (also 1.34.4, 1.33.8, 1.32.12 in C:\kubectl)
+- Kubectl 1.36.1 (also 1.35.1, 1.34.4, 1.33.8, 1.32.12 in C:\kubectl)
 - Kubelogin (azure-kubelogin) 0.2.17
 - Node 24.16.0
 - Nuget CLI 7.6.0
 - Octopus CLI Legacy 9.1.7
 - Octopus CLI 2.21.1
-- Octopus Client 21.11.2726
+- Octopus Client 21.12.2734
 - Powershell 7.6.1
 - Python 3.14.5
+- Pip 26.1.2
 - ScriptCs 0.17.1
 - Terraform 1.15.4
 - 7Zip 26.0
-- Chocolatey - Latest
+- Chocolatey 2.7.2
