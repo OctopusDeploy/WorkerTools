@@ -107,3 +107,19 @@ variable "Docker.Tag.LatestMinor.OS" {
 variable "WorkerTools.Tags.LatestMajor" {
     value "#{WorkerTools.Version.Major}" {}
 }
+
+variable "Docker.Image.TopLevel.Tag.Windows2022" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2022}" {}
+}
+
+variable "Docker.Image.TopLevel.Tag.Windows2025" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2025}" {}
+}
+
+variable "Docker.Image.TopLevel.Tag.Ubuntu2404" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404}" {}
+}
+
+variable "Docker.Image.TopLevel.Tag.Ubuntu2204" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
+}
