@@ -43,5 +43,7 @@ variable "Docker.Registry.Target.Username" {
 }
 
 variable "Docker.Image.Tag" {
-    value "ubuntu.22.04" {}
+    value "ubuntu.22.04" {
+        action = ["tag-and-push-worker-tools-image-ubuntu-22-04"]
+    }
 }
