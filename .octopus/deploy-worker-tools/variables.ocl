@@ -42,10 +42,6 @@ variable "Docker.Registry.Target.Username" {
     }
 }
 
-variable "Docker.Image.OS.Tag.Ubuntu.2204.Full" {
-    value {}
-}
-
 variable "Docker.Image.OS.Tag.Ubuntu.2404.Full" {
     value {}
 }
@@ -92,15 +88,6 @@ variable "Docker.Image.Tag" {
     }
 }
 
-
-variable "WorkerTools.Version.Full" {
-    value "#{Octopus.Release.Number}" {}
-}
-
-variable "WorkerTools.Version.Major" {
-    value "#{Octopus.Release.Number | VersionMajor}" {}
-}
-
-variable "WorkerTools.Version.MajorMinor" {
-    value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}" {}
+variable "Docker.Image.OS.Tag.Ubuntu.2204.Full" {
+    value "#{Docker.Registry.Target.Repository}:" {}
 }
