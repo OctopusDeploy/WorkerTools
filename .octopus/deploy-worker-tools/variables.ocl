@@ -120,26 +120,26 @@ variable "WorkerTools.Tags.LatestMajor" {
     value "#{WorkerTools.Version.Major}" {}
 }
 
-variable "Docker.Image.TopLevel.Tag.Windows2022" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2022}" {}
+ariable "Docker.Manifest.Image[ubuntu2204]" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
 }
 
-variable "Docker.Image.TopLevel.Tag.Windows2025" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2025}" {}
-}
-
-variable "Docker.Image.TopLevel.Tag.Ubuntu2404.amd64" {
+variable "Docker.Manifest.Image[ubuntu2404amd64]" {
     value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404.amd64}" {}
 }
 
-variable "Docker.Image.TopLevel.Tag.Ubuntu2204" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
-}
-
-variable "Docker.Image.TopLevel.Tag.Ubuntu2404.arm64" {
+variable "Docker.Manifest.Image[ubuntu2404arm64]" {
     value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404.arm64}" {}
 }
 
-variable "Docker.Image.TopLevel.Tags[ubuntu.22.04]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
+variable "Docker.Manifest.Image[windows2022]" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2022}" {}
+}
+
+variable "Docker.Manifest.Image[windows2025]" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2025}" {}
+}
+
+variable "Docker.Manifest.ImageArgs" {
+    value "#{each image in Docker.Manifest.Image}#{image} #{/each}" {}
 }
