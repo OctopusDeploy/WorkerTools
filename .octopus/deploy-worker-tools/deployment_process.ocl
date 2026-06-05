@@ -3,7 +3,6 @@ step "tag-and-push-worker-tools-image-ubuntu-22-04" {
 
     action {
         environments = ["staging", "production"]
-        is_disabled = true
         properties = {
             DockerPush.Image.Tag = "#{Docker.Image.Tag}"
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
@@ -27,7 +26,6 @@ step "tag-and-push-worker-tools-image-ubuntu-24-04" {
 
     action {
         environments = ["staging", "production"]
-        is_disabled = true
         properties = {
             DockerPush.Image.Tag = "#{Docker.Image.Tag}"
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
@@ -51,7 +49,6 @@ step "tag-and-push-worker-tools-image-windows-2022" {
 
     action {
         environments = ["staging", "production"]
-        is_disabled = true
         properties = {
             DockerPush.Image.Tag = "#{Docker.Image.Tag}"
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
@@ -75,7 +72,6 @@ step "tag-and-push-worker-tools-image-windows-2025" {
 
     action {
         environments = ["staging", "production"]
-        is_disabled = true
         properties = {
             DockerPush.Image.Tag = "#{Docker.Image.Tag}"
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
@@ -151,6 +147,7 @@ step "debug-variables" {
 
     action {
         action_type = "Octopus.Script"
+        is_disabled = true
         properties = {
             Octopus.Action.Script.ScriptBody = <<-EOT
                 #!/bin/bash
