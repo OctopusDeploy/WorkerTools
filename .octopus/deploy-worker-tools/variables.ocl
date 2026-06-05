@@ -5,3 +5,43 @@ variable "internal-container-registry" {
 variable "skopeo-image-name" {
     value "octopusdeploy/tool-containers/tool-skopeo-cli" {}
 }
+
+variable "Docker.Registry.Target.Repository" {
+    value "docker.io/octopusdeploy/worker-tools" {
+        environment = ["production"]
+    }
+
+    value "docker.packages.octopushq.com/octopusdeploy/worker-tools" {
+        environment = ["staging"]
+    }
+}
+
+variable "Docker.Registry.Target.Password" {
+    value "#{DockerHubDockerRegistry.Password}" {
+        environment = ["production"]
+    }
+
+    value "#{OctopusDockerRegistry.Password}" {
+        environment = ["staging"]
+    }
+}
+
+variable "Docker.Registry.Target.Hostname" {
+    value "#{DockerHubDockerRegistry.Hostname}" {
+        environment = ["production"]
+    }
+
+    value "#{OctopusDockerRegistry.Hostname}" {
+        environment = ["staging"]
+    }
+}
+
+variable "Docker.Registry.Target.Username" {
+    value "#{DockerHubDockerRegistry.Username}" {
+        environment = ["production"]
+    }
+
+    value "#{OctopusDockerRegistry.Username}" {
+        environment = ["staging"]
+    }
+}
