@@ -99,7 +99,6 @@ step "build-multi-platform-manifest" {
     action {
         action_type = "Octopus.Script"
         environments = ["staging", "production"]
-        is_disabled = true
         properties = {
             Octopus.Action.Script.ScriptBody = <<-EOT
                 #!/bin/bash
