@@ -76,6 +76,15 @@ variable "Docker.Image.Tag" {
     }
 }
 
+variable "WorkerTools.Tags.LatestMajor" {
+    value "#{Octopus.Release.Number | VersionMajor}-#{Docker.Image.Tag}" {}
+}
+
+variable "WorkerTools.Tags.LatestMinor" {
+    value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}-#{Docker.Image.Tag}" {}
+}
+
+
 variable "Docker.Image.OS.Tag.Ubuntu.2204.Full" {
     value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Image.OS.Tag.Ubuntu.2204}" {}
 }
