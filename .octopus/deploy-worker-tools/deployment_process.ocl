@@ -93,3 +93,52 @@ step "tag-and-push-worker-tools-image-windows-2025" {
         }
     }
 }
+
+step "build-multi-platform-manifest" {
+    name = "Build Multi Platform Manifest"
+
+    action {
+        action_type = "Octopus.Script"
+        environments = ["staging", "production"]
+        properties = {
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                #!/bin/bash
+                echo "##octopus[stderr-progress]"
+                set -eux
+                
+                targetHostName=$(get_octopusvariable "DockerPush.Target.Docker.Registry.Hostname")
+                echo "Creating multi-arch manifests for registry: $targetHostName"
+                echo $(get_octopusvariable "DockerPush.Target.Docker.Registry.Password") | docker login -u $(get_octopusvariable "DockerPush.Target.Docker.Registry.Username") --password-stdin $targetHostName
+                
+                fullVersion=$(get_octopusvariable "WorkerTools.Version.Full")
+                latestMajorTag=$(get_octopusvariable "WorkerTools.Version.Major")
+                latestMinorTag=$(get_octopusvariable "WorkerTools.Version.MajorMinor")
+                
+                semVerRegex="[0-9]+\.[0-9]+\.[0-9]+"
+                if ! [[ $fullVersion =~ $semVerRegex ]]; then
+                    echo "The tag $fullVersion should be a fully qualified SemVer tag"
+                    exit 1
+                fi
+                
+                for tag in latest ${fullVersion} ${latestMajorTag} ${latestMinorTag}; do
+                    echo "Creating multi-arch manifest for ${dockerRepository}:${tag}"
+                    docker manifest create --amend ${dockerRepository}:${tag} \
+                        $(get_octopusvariable "Docker.Image.OS.Tag.Ubuntu.2204.Full") \
+                        $(get_octopusvariable "Docker.Image.OS.Tag.Ubuntu.2404.Full") \
+                        $(get_octopusvariable "Docker.Image.OS.Tag.Windows.2022.Full") \
+                        $(get_octopusvariable "Docker.Image.OS.Tag.Windows.2025.Full")
+                    docker manifest push ${dockerRepository}:${tag}
+                done
+                EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "hosted-ubuntu"
+
+        container {
+            feed = "docker-packages-octopushq"
+            image = "#{skopeo-image-name}"
+        }
+    }
+}
