@@ -91,3 +91,16 @@ variable "Docker.Image.Tag" {
         action = ["tag-and-push-worker-tools-image-windows-2025"]
     }
 }
+
+
+variable "WorkerTools.Version.Full" {
+    value "#{Octopus.Release.Number}" {}
+}
+
+variable "WorkerTools.Version.Major" {
+    value "#{Octopus.Release.Number | VersionMajor}" {}
+}
+
+variable "WorkerTools.Version.MajorMinor" {
+    value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}" {}
+}
