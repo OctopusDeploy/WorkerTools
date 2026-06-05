@@ -187,8 +187,8 @@ step "debug-variables" {
                     exit 1
                 fi
                 
-                latestMajorTag=$(get_octopusvariable "WorkerTools.Tags.LatestMajor")-"${osTag}"
-                latestMinorTag=$(get_octopusvariable "WorkerTools.Tags.LatestMinor")-"${osTag}"
+                latestMajorTag=$(get_octopusvariable "WorkerTools.Tags.LatestMajor")
+                latestMinorTag=$(get_octopusvariable "WorkerTools.Tags.LatestMinor")
                 
                 echo "Image tag for promotion: $fullyQualifiedTag"
                 
