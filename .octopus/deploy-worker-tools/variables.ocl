@@ -62,8 +62,16 @@ variable "Docker.Tag.OS.Ubuntu2204" {
     value "ubuntu.22.04" {}
 }
 
-variable "Docker.Tag.OS.Ubuntu2404" {
+variable "Docker.Tag.OS.Ubuntu2404.base" {
     value "ubuntu.24.04" {}
+}
+
+variable "Docker.Tag.OS.Ubuntu2404.arm64" {
+    value "ubuntu.24.04-arm64" {}
+}
+
+variable "Docker.Tag.OS.Ubuntu2404.amd64" {
+    value "ubuntu.24.04-amd64" {}
 }
 
 variable "Docker.Tag.OS.Windows2022" {
@@ -75,8 +83,12 @@ variable "Docker.Tag.OS.Windows2025" {
 }
 
 variable "Docker.Image.Tag" {
-    value "#{Docker.Tag.OS.Ubuntu2404}" {
-        action = ["tag-and-push-worker-tools-image-ubuntu-24-04"]
+    value "#{Docker.Tag.OS.Ubuntu2404.amd64}" {
+        action = ["tag-and-push-worker-tools-image-ubuntu-24-04-amd64"]
+    }
+
+    value "#{Docker.Tag.OS.Ubuntu2404.arm64}" {
+        action = ["tag-and-push-worker-tools-image-ubuntu-24-04-arm64"]
     }
 
     value "#{Docker.Tag.OS.Windows2022}" {
@@ -116,10 +128,10 @@ variable "Docker.Image.TopLevel.Tag.Windows2025" {
     value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2025}" {}
 }
 
-variable "Docker.Image.TopLevel.Tag.Ubuntu2404" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404}" {}
+variable "Docker.Image.TopLevel.Tag.Ubuntu2404.amd64" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404.amd64}" {}
 }
 
-variable "Docker.Image.TopLevel.Tag.Ubuntu2204" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
+variable "Docker.Image.TopLevel.Tag.Ubuntu2204.arm64" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204.arm64}" {}
 }
