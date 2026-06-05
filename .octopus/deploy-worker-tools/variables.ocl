@@ -62,32 +62,16 @@ variable "Docker.Tag.OS.Ubuntu2204" {
     value "ubuntu.22.04" {}
 }
 
-variable "Docker.Image.OS.Tag.Ubuntu.2204.Full" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
-}
-
 variable "Docker.Tag.OS.Ubuntu2404" {
     value "ubuntu.24.04" {}
-}
-
-variable "Docker.Image.OS.Tag.Ubuntu.2404.Full" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404}" {}
 }
 
 variable "Docker.Tag.OS.Windows2022" {
     value "windows.ltsc2022" {}
 }
 
-variable "Docker.Image.OS.Tag.Windows.2022.Full" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2022}" {}
-}
-
 variable "Docker.Tag.OS.Windows2025" {
     value "windows.ltsc2025" {}
-}
-
-variable "Docker.Image.OS.Tag.Windows.2025.Full" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2025}" {}
 }
 
 variable "Docker.Image.Tag" {
