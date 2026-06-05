@@ -136,11 +136,6 @@ step "build-multi-platform-manifest" {
             OctopusUseBundledTooling = "False"
         }
         worker_pool = "hosted-ubuntu"
-
-        container {
-            feed = "docker-packages-octopushq"
-            image = "#{skopeo-image-name}"
-        }
     }
 }
 
