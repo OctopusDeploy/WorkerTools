@@ -42,17 +42,52 @@ variable "Docker.Registry.Target.Username" {
     }
 }
 
+variable "Docker.Image.OS.Tag.Ubuntu.2204.Full" {
+    value {}
+}
+
+variable "Docker.Image.OS.Tag.Ubuntu.2404.Full" {
+    value {}
+}
+
+variable "Docker.Image.OS.Tag.Windows.2022.Full" {
+    value {}
+}
+
+variable "Docker.Image.OS.Tag.Windows.2025.Full" {
+    value {}
+}
+
+variable "Docker.Image.OS.Tag.Windows.2025" {
+    value "windows.ltsc2025" {}
+}
+
+variable "Docker.Image.OS.Tag.Windows.2022" {
+    value "windows.ltsc2022" {}
+}
+
+variable "Docker.Image.OS.Tag.Ubuntu.2404" {
+    value "ubuntu.24.04" {}
+}
+
+variable "Docker.Image.OS.Tag.Ubuntu.2204" {
+    value "ubuntu.22.04" {}
+}
+
 variable "Docker.Image.Tag" {
-    value "ubuntu.22.04" {
+    value "#{Docker.Image.OS.Tag.Ubuntu.2204}" {
         action = ["tag-and-push-worker-tools-image-ubuntu-22-04"]
     }
-        value "ubuntu.24.04" {
+
+    value "#{Docker.Image.OS.Tag.Ubuntu.2404}" {
         action = ["tag-and-push-worker-tools-image-ubuntu-24-04"]
     }
-        value "windows.ltsc2022" {
+
+    value "#{Docker.Image.OS.Tag.Windows.2022}" {
         action = ["tag-and-push-worker-tools-image-windows-2022"]
     }
-        value "windows.ltsc2025" {
+
+    value "#{Docker.Image.OS.Tag.Windows.2025}" {
         action = ["tag-and-push-worker-tools-image-windows-2025"]
     }
 }
