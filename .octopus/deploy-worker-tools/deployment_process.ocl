@@ -21,3 +21,75 @@ step "tag-and-push-worker-tools-image-ubuntu-22-04" {
         }
     }
 }
+
+step "tag-and-push-worker-tools-image-ubuntu-24-04" {
+    name = "Tag and Push Worker Tools Image (Ubuntu 24.04)"
+
+    action {
+        environments = ["staging", "production"]
+        properties = {
+            DockerPush.Image.Tag = "#{Docker.Image.Tag}"
+            DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
+            DockerPush.Target.Docker.Registry.Password = "#{Docker.Registry.Target.Password}"
+            DockerPush.Target.Docker.Registry.Username = "#{Docker.Registry.Target.Username}"
+            DockerPush.Target.Docker.Repository = "#{Docker.Registry.Target.Repository}"
+            Octopus.Action.Template.Id = "ActionTemplates-2721"
+            Octopus.Action.Template.Version = "5"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "hosted-ubuntu"
+
+        container {
+            feed = "docker-packages-octopushq"
+            image = "#{skopeo-image-name}"
+        }
+    }
+}
+
+step "tag-and-push-worker-tools-image-windows-2022" {
+    name = "Tag and Push Worker Tools Image (Windows 2022)"
+
+    action {
+        environments = ["staging", "production"]
+        properties = {
+            DockerPush.Image.Tag = "#{Docker.Image.Tag}"
+            DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
+            DockerPush.Target.Docker.Registry.Password = "#{Docker.Registry.Target.Password}"
+            DockerPush.Target.Docker.Registry.Username = "#{Docker.Registry.Target.Username}"
+            DockerPush.Target.Docker.Repository = "#{Docker.Registry.Target.Repository}"
+            Octopus.Action.Template.Id = "ActionTemplates-2721"
+            Octopus.Action.Template.Version = "5"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "hosted-ubuntu"
+
+        container {
+            feed = "docker-packages-octopushq"
+            image = "#{skopeo-image-name}"
+        }
+    }
+}
+
+step "tag-and-push-worker-tools-image-windows-2025" {
+    name = "Tag and Push Worker Tools Image (Windows 2025)"
+
+    action {
+        environments = ["staging", "production"]
+        properties = {
+            DockerPush.Image.Tag = "#{Docker.Image.Tag}"
+            DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
+            DockerPush.Target.Docker.Registry.Password = "#{Docker.Registry.Target.Password}"
+            DockerPush.Target.Docker.Registry.Username = "#{Docker.Registry.Target.Username}"
+            DockerPush.Target.Docker.Repository = "#{Docker.Registry.Target.Repository}"
+            Octopus.Action.Template.Id = "ActionTemplates-2721"
+            Octopus.Action.Template.Version = "5"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "hosted-ubuntu"
+
+        container {
+            feed = "docker-packages-octopushq"
+            image = "#{skopeo-image-name}"
+        }
+    }
+}

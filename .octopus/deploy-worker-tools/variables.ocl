@@ -46,4 +46,13 @@ variable "Docker.Image.Tag" {
     value "ubuntu.22.04" {
         action = ["tag-and-push-worker-tools-image-ubuntu-22-04"]
     }
+        value "ubuntu.24.04" {
+        action = ["tag-and-push-worker-tools-image-ubuntu-24-04"]
+    }
+        value "windows.ltsc2022" {
+        action = ["tag-and-push-worker-tools-image-windows-2022"]
+    }
+        value "windows.ltsc2025" {
+        action = ["tag-and-push-worker-tools-image-windows-2025"]
+    }
 }
