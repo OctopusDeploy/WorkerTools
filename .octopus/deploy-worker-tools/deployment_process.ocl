@@ -140,6 +140,8 @@ step "build-multi-platform-manifest" {
                 latestMinorTag=$(get_octopusvariable "WorkerTools.Version.MajorMinor")
                 latest="latest"
                 
+                
+                
                 semVerRegex="[0-9]+\.[0-9]+\.[0-9]+"
                 if ! [[ $fullVersion =~ $semVerRegex ]]; then
                     echo "The tag $fullVersion should be a fully qualified SemVer tag"
@@ -147,28 +149,22 @@ step "build-multi-platform-manifest" {
                 fi
                 
                 # Get top level images that will be packed in manifests
-                
-                ubuntu22=$(get_octopusvariable "Docker.Image.TopLevel.Tag.Ubuntu2204")
-                ubuntu24amd64=$(get_octopusvariable "Docker.Image.TopLevel.Tag.Ubuntu2404.amd64")
-                ubuntu24arm64=$(get_octopusvariable "Docker.Image.TopLevel.Tag.Ubuntu2404.arm64")
-                windows2022=$(get_octopusvariable "Docker.Image.TopLevel.Tag.Windows2022")
-                windows2025=$(get_octopusvariable "Docker.Image.TopLevel.Tag.Windows2025")
+                imagesToBundle=$(get_octopusvariable "Docker.Manifest.ImageArgs")
+                if [ -z "$imagesToBundle" ]; then
+                    echo "Docker.Manifest.ImageArgs is empty, aborting"
+                    exit 1
+                fi
                 
                 dockerRepository=$(get_octopusvariable "Docker.Registry.Target.Repository")
                 
                 
                 for tag in ${latest} ${fullVersion} ${latestMajorTag} ${latestMinorTag}; do
                     echo "Creating multi-arch manifest for ${dockerRepository}:${tag}"
-                    docker manifest create --amend ${dockerRepository}:${tag} \
-                        ${ubuntu22} \
-                        ${ubuntu24amd64} \
-                        ${ubuntu24arm64} \
-                        ${windows2022} \
-                        ${windows2025}
+                    docker manifest create --amend ${dockerRepository}:${tag} ${imageArgs}
                     docker manifest push ${dockerRepository}:${tag}
                 done
                 
-                # TODO Pack Ubuntu 2024 images - make sure we do this
+                # TODO Extract this and make it a template so we can handle Ubuntu 24.04 easily too
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
