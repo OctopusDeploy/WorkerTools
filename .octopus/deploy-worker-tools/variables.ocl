@@ -59,10 +59,6 @@ variable "Docker.Image.OS.Tag.Ubuntu.2204" {
 }
 
 variable "Docker.Image.Tag" {
-    value "#{Docker.Image.OS.Tag.Ubuntu.2204}" {
-        action = ["tag-and-push-worker-tools-image-ubuntu-22-04"]
-    }
-
     value "#{Docker.Image.OS.Tag.Ubuntu.2404}" {
         action = ["tag-and-push-worker-tools-image-ubuntu-24-04"]
     }
@@ -73,6 +69,10 @@ variable "Docker.Image.Tag" {
 
     value "#{Docker.Image.OS.Tag.Windows.2025}" {
         action = ["tag-and-push-worker-tools-image-windows-2025"]
+    }
+
+    value "#{Docker.Image.OS.Tag.Ubuntu.2204}" {
+        action = ["debug-variables", "tag-and-push-worker-tools-image-ubuntu-22-04"]
     }
 }
 
