@@ -1,0 +1,7 @@
+variable "internal-container-registry" {
+    value "docker.packages.octopushq" {}
+}
+
+variable "skopeo-image-name" {
+    value "octopusdeploy/tool-containers/tool-skopeo-cli" {}
+}
