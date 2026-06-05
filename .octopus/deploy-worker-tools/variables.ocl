@@ -139,3 +139,7 @@ variable "Docker.Image.TopLevel.Tag.Ubuntu2204" {
 variable "Docker.Image.TopLevel.Tag.Ubuntu2404.arm64" {
     value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404.arm64}" {}
 }
+
+variable "Docker.Image.TopLevel.Tags[ubuntu.22.04]" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
+}
