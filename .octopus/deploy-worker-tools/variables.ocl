@@ -89,5 +89,5 @@ variable "Docker.Image.Tag" {
 }
 
 variable "Docker.Image.OS.Tag.Ubuntu.2204.Full" {
-    value "#{Docker.Registry.Target.Repository}:" {}
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Image.OS.Tag.Ubuntu.2204}" {}
 }
