@@ -42,18 +42,6 @@ variable "Docker.Registry.Target.Username" {
     }
 }
 
-variable "Docker.Image.OS.Tag.Ubuntu.2404.Full" {
-    value {}
-}
-
-variable "Docker.Image.OS.Tag.Windows.2022.Full" {
-    value {}
-}
-
-variable "Docker.Image.OS.Tag.Windows.2025.Full" {
-    value {}
-}
-
 variable "Docker.Image.OS.Tag.Windows.2025" {
     value "windows.ltsc2025" {}
 }
@@ -102,4 +90,16 @@ variable "WorkerTools.Version.Major" {
 
 variable "WorkerTools.Version.MajorMinor" {
     value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}" {}
+}
+
+variable "Docker.Image.OS.Tag.Ubuntu.2404.Full" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Image.OS.Tag.Ubuntu.2404}" {}
+}
+
+variable "Docker.Image.OS.Tag.Windows.2022.Full" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Image.OS.Tag.Windows.2022}" {}
+}
+
+variable "Docker.Image.OS.Tag.Windows.2025.Full" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Image.OS.Tag.Windows.2025}" {}
 }
