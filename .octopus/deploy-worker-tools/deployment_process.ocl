@@ -23,6 +23,7 @@ step "tag-and-push-worker-tools-image-ubuntu-22-04" {
 
 step "tag-and-push-worker-tools-image-ubuntu-24-04" {
     name = "Tag and Push Worker Tools Image (Ubuntu 24.04)"
+    start_trigger = "StartWithPrevious"
 
     action {
         environments = ["staging", "production"]
@@ -46,6 +47,7 @@ step "tag-and-push-worker-tools-image-ubuntu-24-04" {
 
 step "tag-and-push-worker-tools-image-windows-2022" {
     name = "Tag and Push Worker Tools Image (Windows 2022)"
+    start_trigger = "StartWithPrevious"
 
     action {
         environments = ["staging", "production"]
@@ -69,6 +71,7 @@ step "tag-and-push-worker-tools-image-windows-2022" {
 
 step "tag-and-push-worker-tools-image-windows-2025" {
     name = "Tag and Push Worker Tools Image (Windows 2025)"
+    start_trigger = "StartWithPrevious"
 
     action {
         environments = ["staging", "production"]
