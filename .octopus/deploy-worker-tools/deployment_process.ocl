@@ -106,9 +106,9 @@ step "build-multi-platform-manifest" {
                 echo "##octopus[stderr-progress]"
                 set -eux
                 
-                targetHostName=$(get_octopusvariable "DockerPush.Target.Docker.Registry.Hostname")
+                targetHostName=$(get_octopusvariable "Docker.Registry.Target.Hostname")
                 echo "Creating multi-arch manifests for registry: $targetHostName"
-                echo $(get_octopusvariable "DockerPush.Target.Docker.Registry.Password") | docker login -u $(get_octopusvariable "DockerPush.Target.Docker.Registry.Username") --password-stdin $targetHostName
+                echo $(get_octopusvariable "Docker.Registry.Target.Password") | docker login -u $(get_octopusvariable "Docker.Registry.Target.Username") --password-stdin $targetHostName
                 
                 fullVersion=$(get_octopusvariable "WorkerTools.Version.Full")
                 latestMajorTag=$(get_octopusvariable "WorkerTools.Version.Major")
@@ -119,6 +119,8 @@ step "build-multi-platform-manifest" {
                     echo "The tag $fullVersion should be a fully qualified SemVer tag"
                     exit 1
                 fi
+                
+                dockerRepository=$(get_octopusvariable "Docker.Registry.Target.Repository")
                 
                 for tag in latest ${fullVersion} ${latestMajorTag} ${latestMinorTag}; do
                     echo "Creating multi-arch manifest for ${dockerRepository}:${tag}"
