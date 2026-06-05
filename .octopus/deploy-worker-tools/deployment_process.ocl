@@ -150,6 +150,7 @@ step "debug-variables" {
     action {
         action_type = "Octopus.Script"
         is_disabled = true
+        is_required = true
         properties = {
             Octopus.Action.Script.ScriptBody = <<-EOT
                 #!/bin/bash
