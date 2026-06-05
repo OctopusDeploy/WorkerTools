@@ -3,6 +3,7 @@ step "tag-and-push-worker-tools-image-ubuntu-22-04" {
 
     action {
         environments = ["staging", "production"]
+        is_disabled = true
         properties = {
             DockerPush.Image.Tag = "#{Docker.Image.Tag}"
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
@@ -26,6 +27,7 @@ step "tag-and-push-worker-tools-image-ubuntu-24-04" {
 
     action {
         environments = ["staging", "production"]
+        is_disabled = true
         properties = {
             DockerPush.Image.Tag = "#{Docker.Image.Tag}"
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
@@ -49,6 +51,7 @@ step "tag-and-push-worker-tools-image-windows-2022" {
 
     action {
         environments = ["staging", "production"]
+        is_disabled = true
         properties = {
             DockerPush.Image.Tag = "#{Docker.Image.Tag}"
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
@@ -72,6 +75,7 @@ step "tag-and-push-worker-tools-image-windows-2025" {
 
     action {
         environments = ["staging", "production"]
+        is_disabled = true
         properties = {
             DockerPush.Image.Tag = "#{Docker.Image.Tag}"
             DockerPush.Target.Docker.Registry.Hostname = "#{Docker.Registry.Target.Hostname}"
@@ -96,6 +100,7 @@ step "build-multi-platform-manifest" {
     action {
         action_type = "Octopus.Script"
         environments = ["staging", "production"]
+        is_disabled = true
         properties = {
             Octopus.Action.Script.ScriptBody = <<-EOT
                 #!/bin/bash
@@ -127,6 +132,79 @@ step "build-multi-platform-manifest" {
                         $(get_octopusvariable "Docker.Image.OS.Tag.Windows.2025.Full")
                     docker manifest push ${dockerRepository}:${tag}
                 done
+                EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "hosted-ubuntu"
+
+        container {
+            feed = "docker-packages-octopushq"
+            image = "#{skopeo-image-name}"
+        }
+    }
+}
+
+step "debug-variables" {
+    name = "Debug Variables"
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                #!/bin/bash
+                echo "##octopus[stderr-progress]"
+                set -eux
+                
+                apt-get update
+                apt install -y jq
+                
+                sourceHostName=$(get_octopusvariable "OctopusDockerRegistry.Hostname")
+                targetHostName=$(get_octopusvariable "Docker.Target.Docker.Registry.Hostname")
+                
+                echo "Source Registry Name: $sourceHostName"
+                echo "Target Registry Name: $targetHostName"
+                
+                # retry --times=3 --delay=5 -- skopeo login -u $(get_octopusvariable "OctopusDockerRegistry.Username") -p $(get_octopusvariable "OctopusDockerRegistry.Password") $sourceHostName
+                # retry --times=3 --delay=5 -- skopeo login -u $(get_octopusvariable "Docker.Target.Docker.Registry.Username") -p $(get_octopusvariable "Docker.Target.Docker.Registry.Password") $targetHostName
+                
+                repositoryTagsJson=$(retry --times=3 --delay=5 -- skopeo list-tags docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"))
+                
+                osTag=$(get_octopusvariable "DockerPush.Image.Tag")
+                fullyQualifiedTag=$(get_octopusvariable "Octopus.Release.Number")-"${osTag}"
+                
+                semVerRegex="[0-9]+\.[0-9]+\.[0-9]+\-.*"
+                if ! [[ $fullyQualifiedTag =~ $semVerRegex ]]; then
+                    echo "The tag $fullyQualifiedTag should be a fully qualified SemVer tag"
+                    exit 1
+                fi
+                
+                matchingSourceTag=$(jq -r --arg fullyQualifiedTag "$fullyQualifiedTag" '.Tags[] | select(.==$fullyQualifiedTag)' <<<"$repositoryTagsJson")
+                
+                if [ "$fullyQualifiedTag" != "$matchingSourceTag" ]; then
+                    echo "The tag $fullyQualifiedTag could not be found in $sourceHostName"
+                    exit 1
+                fi
+                
+                latestMajorTag=$(get_octopusvariable "WorkerTools.Tags.LatestMajor")-"${osTag}"
+                latestMinorTag=$(get_octopusvariable "WorkerTools.Tags.LatestMinor")-"${osTag}"
+                
+                echo "Image tag for promotion: $fullyQualifiedTag"
+                
+                # if [ "$sourceHostName" != "$targetHostName" ]; then
+                #     echo "Pushing $fullyQualifiedTag tag to target registry"
+                #     retry --times=6 --delay=10 -- skopeo copy --all docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"):$fullyQualifiedTag docker://$(get_octopusvariable "Docker.Target.Docker.Repository"):$fullyQualifiedTag
+                # fi
+                
+                echo "Pushing floating tags to target registry:"
+                echo $latestMajorTag
+                echo $latestMinorTag
+                echo $osTag
+                # retry --times=6 --delay=10 -- skopeo copy --all docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"):$fullyQualifiedTag docker://$(get_octopusvariable "Docker.Target.Docker.Repository"):$latestMajorTag
+                # retry --times=6 --delay=10 -- skopeo copy --all docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"):$fullyQualifiedTag docker://$(get_octopusvariable "Docker.Target.Docker.Repository"):$latestMinorTag
+                # retry --times=6 --delay=10 -- skopeo copy --all docker://$(get_octopusvariable "OctopusDockerRegistry.WorkerTools.Repository"):$fullyQualifiedTag docker://$(get_octopusvariable "Docker.Target.Docker.Repository"):$osTag
+                
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
