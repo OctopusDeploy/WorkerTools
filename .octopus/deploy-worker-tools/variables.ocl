@@ -42,53 +42,6 @@ variable "Docker.Registry.Target.Username" {
     }
 }
 
-variable "Docker.Image.OS.Tag.Windows.2025" {
-    value "windows.ltsc2025" {}
-}
-
-variable "Docker.Image.OS.Tag.Windows.2022" {
-    value "windows.ltsc2022" {}
-}
-
-variable "Docker.Image.OS.Tag.Ubuntu.2404" {
-    value "ubuntu.24.04" {}
-}
-
-variable "Docker.Image.OS.Tag.Ubuntu.2204" {
-    value "ubuntu.22.04" {}
-}
-
-variable "Docker.Image.Tag" {
-    value "#{Docker.Image.OS.Tag.Ubuntu.2404}" {
-        action = ["tag-and-push-worker-tools-image-ubuntu-24-04"]
-    }
-
-    value "#{Docker.Image.OS.Tag.Windows.2022}" {
-        action = ["tag-and-push-worker-tools-image-windows-2022"]
-    }
-
-    value "#{Docker.Image.OS.Tag.Windows.2025}" {
-        action = ["tag-and-push-worker-tools-image-windows-2025"]
-    }
-
-    value "#{Docker.Image.OS.Tag.Ubuntu.2204}" {
-        action = ["debug-variables", "tag-and-push-worker-tools-image-ubuntu-22-04"]
-    }
-}
-
-variable "WorkerTools.Tags.LatestMajor" {
-    value "#{Octopus.Release.Number | VersionMajor}-#{Docker.Image.Tag}" {}
-}
-
-variable "WorkerTools.Tags.LatestMinor" {
-    value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}-#{Docker.Image.Tag}" {}
-}
-
-
-variable "Docker.Image.OS.Tag.Ubuntu.2204.Full" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Image.OS.Tag.Ubuntu.2204}" {}
-}
-
 variable "WorkerTools.Version.Full" {
     value "#{Octopus.Release.Number}" {}
 }
@@ -101,14 +54,72 @@ variable "WorkerTools.Version.MajorMinor" {
     value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}" {}
 }
 
+variable "Docker.Tag.LatestMinor.OS" {
+    value "#{WorkerTools.Tags.LatestMinor}-#{Docker.Image.Tag}" {}
+}
+
+variable "Docker.Tag.LatestMajor.OS" {
+    value "#{WorkerTools.Tags.LatestMajor}-#{Docker.Image.Tag}" {}
+}
+
+variable "Docker.Tag.FullVersion.OS" {
+    value "#{WorkerTools.Version.Full}-#{Docker.Image.Tag}" {}
+}
+
+variable "Docker.Tag.OS.Ubuntu2204" {
+    value "ubuntu.22.04" {}
+}
+
+variable "Docker.Image.OS.Tag.Ubuntu.2204.Full" {
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
+}
+
+variable "Docker.Tag.OS.Ubuntu2404" {
+    value "ubuntu.24.04" {}
+}
+
 variable "Docker.Image.OS.Tag.Ubuntu.2404.Full" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Image.OS.Tag.Ubuntu.2404}" {}
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404}" {}
+}
+
+variable "Docker.Tag.OS.Windows2022" {
+    value "windows.ltsc2022" {}
 }
 
 variable "Docker.Image.OS.Tag.Windows.2022.Full" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Image.OS.Tag.Windows.2022}" {}
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2022}" {}
+}
+
+variable "Docker.Tag.OS.Windows2025" {
+    value "windows.ltsc2025" {}
 }
 
 variable "Docker.Image.OS.Tag.Windows.2025.Full" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Image.OS.Tag.Windows.2025}" {}
+    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2025}" {}
+}
+
+variable "Docker.Image.Tag" {
+    value "#{Docker.Tag.OS.Ubuntu2404}" {
+        action = ["tag-and-push-worker-tools-image-ubuntu-24-04"]
+    }
+
+    value "#{Docker.Tag.OS.Windows2022}" {
+        action = ["tag-and-push-worker-tools-image-windows-2022"]
+    }
+
+    value "#{Docker.Tag.OS.Windows2025}" {
+        action = ["tag-and-push-worker-tools-image-windows-2025"]
+    }
+
+    value "#{Docker.Tag.OS.Ubuntu2204}" {
+        action = ["tag-and-push-worker-tools-image-ubuntu-22-04"]
+    }
+}
+
+variable "WorkerTools.Tags.LatestMajor" {
+    value "#{WorkerTools.Tags.LatestMajor}" {}
+}
+
+variable "WorkerTools.Tags.LatestMinor" {
+    value "#{WorkerTools.Version.MajorMinor}" {}
 }
