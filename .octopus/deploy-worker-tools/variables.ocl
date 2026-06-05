@@ -54,14 +54,6 @@ variable "WorkerTools.Version.MajorMinor" {
     value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}" {}
 }
 
-variable "Docker.Tag.LatestMinor.OS" {
-    value "#{WorkerTools.Tags.LatestMinor}-#{Docker.Image.Tag}" {}
-}
-
-variable "Docker.Tag.LatestMajor.OS" {
-    value "#{WorkerTools.Tags.LatestMajor}-#{Docker.Image.Tag}" {}
-}
-
 variable "Docker.Tag.FullVersion.OS" {
     value "#{WorkerTools.Version.Full}-#{Docker.Image.Tag}" {}
 }
@@ -122,4 +114,12 @@ variable "WorkerTools.Tags.LatestMajor" {
 
 variable "WorkerTools.Tags.LatestMinor" {
     value "#{WorkerTools.Version.MajorMinor}" {}
+}
+
+variable "Docker.Tag.LatestMajor.OS" {
+    value "#{WorkerTools.Version.LatestMajor}-#{Docker.Image.Tag}" {}
+}
+
+variable "Docker.Tag.LatestMinor.OS" {
+    value "#{WorkerTools.Version.LatestMinor}-#{Docker.Image.Tag}" {}
 }
