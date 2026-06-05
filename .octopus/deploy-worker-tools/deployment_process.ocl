@@ -168,7 +168,7 @@ step "build-multi-platform-manifest" {
                     docker manifest push ${dockerRepository}:${tag}
                 done
                 
-                # TODO Pack Ubuntu 2024 images
+                # TODO Pack Ubuntu 2024 images - make sure we do this
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
