@@ -108,10 +108,6 @@ variable "Docker.Image.Tag" {
     }
 }
 
-variable "WorkerTools.Tags.LatestMajor" {
-    value "#{WorkerTools.Tags.LatestMajor}" {}
-}
-
 variable "WorkerTools.Tags.LatestMinor" {
     value "#{WorkerTools.Version.MajorMinor}" {}
 }
@@ -122,4 +118,8 @@ variable "Docker.Tag.LatestMajor.OS" {
 
 variable "Docker.Tag.LatestMinor.OS" {
     value "#{WorkerTools.Version.LatestMinor}-#{Docker.Image.Tag}" {}
+}
+
+variable "WorkerTools.Tags.LatestMajor" {
+    value "#{WorkerTools.Version.LatestMajor}" {}
 }
