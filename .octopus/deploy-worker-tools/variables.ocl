@@ -41,3 +41,7 @@ variable "Docker.Registry.Target.Username" {
         environment = ["staging"]
     }
 }
+
+variable "Docker.Image.Tag" {
+    value "ubuntu.22.04" {}
+}
