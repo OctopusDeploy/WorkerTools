@@ -160,7 +160,7 @@ step "build-multi-platform-manifest" {
                 
                 for tag in ${latest} ${fullVersion} ${latestMajorTag} ${latestMinorTag}; do
                     echo "Creating multi-arch manifest for ${dockerRepository}:${tag}"
-                    docker manifest create --amend ${dockerRepository}:${tag} ${imageArgs}
+                    docker manifest create --amend ${dockerRepository}:${tag} ${imagesToBundle}
                     docker manifest push ${dockerRepository}:${tag}
                 done
                 
