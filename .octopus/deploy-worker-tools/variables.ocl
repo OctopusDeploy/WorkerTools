@@ -146,7 +146,7 @@ variable "Docker.Manifest.ImageArgs" {
     }
 
     value "#{Docker.Manifest.Image[ubuntu2404amd64]} #{Docker.Manifest.Image[ubuntu2404arm64]}" {
+        action = ["bundle-ubuntu-24-04-multi-arch"]
         description = ""
-        environment = ["staging"]
     }
 }
