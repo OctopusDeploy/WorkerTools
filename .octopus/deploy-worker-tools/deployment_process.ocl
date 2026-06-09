@@ -121,54 +121,10 @@ step "build-multi-platform-manifest" {
     name = "Build Multi Platform Manifest"
 
     action {
-        action_type = "Octopus.Script"
         environments = ["staging", "production"]
         properties = {
-            Octopus.Action.Script.ScriptBody = <<-EOT
-                #!/bin/bash
-                echo "##octopus[stderr-progress]"
-                set -eux
-                
-                # Login in to the repository with the images
-                targetHostName=$(get_octopusvariable "Docker.Registry.Target.Hostname")
-                echo "Creating multi-arch manifests for registry: $targetHostName"
-                echo $(get_octopusvariable "Docker.Registry.Target.Password") | docker login -u $(get_octopusvariable "Docker.Registry.Target.Username") --password-stdin $targetHostName
-                
-                # Populate the versioned tags we will be adding
-                fullVersion=$(get_octopusvariable "WorkerTools.Version.Full")
-                latestMajorTag=$(get_octopusvariable "WorkerTools.Version.Major")
-                latestMinorTag=$(get_octopusvariable "WorkerTools.Version.MajorMinor")
-                latest=$(get_octopusvariable "WorkerTools.Version.Latest")
-                
-                
-                
-                semVerRegex="[0-9]+\.[0-9]+\.[0-9]+"
-                if ! [[ $fullVersion =~ $semVerRegex ]]; then
-                    echo "The tag $fullVersion should be a fully qualified SemVer tag"
-                    exit 1
-                fi
-                
-                # Get top level images that will be packed in manifests
-                imagesToBundle=$(get_octopusvariable "Docker.Manifest.ImageArgs")
-                if [ -z "$imagesToBundle" ]; then
-                    echo "Docker.Manifest.ImageArgs is empty, aborting"
-                    exit 1
-                fi
-                
-                dockerRepository=$(get_octopusvariable "Docker.Registry.Target.Repository")
-                
-                
-                for tag in ${latest} ${fullVersion} ${latestMajorTag} ${latestMinorTag}; do
-                    echo "Creating multi-arch manifest for ${dockerRepository}:${tag}"
-                    docker manifest create --amend ${dockerRepository}:${tag} ${imagesToBundle}
-                    docker manifest push ${dockerRepository}:${tag}
-                done
-                
-                # TODO Extract this and make it a template so we can handle Ubuntu 24.04 easily too
-                EOT
-            Octopus.Action.Script.ScriptSource = "Inline"
-            Octopus.Action.Script.Syntax = "Bash"
-            OctopusUseBundledTooling = "False"
+            Octopus.Action.Template.Id = "ActionTemplates-3781"
+            Octopus.Action.Template.Version = "0"
         }
         worker_pool = "hosted-ubuntu"
     }
