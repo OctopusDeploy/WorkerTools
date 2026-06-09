@@ -144,4 +144,9 @@ variable "Docker.Manifest.ImageArgs" {
     value "#{each image in Docker.Manifest.Image}#{image} #{/each}" {
         action = ["build-multi-platform-manifest"]
     }
+
+    value "#{Docker.Manifest.Image[ubuntu2404amd64]} #{Docker.Manifest.Image[ubuntu2404arm64]}" {
+        description = ""
+        environment = ["staging"]
+    }
 }
