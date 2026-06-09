@@ -138,7 +138,7 @@ step "build-multi-platform-manifest" {
                 fullVersion=$(get_octopusvariable "WorkerTools.Version.Full")
                 latestMajorTag=$(get_octopusvariable "WorkerTools.Version.Major")
                 latestMinorTag=$(get_octopusvariable "WorkerTools.Version.MajorMinor")
-                latest="latest"
+                latest=$(get_octopusvariable "WorkerTools.Version.Latest")
                 
                 
                 
