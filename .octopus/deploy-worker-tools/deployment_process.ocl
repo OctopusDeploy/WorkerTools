@@ -173,3 +173,18 @@ step "build-multi-platform-manifest" {
         worker_pool = "hosted-ubuntu"
     }
 }
+
+step "bundle-ubuntu-24-04-multi-arch" {
+    name = "Bundle Ubuntu 24.04 Multi Arch"
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.Script.ScriptBody = "echo 'Hello World'"
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "hosted-ubuntu"
+    }
+}
