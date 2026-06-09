@@ -101,7 +101,9 @@ RUN choco install -y python3 --version $Env:Python_Version --no-progress; `
     Update-SessionEnvironment
 
 # Install Pip
-RUN python -m pip install --upgrade pip==$Env:Pip_Version
+RUN python -m pip install --upgrade pip==$Env:Pip_Version; `
+    Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
+    Update-SessionEnvironment
 
 # Install 7ZIP because gcloud
 RUN choco install 7zip -y --version $Env:7Zip_Version --no-progress
