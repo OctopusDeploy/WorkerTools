@@ -124,7 +124,7 @@ step "build-multi-platform-manifest" {
         environments = ["staging", "production"]
         properties = {
             Octopus.Action.Template.Id = "ActionTemplates-3781"
-            Octopus.Action.Template.Version = "0"
+            Octopus.Action.Template.Version = "1"
         }
         worker_pool = "hosted-ubuntu"
     }
