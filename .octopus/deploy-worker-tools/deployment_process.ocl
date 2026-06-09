@@ -130,22 +130,6 @@ step "build-multi-platform-manifest" {
     }
 }
 
-step "bundle-ubuntu-24-04-multi-arch" {
-    name = "Bundle Ubuntu 24.04 Multi Arch"
-
-    action {
-        action_type = "Octopus.Script"
-        is_disabled = true
-        properties = {
-            Octopus.Action.Script.ScriptBody = "echo 'Hello World'"
-            Octopus.Action.Script.ScriptSource = "Inline"
-            Octopus.Action.Script.Syntax = "Bash"
-            OctopusUseBundledTooling = "False"
-        }
-        worker_pool = "hosted-ubuntu"
-    }
-}
-
 step "build-multi-platform-manifest-ubuntu-24-04" {
     name = "Build Multi Platform Manifest (Ubuntu 24.04)"
 
