@@ -46,7 +46,7 @@ variable "WorkerTools.Version.Full" {
     value "#{Octopus.Release.Number}" {}
 
     value "#{Octopus.Release.Number}-#{Docker.Tag.OS.Ubuntu2404.base}" {
-        action = ["bundle-ubuntu-24-04-multi-arch"]
+        action = ["build-multi-platform-manifest-ubuntu-24-04"]
         description = ""
     }
 }
@@ -55,7 +55,7 @@ variable "WorkerTools.Version.Major" {
     value "#{Octopus.Release.Number | VersionMajor}" {}
 
     value "#{Octopus.Release.Number | VersionMajor}-#{Docker.Tag.OS.Ubuntu2404.base}" {
-        action = ["bundle-ubuntu-24-04-multi-arch"]
+        action = ["build-multi-platform-manifest-ubuntu-24-04"]
         description = ""
     }
 }
@@ -64,7 +64,7 @@ variable "WorkerTools.Version.MajorMinor" {
     value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}" {}
 
     value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}-#{Docker.Tag.OS.Ubuntu2404.base}" {
-        action = ["bundle-ubuntu-24-04-multi-arch"]
+        action = ["build-multi-platform-manifest-ubuntu-24-04"]
         description = ""
     }
 }
@@ -161,7 +161,7 @@ variable "Docker.Manifest.ImageArgs" {
     }
 
     value "#{Docker.Manifest.Image[ubuntu2404amd64]} #{Docker.Manifest.Image[ubuntu2404arm64]}" {
-        action = ["bundle-ubuntu-24-04-multi-arch"]
+        action = ["build-multi-platform-manifest-ubuntu-24-04"]
         description = ""
     }
 }
@@ -170,6 +170,6 @@ variable "WorkerTools.Version.Latest" {
     value "latest" {}
 
     value "#{Docker.Tag.OS.Ubuntu2404.base}" {
-        action = ["bundle-ubuntu-24-04-multi-arch"]
+        action = ["build-multi-platform-manifest-ubuntu-24-04"]
     }
 }
