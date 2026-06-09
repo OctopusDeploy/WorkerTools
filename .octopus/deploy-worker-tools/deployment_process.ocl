@@ -145,3 +145,16 @@ step "bundle-ubuntu-24-04-multi-arch" {
         worker_pool = "hosted-ubuntu"
     }
 }
+
+step "build-multi-platform-manifest-ubuntu-24-04" {
+    name = "Build Multi Platform Manifest (Ubuntu 24.04)"
+
+    action {
+        environments = ["staging", "production"]
+        properties = {
+            Octopus.Action.Template.Id = "ActionTemplates-3781"
+            Octopus.Action.Template.Version = "1"
+        }
+        worker_pool = "hosted-ubuntu"
+    }
+}
