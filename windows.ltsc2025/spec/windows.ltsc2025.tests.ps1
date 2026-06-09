@@ -103,7 +103,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has pip installed and working' {
-        pip --version | Should -Match 'pip 26.1.2'
+        python -m pip --version | Should -Match 'pip 26.1.2'
         $LASTEXITCODE | Should -be 0
     }
 
