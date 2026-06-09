@@ -118,7 +118,7 @@ step "tag-and-push-worker-tools-image-windows-2025" {
 }
 
 step "build-multi-platform-manifest" {
-    name = "Build Multi Platform Manifest"
+    name = "Create Worker Tools Bundle"
 
     action {
         environments = ["staging", "production"]
@@ -131,7 +131,7 @@ step "build-multi-platform-manifest" {
 }
 
 step "build-multi-platform-manifest-ubuntu-24-04" {
-    name = "Build Multi Platform Manifest (Ubuntu 24.04)"
+    name = "Create Ubuntu 24.04 Bundle"
 
     action {
         environments = ["staging", "production"]
