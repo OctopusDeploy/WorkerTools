@@ -179,6 +179,7 @@ step "bundle-ubuntu-24-04-multi-arch" {
 
     action {
         action_type = "Octopus.Script"
+        is_disabled = true
         properties = {
             Octopus.Action.Script.ScriptBody = "echo 'Hello World'"
             Octopus.Action.Script.ScriptSource = "Inline"
