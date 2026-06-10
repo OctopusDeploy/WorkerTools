@@ -9,9 +9,9 @@
 
 ## Tags
 
-- `5.0.0-ubuntu.22.04`
-- `5.0-ubuntu.22.04`
-- `5-ubuntu.22.04`
+- `6.6.2-ubuntu.22.04`
+- `6.0-ubuntu.22.04`
+- `6-ubuntu.22.04`
 - `ubuntu.22.04`
 
 ## Digest
@@ -54,7 +54,7 @@
 - maven - Latest
 - gradle - Latest
 - Python2 - 2.7.18
-- Python3 - Latest
+- Python3 - 3.10
 - groff - Latest
 - Istio CLI - Latest
 - Linkerd CLI - Latest

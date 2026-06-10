@@ -9,19 +9,19 @@
 
 ## Tags
 Arm64
-- `6.6.0-ubuntu.24.04-arm64`
+- `6.6.2-ubuntu.24.04-arm64`
 - `6.6-ubuntu.24.04-arm64`
 - `6-ubuntu.24.04-arm64`
 - `ubuntu.24.04-arm64`
 
 AMD64 
-- `6.6.0-ubuntu.24.04-amd64`
+- `6.6.2-ubuntu.24.04-amd64`
 - `6.6-ubuntu.24.04-amd64`
 - `6-ubuntu.24.04-amd64`
 - `ubuntu.24.04-amd64`
 
 MultiArch
-- `6.6.0-ubuntu.24.04`
+- `6.6.2-ubuntu.24.04`
 - `6.6-ubuntu.24.04`
 - `6-ubuntu.24.04`
 - `ubuntu.24.04`
@@ -52,7 +52,7 @@ MultiArch
 - Octopus CLI 2.21.0
 - Octopus Client 21.6.26529
 - Powershell 7.6.1
-- Python3 3.12.3
+- Python3 3.14
 - Terraform 1.15.1
 - wget - Latest
 - unzip - Latest

@@ -4,8 +4,10 @@ Officially sanctioned worker images for Octopus Deploy available on [docker hub]
 
 | Operating System         | Installed Tools and Versions                                                                                                                         |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Ubuntu 24.04              | [Installed tools](./ubuntu.24.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.24.04/Dockerfile))         |
-| Windows Server Core 2022 | [Installed tools](./windows.ltsc2022/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/Dockerfile)) |
+| Ubuntu 22.04              | [Installed tools](./ubuntu.22.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/ubuntu.22.04/Dockerfile))          |
+| Ubuntu 24.04              | [Installed tools](./ubuntu.24.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/ubuntu.24.04/Dockerfile))          |
+| Windows Server Core 2022 | [Installed tools](./windows.ltsc2022/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/windows.ltsc2022/Dockerfile))   |
+| Windows Server Core 2025 | [Installed tools](./windows.ltsc2025/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/windows.ltsc2025/Dockerfile))   |
 
 ## Management
 
@@ -61,15 +63,15 @@ Then within the running docker container
 #### Option 1: Build and Test scripts
 
 ```powershell
-build.ps1 -image-directory 'windows.ltsc2022'
+build.ps1 -image-directory 'windows.ltsc2025'
 ```
 
-Runs a build and test of the `windows.ltsc2022` container
+Runs a build and test of the `windows.ltsc2025` container
 
 #### Option 2: DIY
 
 ```powershell
-cd windows.ltsc2019
+cd windows.ltsc2012
 docker build . -t worker-tools
 docker build . -t worker-tools-tests -f Tests.Dockerfile --build-arg ContainerUnderTest=worker-tools
 docker run -it -v ${pwd}:c:\app worker-tools-tests pwsh

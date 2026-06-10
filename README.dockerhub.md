@@ -12,28 +12,36 @@ Pick an image that is suitable for your needs based on OS + distribution.
 
 | Operating System         | Installed Tools and Versions                                                                                                                         |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Ubuntu 24.04             | [Installed tools](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.24.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.24.04/Dockerfile))         |
-| Windows Server Core 2022 | [Installed tools](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/Dockerfile)) |
+| Ubuntu 22.04              | [Installed tools](./ubuntu.22.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/ubuntu.22.04/Dockerfile))          |
+| Ubuntu 24.04              | [Installed tools](./ubuntu.24.04/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/ubuntu.24.04/Dockerfile))          |
+| Windows Server Core 2022 | [Installed tools](./windows.ltsc2022/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/windows.ltsc2022/Dockerfile))   |
+| Windows Server Core 2025 | [Installed tools](./windows.ltsc2025/README.md) ([Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/windows.ltsc2025/Dockerfile))   |
 
 The images we publish have multiple release tracks, and are [semantically versioned](https://semver.org/). To ensure stability within your deployment processes, we recommend using the full `major.minor.patch` tag when using the `octopusdeploy/worker-tools` image - for example, use `6.6.0-ubuntu.24.04`, not `ubuntu.24.04`, unless you have a particular use-case that is more tolerant of changes.
 
 Release Track  | Ubuntu             | Windows 
 ---------|--------------------| ---
-latest | ubuntu.24.04       | windows.ltsc2022
-Major | 1-ubuntu.24.04     | 1-windows.ltsc2022
-Major.Minor | 1.0-ubuntu.24.04   | 1.0-windows.ltsc2022
-Major.Minor.Patch | 1.0.1-ubuntu.24.04 | 1.0.2-windows.ltsc2022
+latest | ubuntu.24.04       | windows.ltsc2025
+Major | 1-ubuntu.24.04     | 1-windows.ltsc2025
+Major.Minor | 1.0-ubuntu.24.04   | 1.0-windows.ltsc2025
+Major.Minor.Patch | 1.0.1-ubuntu.24.04 | 1.0.2-windows.ltsc2025
 
 # Full Tag Listing
 
-## Windows Server 2022 amd64 Tags
+## Windows Server 2025 Tags
 Tag | Dockerfile
 ---------| ---------------
-windows.ltsc2022 | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/windows.ltsc2022/Dockerfile)
+windows.ltsc2025 | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/windows.ltsc2025/Dockerfile)
+
+## Windows Server 2022 Tags
+Tag | Dockerfile
+---------| ---------------
+windows.ltsc2022 | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/windows.ltsc2022/Dockerfile)
 
 ## Ubuntu Tags
 Tag | Dockerfile
 ---------| ---------------
-ubuntu.24.04 | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/master/ubuntu.24.04/Dockerfile)
+ubuntu.24.04 | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/ubuntu.24.04/Dockerfile)
+ubuntu.22.04 | [Dockerfile](https://github.com/OctopusDeploy/WorkerTools/blob/main/ubuntu.22.04/Dockerfile)
 
 You can retrieve a list of all available tags for octopusdeploy/worker-tools at https://hub.docker.com/v2/repositories/octopusdeploy/worker-tools/tags.
