@@ -1,9 +1,10 @@
 Write-Output "##teamcity[blockOpened name='Pester tests']"
 
 try {
-    Install-Module -Name "Pester" -MinimumVersion "5.0.2" -Force
+    # Keep Pester in the v5 range
+    Install-Module -Name "Pester" -MinimumVersion "5.7.1" -MaximumVersion "5.99.99" -Force
 
-    Import-Module -Name "Pester"
+    Import-Module -Name "Pester" -MinimumVersion "5.7.1"
 
     Set-Location /app/spec
 
