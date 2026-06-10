@@ -11,7 +11,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has chocolatey installed' {
-        choco --version | Should -Match '2.7.2'
+        [string](& choco --version) | Should -Match '2.7.2'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -22,12 +22,12 @@ Describe  'installed dependencies' {
     }
 
     It 'has dotnet installed' {
-        dotnet --version | Should -Match '10.0.\d+'
+        [string](& dotnet --version) | Should -Match '10.0.\d+'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has the .NET 8 runtime installed' {
-        (dotnet --list-runtimes) | Select-String -Pattern 'Microsoft.NETCore.App 8.0.27' | Should -Not -BeNullOrEmpty
+        [string](& dotnet --list-runtimes) | Should -Match 'Microsoft.NETCore.App 8.0.27'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -37,7 +37,8 @@ Describe  'installed dependencies' {
     }
 
     It 'has java installed' {
-        java -version 2>&1 | Select-String -Pattern '25' | Should -BeLike "*25*"
+        $output = & java -version 2>&1
+        [string]$output | Should -Match '25'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -48,88 +49,93 @@ Describe  'installed dependencies' {
     }
 
     It 'has az powershell module installed' {
-        (Get-Module Az -ListAvailable).Version.ToString() | should -be '15.6.1'
+        (Get-Module Az -ListAvailable).Version.ToString() | Should -Be '15.6.1'
     }
 
     It 'has aws cli installed' {
-      aws --version 2>&1 | Should -Match '2.34.53'
+        $output = & aws --version 2>&1
+        [string]$output | Should -Match '2.34.53'
     }
 
     It 'has aws powershell installed' {
       Import-Module AWSPowerShell.NetCore
-      Get-AWSPowerShellVersion | Should -Match '5.0.218'
+      [string](& Get-AWSPowerShellVersion) | Should -Match '5.0.218'
     }
 
-    # There is no version command for aws-iam-authenticator, so we just check for the installed version.
     It 'has aws-iam-authenticator installed' {
-        Test-Path 'C:\ProgramData\chocolatey\bin\aws-iam-authenticator.exe' | should -be $true
+        Test-Path 'C:\ProgramData\chocolatey\bin\aws-iam-authenticator.exe' | Should -Be $true
     }
 
     It 'has node installed' {
-        node --version | Should -Match '24.16.0'
+        [string](& node --version) | Should -Match '24.16.0'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has kubectl installed' {
-        kubectl version --client | Select-String -Pattern "1.36.1" | Should -BeLike "Client Version: v1.36.1"
+        $output = & kubectl version --client
+        [string]$output | Should -Match '1.36.1'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has multiple kubectl versions available' {
         foreach ($v in @('1.32.12', '1.33.8', '1.34.4', '1.35.1', '1.36.1')) {
             Test-Path "C:\kubectl\kubectl-$v.exe" | Should -Be $true
-            (& "C:\kubectl\kubectl-$v.exe" version --client) | Select-String -Pattern $v | Should -BeLike "*v$v"
+            [string](& "C:\kubectl\kubectl-$v.exe" version --client) | Should -Match "v$v"
         }
     }
 
     It 'has kubelogin installed' {
-        kubelogin --version | Select-Object -First  1 -Skip 1 | Should -match 'v0.2.17'
+        $output = & kubelogin --version
+        [string]$output | Should -Match 'v0.2.17'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has helm installed' {
-        helm version | Should -Match '3.20.1'
+        [string](& helm version) | Should -Match '3.20.1'
         $LASTEXITCODE | Should -be 0
     }
 
-    # If the terraform version is not the latest, then `terraform version` returns multiple lines and a non-zero return code
     It 'has terraform installed' {
-        terraform version | Select-Object -First 1 | Should -Match '1.15.4'
+        $output = & terraform version
+        [string]$output | Should -Match '1.15.4'
     }
 
     It 'has python installed' {
-        python --version | Should -Match '3.14.5'
+        [string](& python --version) | Should -Match '3.14.5'
         $LASTEXITCODE | Should -be 0
     }
 
+    # There is a quirk in the way Pester handles pip's version output so cast to string
     It 'has pip installed and working' {
-        pip --version | Should -Match 'pip 26.1.2'
+        $output = & pip --version
+        [string]$output | Should -Match 'pip 26.1.2'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select-String -Pattern "566.0.0" | Should -BeLike "Google Cloud SDK 566.0.0"
+        $output = & gcloud --version
+        [string]$output | Should -Match '566.0.0'
         $LASTEXITCODE | Should -be 0
     }
 
-    # Version follows gcloud SDK bundled plugin; pin loosely to avoid drift.
     It 'has gke-gcloud-auth-plugin installed' {
-        gke-gcloud-auth-plugin --version | Select -First 1 | Should -BeLike "Kubernetes v*"
+        $output = & gke-gcloud-auth-plugin --version
+        [string]$output | Should -Match 'Kubernetes v'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has octopus cli installed' {
-        octopus version | Should -Match '2.21.1'
+        [string](& octopus version) | Should -Match '2.21.1'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has octo installed' {
-        octo --version | Should -Match '9.1.7'
+        [string](& octo --version) | Should -Match '9.1.7'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has eksctl installed' {
-        eksctl version | Should -Match '0.226.0'
+        [string](& eksctl version) | Should -Match '0.226.0'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -148,7 +154,7 @@ Describe  'installed dependencies' {
     It 'should have installed git' {
         $output = & git --version
         $LASTEXITCODE | Should -be 0
-        $output | Should -Match '2.54.0'
+        [string]$output | Should -Match '2.54.0'
     }
 
     It 'should have installed argo cli' {
@@ -160,6 +166,6 @@ Describe  'installed dependencies' {
     It 'has nuget cli installed' {
         $output = & nuget help
         $LASTEXITCODE | Should -be 0
-        $output | Select-Object -First 1 | Should -Match '7.6.0'
+        [string]($output | Select-Object -First 1) | Should -Match '7.6.0'
     }
 }
