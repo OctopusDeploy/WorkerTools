@@ -25,6 +25,7 @@ ARG Kubelogin_Version=v0.2.17
 ARG NodeJs_Version=24
 ARG Octopus_Cli_Version=2.21.0
 ARG Octopus_Client_Version=21.6.2652
+ARG PythonVersion=3.14
 ARG Powershell_Version=7.6.1
 ARG Terraform_Version=1.15.1
 
@@ -152,13 +153,14 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install pip & groff
-# Ubuntu 24.04 requires --break-system-packages due to PEP 668
-# https://peps.python.org/pep-0668/
-# This is fine for now given the short lived nature of WorkerTools containers
-RUN apt-get update && \
-    apt-get install -y python3-pip groff && \
-    python3 -m pip install pycryptodome --user --break-system-packages && \
+# Install Python (via deadsnakes PPA) & groff
+# https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa
+RUN add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends python${PythonVersion} python${PythonVersion}-venv python${PythonVersion}-dev groff && \
+    python${PythonVersion} -m ensurepip --upgrade && \
+    python${PythonVersion} -m pip install pycryptodome --break-system-packages && \
+    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python${PythonVersion} 1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
