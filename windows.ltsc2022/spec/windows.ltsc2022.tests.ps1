@@ -76,7 +76,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has python installed' {
-        python --version | Should -Match '3.14.2'
+        python --version | Should -Match '3.14.5'
         $LASTEXITCODE | Should -be 0
     }
 

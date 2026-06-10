@@ -22,7 +22,7 @@ ARG Octopus_Cli_Legacy_Version=9.1.7
 ARG Octopus_Cli_Version=2.20.1
 ARG Octopus_Client_Version=20.3.2503
 ARG Powershell_Version=7.5.4
-ARG Python_Version=3.14.2
+ARG Python_Version=3.14.5
 ARG ScriptCs_Version=0.17.1
 ARG Terraform_Version=1.14.3
 
