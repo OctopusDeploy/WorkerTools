@@ -157,8 +157,8 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -
 # https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa
 RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
-    apt-get install -y --no-install-recommends python${PythonVersion} python${PythonVersion}-distutils python${PythonVersion}-dev groff && \
-    curl -sS https://bootstrap.pypa.io/get-pip.py | python${PythonVersion} && \
+    apt-get install -y --no-install-recommends python${PythonVersion} python${PythonVersion}-venv python${PythonVersion}-dev groff && \
+    python${PythonVersion} -m ensurepip --upgrade && \
     python${PythonVersion} -m pip install pycryptodome --break-system-packages && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python${PythonVersion} 1 && \
     apt-get clean && \
