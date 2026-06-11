@@ -9,8 +9,8 @@
 
 ## Tags
 
-- `6.0.0-windows.ltsc2025`
-- `6.0-windows.ltsc2025`
+- `6.6.1-windows.ltsc2025`
+- `6.6-windows.ltsc2025`
 - `6-windows.ltsc2025`
 - `windows.ltsc2025`
 
