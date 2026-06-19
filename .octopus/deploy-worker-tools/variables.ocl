@@ -135,26 +135,6 @@ variable "WorkerTools.Tags.LatestMajor" {
     value "#{WorkerTools.Version.Major}" {}
 }
 
-variable "Docker.Manifest.Image[ubuntu2204]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
-}
-
-variable "Docker.Manifest.Image[ubuntu2404amd64]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404.amd64}" {}
-}
-
-variable "Docker.Manifest.Image[ubuntu2404arm64]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404.arm64}" {}
-}
-
-variable "Docker.Manifest.Image[windows2022]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2022}" {}
-}
-
-variable "Docker.Manifest.Image[windows2025]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2025}" {}
-}
-
 variable "Docker.Manifest.ImageArgs" {
     value "#{each image in Docker.Manifest.Image}#{image} #{/each}" {
         action = ["build-multi-platform-manifest"]
@@ -172,4 +152,24 @@ variable "WorkerTools.Version.Latest" {
     value "#{Docker.Tag.OS.Ubuntu2404.base}" {
         action = ["build-multi-platform-manifest-ubuntu-24-04"]
     }
+}
+
+variable "Docker.Manifest.Image[ubuntu2204]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Ubuntu2204}" {}
+}
+
+variable "Docker.Manifest.Image[ubuntu2404amd64]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Ubuntu2404.amd64}" {}
+}
+
+variable "Docker.Manifest.Image[ubuntu2404arm64]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Ubuntu2404.arm64}" {}
+}
+
+variable "Docker.Manifest.Image[windows2022]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Windows2022}" {}
+}
+
+variable "Docker.Manifest.Image[windows2025]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Windows2025}" {}
 }
