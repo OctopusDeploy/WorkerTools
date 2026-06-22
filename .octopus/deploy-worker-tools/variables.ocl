@@ -147,10 +147,6 @@ variable "Docker.Manifest.Image[windows2025]" {
     value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Windows2025}" {}
 }
 
-variable "Release.Number.Wrapper" {
-    value "6.6.1-pr-0127.63" {}
-}
-
 variable "WorkerTools.Version.Full" {
     value "#{Release.Number.Wrapper}" {}
 
@@ -176,4 +172,8 @@ variable "WorkerTools.Version.MajorMinor" {
         action = ["build-multi-platform-manifest-ubuntu-24-04"]
         description = ""
     }
+}
+
+variable "Release.Number.Wrapper" {
+    value "#{Octopus.Release.Number}" {}
 }
