@@ -173,3 +173,7 @@ variable "Docker.Manifest.Image[windows2022]" {
 variable "Docker.Manifest.Image[windows2025]" {
     value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Windows2025}" {}
 }
+
+variable "TestReleaseNumber" {
+    value "6.6.1-pr-0127.63" {}
+}
