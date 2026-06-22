@@ -42,18 +42,6 @@ variable "Docker.Registry.Target.Username" {
     }
 }
 
-variable "WorkerTools.Version.Full" {
-    value "#{Octopus.Release.Number}" {}
-}
-
-variable "WorkerTools.Version.Major" {
-    value "#{Octopus.Release.Number | VersionMajor}" {}
-}
-
-variable "WorkerTools.Version.MajorMinor" {
-    value "#{Octopus.Release.Number | VersionMajor}.#{Octopus.Release.Number | VersionMinor}" {}
-}
-
 variable "Docker.Tag.FullVersion.OS" {
     value "#{WorkerTools.Version.Full}-#{Docker.Image.Tag}" {}
 }
@@ -120,26 +108,6 @@ variable "WorkerTools.Tags.LatestMajor" {
     value "#{WorkerTools.Version.Major}" {}
 }
 
-variable "Docker.Manifest.Image[ubuntu2204]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2204}" {}
-}
-
-variable "Docker.Manifest.Image[ubuntu2404amd64]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404.amd64}" {}
-}
-
-variable "Docker.Manifest.Image[ubuntu2404arm64]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Ubuntu2404.arm64}" {}
-}
-
-variable "Docker.Manifest.Image[windows2022]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2022}" {}
-}
-
-variable "Docker.Manifest.Image[windows2025]" {
-    value "#{Docker.Registry.Target.Repository}:#{WorkerTools.Version.Full}-#{Docker.Tag.OS.Windows2025}" {}
-}
-
 variable "Docker.Manifest.ImageArgs" {
     value "#{each image in Docker.Manifest.Image}#{image} #{/each}" {
         action = ["build-multi-platform-manifest"]
@@ -157,4 +125,55 @@ variable "WorkerTools.Version.Latest" {
     value "#{Docker.Tag.OS.Ubuntu2404.base}" {
         action = ["build-multi-platform-manifest-ubuntu-24-04"]
     }
+}
+
+variable "Docker.Manifest.Image[ubuntu2204]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Ubuntu2204}" {}
+}
+
+variable "Docker.Manifest.Image[ubuntu2404amd64]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Ubuntu2404.amd64}" {}
+}
+
+variable "Docker.Manifest.Image[ubuntu2404arm64]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Ubuntu2404.arm64}" {}
+}
+
+variable "Docker.Manifest.Image[windows2022]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Windows2022}" {}
+}
+
+variable "Docker.Manifest.Image[windows2025]" {
+    value "#{Docker.Registry.Target.Repository}:#{Octopus.Release.Number}-#{Docker.Tag.OS.Windows2025}" {}
+}
+
+variable "WorkerTools.Version.Full" {
+    value "#{Release.Number.Wrapper}" {}
+
+    value "#{Release.Number.Wrapper}-#{Docker.Tag.OS.Ubuntu2404.base}" {
+        action = ["build-multi-platform-manifest-ubuntu-24-04"]
+        description = ""
+    }
+}
+
+variable "WorkerTools.Version.Major" {
+    value "#{Release.Number.Wrapper | VersionMajor}" {}
+
+    value "#{Release.Number.Wrapper | VersionMajor}-#{Docker.Tag.OS.Ubuntu2404.base}" {
+        action = ["build-multi-platform-manifest-ubuntu-24-04"]
+        description = ""
+    }
+}
+
+variable "WorkerTools.Version.MajorMinor" {
+    value "#{Release.Number.Wrapper | VersionMajor}.#{Release.Number.Wrapper | VersionMinor}" {}
+
+    value "#{Release.Number.Wrapper | VersionMajor}.#{Release.Number.Wrapper | VersionMinor}-#{Docker.Tag.OS.Ubuntu2404.base}" {
+        action = ["build-multi-platform-manifest-ubuntu-24-04"]
+        description = ""
+    }
+}
+
+variable "Release.Number.Wrapper" {
+    value "#{Octopus.Release.Number}" {}
 }
