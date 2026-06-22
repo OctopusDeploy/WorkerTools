@@ -82,7 +82,7 @@ step "tag-and-push-worker-tools-image-windows-2022" {
             DockerPush.Target.Docker.Registry.Username = "#{Docker.Registry.Target.Username}"
             DockerPush.Target.Docker.Repository = "#{Docker.Registry.Target.Repository}"
             Octopus.Action.Template.Id = "ActionTemplates-2721"
-            Octopus.Action.Template.Version = "13"
+            Octopus.Action.Template.Version = "14"
         }
         worker_pool = "hosted-ubuntu"
 
