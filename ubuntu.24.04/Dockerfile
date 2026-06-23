@@ -232,13 +232,14 @@ RUN case "$TARGETPLATFORM" in \
     rm argocd-linux-${ARGO_ARCH}
 
 # Get common utilities for scripting
-# https://mikefarah.gitbook.io/yq/
 # https://augeas.net/
-# Install yq from GitHub releases (PPA doesn't support Ubuntu 24.04)
 RUN apt-get update && apt-get install -y jq openssh-client rsync git augeas-tools xxd && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    case "$TARGETPLATFORM" in \
+    rm -rf /var/lib/apt/lists/*
+
+# Install latest YQ
+# https://mikefarah.gitbook.io/yq/
+RUN case "$TARGETPLATFORM" in \
         "linux/amd64") YQ_ARCH="amd64" ;; \
         "linux/arm64") YQ_ARCH="arm64" ;; \
         *) echo "Unsupported platform: $TARGETPLATFORM" && exit 1 ;; \
