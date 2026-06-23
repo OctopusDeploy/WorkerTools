@@ -189,11 +189,14 @@ RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases
   rm argocd-linux-amd64
 
 # Get common utilities for scripting
-# https://mikefarah.gitbook.io/yq/
 # https://augeas.net/
-RUN add-apt-repository -y ppa:rmescandon/yq && \
-    apt-get update && apt-get install -y jq yq openssh-client rsync git augeas-tools xxd && \
+RUN apt-get update && apt-get install -y jq openssh-client rsync git augeas-tools xxd && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* 
+
+# Install latest YQ
+# https://mikefarah.gitbook.io/yq/
+RUN wget --quiet https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
+    chmod +x /usr/bin/yq
 
 RUN rm -rf /usr/share/doc /usr/share/man /usr/share/info /var/cache/*
