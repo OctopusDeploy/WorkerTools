@@ -25,7 +25,7 @@ Describe  'installed dependencies' {
 
     It 'has az installed' {
       $output = (& az version) | convertfrom-json
-      $output.'azure-cli' | Should -be '2.80.0'
+      $output.'azure-cli' | Should -be '2.88.0'
       $LASTEXITCODE | Should -be 0
     }
 
@@ -48,18 +48,18 @@ Describe  'installed dependencies' {
     }
 
     It 'has kubelogin installed' {
-        kubelogin --version | Select-Object -First  1 -Skip 1 | Should -match 'v0.2.13'
+        kubelogin --version | Select-Object -First  1 -Skip 1 | Should -match 'v0.2.19'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has helm installed' {
-        helm version | Should -match '3.20.2'
+        helm version | Should -match '3.21.3'
         $LASTEXITCODE | Should -be 0
     }
 
     # If the terraform version is not the latest, then `terraform version` returns multiple lines and a non-zero return code
     It 'has terraform installed' {
-        terraform version | Select-Object -First 1 | Should -match '1.14.3'
+        terraform version | Select-Object -First 1 | Should -match '1.15.8'
     }
 
     It 'has python3 installed' {

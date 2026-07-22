@@ -26,7 +26,7 @@ Describe  'installed dependencies' {
 
     It 'has az installed' {
         $output = (& az version) | ConvertFrom-Json
-        $output.'azure-cli' | Should -Be '2.85.0'
+        $output.'azure-cli' | Should -Be '2.88.0'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -52,18 +52,18 @@ Describe  'installed dependencies' {
 
     It 'has kubelogin installed' {
         $output = & kubelogin --version
-        [string]$output | Should -Match 'v0.2.17'
+        [string]$output | Should -Match 'v0.2.19'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has helm installed' {
-        [string](& helm version) | Should -Match '3.20.2'
+        [string](& helm version) | Should -Match '3.21.3'
         $LASTEXITCODE | Should -be 0
     }
 
     It 'has terraform installed' {
         $output = & terraform version
-        [string]$output | Should -Match '1.15.1'
+        [string]$output | Should -Match '1.15.8'
     }
 
     It 'has python3 installed' {
