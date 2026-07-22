@@ -27,7 +27,7 @@ ARG Octopus_Cli_Version=2.21.0
 ARG Octopus_Client_Version=21.6.2652
 ARG PythonVersion=3.14
 ARG Powershell_Version=7.6.1
-ARG Terraform_Version=1.15.1
+ARG Terraform_Version=1.15.8
 
 # Install common tools
 RUN apt-get update && \

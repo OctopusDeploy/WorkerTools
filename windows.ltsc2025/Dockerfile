@@ -29,7 +29,7 @@ ARG Pip_Version=26.1.2
 ARG Powershell_Version=7.6.1
 ARG Python_Version=3.14.5
 ARG ScriptCs_Version=0.17.1
-ARG Terraform_Version=1.15.4
+ARG Terraform_Version=1.15.8
 
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
