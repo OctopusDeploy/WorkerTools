@@ -86,7 +86,7 @@ Describe  'installed dependencies' {
 
     It 'has kubelogin installed' {
         $output = & kubelogin --version
-        [string]$output | Should -Match 'v0.2.19'
+        [string]$output | Should -Match 'v0.2.18'
         $LASTEXITCODE | Should -be 0
     }
 
