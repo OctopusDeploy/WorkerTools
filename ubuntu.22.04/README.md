@@ -28,23 +28,23 @@
 - Aws CLI 2.32.28
 - Aws Iam Authenticator 0.7.10
 - Aws Powershell 5.0.128
-- Azure CLI 2.81.0
+- Azure CLI 2.88.0
 - Azure Powershell 15.1.0
 - Dotnet Sdk 8.0
 - Ecs CLI 1.21.0
 - Eksctl 0.221.0
 - Google Cloud CLI 550.0.0
 - Google Cloud GKE auth plugin 550.0.0
-- Helm v3.19.0
+- Helm v3.21.3
 - Java Jdk 25 (Distro latest)
 - Kubectl 1.35
-- Kubelogin v0.2.13
+- Kubelogin v0.2.19
 - NodeJS 24 - Latest
 - Octopus CLI 2.20.1
 - Octopus CLI Legacy 9.1.7
 - Octopus Client 20.3.2503
 - Powershell 7.5.4
-- Terraform 1.14.3
+- Terraform 1.15.8
 - Umoci 0.4.7
 - wget - Latest
 - unzip - Latest

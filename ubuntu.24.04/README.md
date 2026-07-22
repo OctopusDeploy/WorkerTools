@@ -37,23 +37,23 @@ MultiArch
 - Aws CLI 2.34.42
 - Aws Iam Authenticator 0.7.14
 - Aws Powershell 5.0.207
-- Azure CLI 2.85.0
+- Azure CLI 2.88.0
 - Azure Powershell 15.5.0
 - Dotnet Sdk 10.0
 - Ecs CLI 1.21.0
 - Eksctl 0.226.0
 - Google Cloud CLI 566.0.0
 - Google Cloud GKE auth plugin 566.0.0
-- Helm v3.20.2
+- Helm v3.21.3
 - Java Jdk 21
 - Kubectl 1.36
-- Kubelogin v0.2.17
+- Kubelogin v0.2.19
 - NodeJS 24 - latest
 - Octopus CLI 2.21.0
 - Octopus Client 21.6.26529
 - Powershell 7.6.1
 - Python3 3.14
-- Terraform 1.15.1
+- Terraform 1.15.8
 - wget - Latest
 - unzip - Latest
 - apt-utils - Latest
