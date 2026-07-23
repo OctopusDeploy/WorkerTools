@@ -11,23 +11,23 @@ ARG Argocd_Version=3.3.9
 ARG Aws_Cli_Version=2.34.42
 ARG Aws_Iam_Authenticator_Version=0.7.14
 ARG Aws_Powershell_Version=5.0.207
-ARG Azure_Cli_Version=2.85.0-1~noble
+ARG Azure_Cli_Version=2.88.0-1~noble
 ARG Azure_Powershell_Version=15.5.0
 ARG Dotnet_Sdk_Version=10.0
 ARG Ecs_Cli_Version=1.21.0
 ARG Eks_Cli_Version=v0.226.0
 ARG Google_Cloud_Cli_Version=566.0.0-0
 ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=566.0.0-0
-ARG Helm_Version=v3.20.2
+ARG Helm_Version=v3.21.3
 ARG Java_Jdk_Version=21
 ARG Kubectl_Version=1.36
-ARG Kubelogin_Version=v0.2.17
+ARG Kubelogin_Version=v0.2.19
 ARG NodeJs_Version=24
 ARG Octopus_Cli_Version=2.21.0
 ARG Octopus_Client_Version=21.6.2652
 ARG PythonVersion=3.14
 ARG Powershell_Version=7.6.1
-ARG Terraform_Version=1.15.1
+ARG Terraform_Version=1.15.8
 
 # Install common tools
 RUN apt-get update && \

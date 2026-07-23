@@ -8,15 +8,15 @@ ARG Argo_Cli_Version=3.2.3
 ARG Aws_Cli_Version=2.32.28
 ARG Aws_Iam_Authenticator_Version=0.7.10
 ARG Aws_Powershell_Version=5.0.128
-ARG Azure_Cli_Version=2.81.0
+ARG Azure_Cli_Version=2.88.0
 ARG Azure_Powershell_Version=15.1.0
 ARG Eks_Cli_Version=0.221.0
 ARG Git_Version=2.52.0
 ARG Google_Cloud_Cli_Version=550.0.0
-ARG Helm_Version=3.20.2
+ARG Helm_Version=3.21.3
 ARG Java_Jdk_Version=25.0.0.1
 ARG Kubectl_Version=1.35.0
-ARG Kubelogin_Version=0.2.13
+ARG Kubelogin_Version=0.2.18
 ARG Node_Version=24.12.0
 ARG Octopus_Cli_Legacy_Version=9.1.7
 ARG Octopus_Cli_Version=2.20.1
@@ -24,7 +24,7 @@ ARG Octopus_Client_Version=20.3.2503
 ARG Powershell_Version=7.5.4
 ARG Python_Version=3.14.5
 ARG ScriptCs_Version=0.17.1
-ARG Terraform_Version=1.14.3
+ARG Terraform_Version=1.15.8
 
 # Install Choco
 RUN $ProgressPreference = 'SilentlyContinue'; `
