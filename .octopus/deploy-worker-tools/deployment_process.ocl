@@ -135,6 +135,10 @@ step "build-multi-platform-manifest-ubuntu-24-04" {
 
     action {
         environments = ["staging", "production"]
+        notes = <<-EOT
+                Pushes a `ubuntu-24.04` image for multi arch image targeting _latest_ available for ubuntu-24.04.
+                We do not provide a windows version of this as we don't publish an arm version.
+                EOT
         properties = {
             Octopus.Action.Template.Id = "ActionTemplates-3781"
             Octopus.Action.Template.Version = "1"
