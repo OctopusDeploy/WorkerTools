@@ -5,7 +5,7 @@
 1. `GitHub` Dockerfile Per Platform
 2. `TeamCity` [Chain:ReleaseAll](https://build.octopushq.com/project/OctopusDeploy_WorkerTools?mode=builds#all-projects)
 3. `Octopus (Dev)` Push to Artifactory
-4. Wait For Worker Tools VM to push to Production (see below)
+4. Wait For Worker Tools VM to push to Production Tenants (see below)
 5. `Octopus (Prod)` Push to DockerHub
 
 ## 👷 Build
@@ -49,6 +49,8 @@ azure-arm.ubuntu: - "6.6.3-ubuntu.22.04"
 ```
 
 For each of the relevant distros, check the earliest build that had the new docker image cached. 
+
+Each Octopus Project has a `Cautious Promoter` step which runs the [Cautious Promoter](https://github.com/OctopusDeploy/CautiousPromoter) tool to determin when to push to each Production Tenant.
 
 Once _all_ of these builds have been deployed to Production from the [Dynamic Worker Images Project](https://deploy.octopus.app/app#/Spaces-142/projects?includeProjectGroupId=ProjectGroups-1841&searchValue=Dynamic+Worker+Images&page=1&pageSize=50&hideInactiveProjects=false) Group, then the docker images can be released to production.
 
