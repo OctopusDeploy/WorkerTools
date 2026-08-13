@@ -2,7 +2,11 @@
 
 **⚠️ Note: Unless a semantic version build tag is set on the commit being triggered, TeamCity will generate a pre-release build of the images. This should not go out to Production**
 
-`GitHub` Dockerfile Per Platform --> `TeamCity` [Chain:ReleaseAll](https://build.octopushq.com/project/OctopusDeploy_WorkerTools?mode=builds#all-projects) --> `Octopus (Dev)` Push to Artifactory --> `Octopus (Prod)` Push to DockerHub
+1. `GitHub` Dockerfile Per Platform
+2. `TeamCity` [Chain:ReleaseAll](https://build.octopushq.com/project/OctopusDeploy_WorkerTools?mode=builds#all-projects)
+3. `Octopus (Dev)` Push to Artifactory
+4. Wait For Worker Tools VM to push to Production (see below)
+5. `Octopus (Prod)` Push to DockerHub
 
 ## 👷 Build
 When a change is made to a file in this repository, TeamCity triggers the [full build chain](https://build.octopushq.com/buildConfiguration/OctopusDeploy_WorkerTools_ChainBuildTestAndRelease).
@@ -35,3 +39,16 @@ Unfortunately if the image is not yet cached on the Dynamic Worker VM Image, clo
 ## ☁️ Octopus Cloud Dynamic Worker Images
 Not until the 
 [Cloud Platform deploy space](https://deploy.octopus.app/app#/Spaces-142/projects?searchValue=Dynamic+Worker+Images&page=1&pageSize=50&hideInactiveProjects=false) contains a project per VM.
+
+Go to the Image deployment (e.g [x](https://build.octopushq.com/buildConfiguration/CloudPlatform_DynamicWorkers_DynamicWorkerVmImages_Ubuntu2204/23691299?showLog=23691299_2731_39.67.645.2501.2731&logView=flowAware)), find the latest build and look for the line entry describing the cached versions, looking for the header `Cache Docker Images`. At the bottom of this you will see log entry
+```
+azure-arm.ubuntu: Selecting the following images due to maximum image count of 3 :
+azure-arm.ubuntu: - "6.6.5-ubuntu.22.04"
+azure-arm.ubuntu: - "6.6.4-ubuntu.22.04"
+azure-arm.ubuntu: - "6.6.3-ubuntu.22.04"
+```
+
+For each of the relevant distros, check the earliest build that had the new docker image cached. 
+
+Once _all_ of these builds have been deployed to Production from the [Dynamic Worker Images Project](https://deploy.octopus.app/app#/Spaces-142/projects?includeProjectGroupId=ProjectGroups-1841&searchValue=Dynamic+Worker+Images&page=1&pageSize=50&hideInactiveProjects=false) Group, then the docker images can be released to production.
+
