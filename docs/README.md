@@ -54,3 +54,4 @@ Each Octopus Project has a `Cautious Promoter` step which runs the [Cautious Pro
 
 Once _all_ of these builds have been deployed to Production from the [Dynamic Worker Images Project](https://deploy.octopus.app/app#/Spaces-142/projects?includeProjectGroupId=ProjectGroups-1841&searchValue=Dynamic+Worker+Images&page=1&pageSize=50&hideInactiveProjects=false) Group, then the docker images can be released to production.
 
+See [here](./execution-container-images.md) for further information about how execution container images work for Hosted Octopus.
