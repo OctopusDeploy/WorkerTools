@@ -67,12 +67,14 @@ RUN C:\choco-install.ps1 aws-iam-authenticator $Env:Aws_Iam_Authenticator_Versio
 # Install AWS PowerShell modules
 # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-windows.html#ps-installing-awspowershellnetcore
 RUN Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force; `
-    Install-Module -name AWSPowerShell.NetCore -RequiredVersion $Env:Aws_Powershell_Version -Force
+    Install-Module -name AWSPowerShell.NetCore -RequiredVersion $Env:Aws_Powershell_Version -Force; `
+    Get-ChildItem (Get-Module -ListAvailable AWSPowerShell.NetCore).ModuleBase -Recurse -Filter *-help.xml | Remove-Item -Force
 
 # Install Azure PowerShell modules
 # https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-3.6.1
 RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion $Env:Azure_Powershell_Version; `
-    Enable-AzureRmAlias -Scope LocalMachine
+    Enable-AzureRmAlias -Scope LocalMachine; `
+    Get-ChildItem (Get-Module -ListAvailable Az, Az.*).ModuleBase -Recurse -Filter *-help.xml | Remove-Item -Force
 
 # Install NodeJS
 RUN C:\choco-install.ps1 nodejs-lts $Env:Node_Version
