@@ -51,7 +51,7 @@ RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/d
 
 # Install JDK
 RUN C:\choco-install.ps1 openjdk $Env:Java_Jdk_Version -AllowEmptyChecksums; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
-    Remove-Item -Force 'C:\Program Files\OpenJDK\jdk-*\lib\src.zip'
+    Remove-Item -Recurse -Force 'C:\Program Files\OpenJDK\jdk-*\lib\src.zip', 'C:\Program Files\OpenJDK\jdk-*\jmods'
 
 # Install Azure CLI
 RUN C:\choco-install.ps1 azure-cli $Env:Azure_Cli_Version
@@ -102,7 +102,7 @@ RUN C:\choco-install.ps1 terraform $Env:Terraform_Version
 
 # Install python
 RUN C:\choco-install.ps1 python3 $Env:Python_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
-    Remove-Item -Recurse -Force C:\Python3*\Doc, C:\Python3*\Lib\test
+    Remove-Item -Recurse -Force C:\Python3*\Doc, C:\Python3*\Lib\test, 'C:\ProgramData\Package Cache'
 
 # Install Pip
 RUN python -m pip install --no-cache-dir --upgrade pip==$Env:Pip_Version
