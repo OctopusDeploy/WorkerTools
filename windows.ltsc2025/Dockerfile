@@ -50,7 +50,8 @@ RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/d
     rm dotnet-install.ps1
 
 # Install JDK
-RUN C:\choco-install.ps1 openjdk $Env:Java_Jdk_Version -AllowEmptyChecksums
+RUN C:\choco-install.ps1 openjdk $Env:Java_Jdk_Version -AllowEmptyChecksums; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Remove-Item -Force 'C:\Program Files\OpenJDK\jdk-*\lib\src.zip'
 
 # Install Azure CLI
 RUN C:\choco-install.ps1 azure-cli $Env:Azure_Cli_Version
@@ -59,7 +60,8 @@ RUN C:\choco-install.ps1 azure-cli $Env:Azure_Cli_Version
 RUN az config set bicep.use_binary_from_path=false 
 
 # Install the AWS CLI
-RUN C:\choco-install.ps1 awscli $Env:Aws_Cli_Version
+RUN C:\choco-install.ps1 awscli $Env:Aws_Cli_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Remove-Item -Recurse -Force 'C:\Program Files\Amazon\AWSCLIV2\awscli\examples'
 
 # Install the AWS IAM Authenticator 
 RUN C:\choco-install.ps1 aws-iam-authenticator $Env:Aws_Iam_Authenticator_Version
@@ -136,7 +138,8 @@ RUN C:\choco-install.ps1 nuget.commandline $Env:Nuget_Cli_Version
 # PowerShell 7 is provided by the .NET SDK base image
 
 # Install Git
-RUN C:\choco-install.ps1 git.install $Env:Git_Version
+RUN C:\choco-install.ps1 git.install $Env:Git_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Remove-Item -Recurse -Force 'C:\Program Files\Git\mingw64\share\doc'
 
 # Install Argo CD
 RUN C:\choco-install.ps1 argocd-cli $Env:Argo_Cli_Version
