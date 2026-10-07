@@ -97,12 +97,11 @@ RUN Invoke-WebRequest "https://get.helm.sh/helm-v${Env:Helm_Version}-windows-amd
 RUN C:\choco-install.ps1 terraform $Env:Terraform_Version
 
 # Install python
-RUN C:\choco-install.ps1 python3 $Env:Python_Version
+RUN C:\choco-install.ps1 python3 $Env:Python_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Remove-Item -Recurse -Force C:\Python3*\Doc, C:\Python3*\Lib\test
 
 # Install Pip
-RUN python -m pip install --upgrade pip==$Env:Pip_Version; `
-    Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
-    Update-SessionEnvironment
+RUN python -m pip install --no-cache-dir --upgrade pip==$Env:Pip_Version
 
 # Install 7ZIP because gcloud
 RUN C:\choco-install.ps1 7zip $Env:7Zip_Version
@@ -111,7 +110,8 @@ RUN C:\choco-install.ps1 7zip $Env:7Zip_Version
 RUN C:\choco-install.ps1 gcloudsdk $Env:Google_Cloud_Cli_Version
 
 # Install gcloud kubectl auth
-RUN gcloud components install gke-gcloud-auth-plugin --quiet
+RUN gcloud components install gke-gcloud-auth-plugin --quiet; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Get-ChildItem (gcloud info --format='value(installation.sdk_root)') -Recurse -Directory -Filter __pycache__ | Remove-Item -Recurse -Force
 
 # Install ScriptCS
 RUN C:\choco-install.ps1 scriptcs $Env:ScriptCs_Version
