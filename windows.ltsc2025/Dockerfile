@@ -36,7 +36,8 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
     $Env:chocolateyVersion = $Env:Chocolatey_Version; `
     Set-ExecutionPolicy Bypass -Scope Process -Force; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
-    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')); `
+    wevtutil sl Microsoft-Windows-PowerShell/Operational /e:false
 
 COPY .\scripts\choco-install.ps1 C:\choco-install.ps1
 
