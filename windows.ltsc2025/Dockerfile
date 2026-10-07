@@ -38,6 +38,8 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
+COPY .\scripts\choco-install.ps1 C:\choco-install.ps1
+
 # Disable .NET CLI telemetry
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
@@ -47,21 +49,19 @@ RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/d
     rm dotnet-install.ps1
 
 # Install JDK
-RUN choco install openjdk --allow-empty-checksums --y --no-progress --version $Env:Java_Jdk_Version; `
-    Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
-    Update-SessionEnvironment
+RUN C:\choco-install.ps1 openjdk $Env:Java_Jdk_Version -AllowEmptyChecksums
 
 # Install Azure CLI
-RUN choco install azure-cli -y --version $Env:Azure_Cli_Version --no-progress
+RUN C:\choco-install.ps1 azure-cli $Env:Azure_Cli_Version
 
 # remove az cli warning - https://github.com/Azure/arm-deploy/issues/173
 RUN az config set bicep.use_binary_from_path=false 
 
 # Install the AWS CLI
-RUN choco install awscli -y --version $Env:Aws_Cli_Version --no-progress
+RUN C:\choco-install.ps1 awscli $Env:Aws_Cli_Version
 
 # Install the AWS IAM Authenticator 
-RUN choco install aws-iam-authenticator -y --version $Env:Aws_Iam_Authenticator_Version --no-progress
+RUN C:\choco-install.ps1 aws-iam-authenticator $Env:Aws_Iam_Authenticator_Version
 
 # Install AWS PowerShell modules
 # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-windows.html#ps-installing-awspowershellnetcore
@@ -74,7 +74,7 @@ RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion
     Enable-AzureRmAlias -Scope LocalMachine
 
 # Install NodeJS
-RUN choco install nodejs-lts -y --version $Env:Node_Version --no-progress
+RUN C:\choco-install.ps1 nodejs-lts $Env:Node_Version
 
 # Install kubectl
 RUN New-Item -ItemType Directory -Path C:\kubectl -Force | Out-Null; `
@@ -84,7 +84,7 @@ RUN New-Item -ItemType Directory -Path C:\kubectl -Force | Out-Null; `
     Copy-Item "C:\kubectl\kubectl-$($Env:Kubectl_Version).exe" C:\Windows\system32\kubectl.exe;
 
 # Install Kubelogin
-RUN choco install azure-kubelogin --version $Env:Kubelogin_Version --no-progress -y
+RUN C:\choco-install.ps1 azure-kubelogin $Env:Kubelogin_Version
 
 # Install helm 3
 RUN Invoke-WebRequest "https://get.helm.sh/helm-v${Env:Helm_Version}-windows-amd64.zip" -OutFile helm.zip; `
@@ -93,12 +93,10 @@ RUN Invoke-WebRequest "https://get.helm.sh/helm-v${Env:Helm_Version}-windows-amd
     Remove-Item -Recurse -Force helm, helm.zip
 
 # Install Terraform
-RUN choco install -y terraform --version $Env:Terraform_Version --no-progress
+RUN C:\choco-install.ps1 terraform $Env:Terraform_Version
 
 # Install python
-RUN choco install -y python3 --version $Env:Python_Version --no-progress; `
-    Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
-    Update-SessionEnvironment
+RUN C:\choco-install.ps1 python3 $Env:Python_Version
 
 # Install Pip
 RUN python -m pip install --upgrade pip==$Env:Pip_Version; `
@@ -106,39 +104,39 @@ RUN python -m pip install --upgrade pip==$Env:Pip_Version; `
     Update-SessionEnvironment
 
 # Install 7ZIP because gcloud
-RUN choco install 7zip -y --version $Env:7Zip_Version --no-progress
+RUN C:\choco-install.ps1 7zip $Env:7Zip_Version
 
 # Install gcloud
-RUN choco install gcloudsdk -y --version $Env:Google_Cloud_Cli_Version --no-progress
+RUN C:\choco-install.ps1 gcloudsdk $Env:Google_Cloud_Cli_Version
 
 # Install gcloud kubectl auth
 RUN gcloud components install gke-gcloud-auth-plugin --quiet
 
 # Install ScriptCS
-RUN choco install scriptcs -y --version $Env:ScriptCs_Version --no-progress
+RUN C:\choco-install.ps1 scriptcs $Env:ScriptCs_Version
 
 # Install Octopus CLI
-RUN choco install octopus-cli -y --version $Env:Octopus_Cli_Version --no-progress
+RUN C:\choco-install.ps1 octopus-cli $Env:Octopus_Cli_Version
 
 # Install octo
-RUN choco install octopustools -y --version $Env:Octopus_Cli_Legacy_Version --no-progress
+RUN C:\choco-install.ps1 octopustools $Env:Octopus_Cli_Legacy_Version
 
 # Install Octopus Client
 RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion $Env:Octopus_Client_Version
     
 # Install eksctl
-RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress
+RUN C:\choco-install.ps1 eksctl $Env:Eks_Cli_Version
 
 # Install NuGet CLI
-RUN choco install nuget.commandline -y --version $Env:Nuget_Cli_Version --no-progress
+RUN C:\choco-install.ps1 nuget.commandline $Env:Nuget_Cli_Version
 
 # PowerShell 7 is provided by the .NET SDK base image
 
 # Install Git
-RUN choco install git.install --yes --version $Env:Git_Version --no-progress
+RUN C:\choco-install.ps1 git.install $Env:Git_Version
 
 # Install Argo CD
-RUN choco install argocd-cli --yes --version $Env:Argo_Cli_Version --no-progress
+RUN C:\choco-install.ps1 argocd-cli $Env:Argo_Cli_Version
 
 # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
