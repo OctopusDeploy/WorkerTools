@@ -31,13 +31,14 @@ ARG Python_Version=3.14.5
 ARG ScriptCs_Version=0.17.1
 ARG Terraform_Version=1.15.8
 
-# Install Choco
+# Install Choco and disable the .NET NGEN scheduled tasks
 RUN $ProgressPreference = 'SilentlyContinue'; `
     $Env:chocolateyVersion = $Env:Chocolatey_Version; `
     Set-ExecutionPolicy Bypass -Scope Process -Force; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')); `
-    wevtutil sl Microsoft-Windows-PowerShell/Operational /e:false
+    wevtutil sl Microsoft-Windows-PowerShell/Operational /e:false; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Get-ScheduledTask -TaskPath '\Microsoft\Windows\.NET Framework\' -ErrorAction Stop | Disable-ScheduledTask -ErrorAction Stop | Out-Null
 
 COPY .\scripts\choco-install.ps1 C:\choco-install.ps1
 
