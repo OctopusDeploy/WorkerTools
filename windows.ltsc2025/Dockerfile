@@ -31,114 +31,87 @@ ARG Python_Version=3.14.5
 ARG ScriptCs_Version=0.17.1
 ARG Terraform_Version=1.15.8
 
-# Install Choco
+# Install Choco and disable the .NET NGEN scheduled tasks
 RUN $ProgressPreference = 'SilentlyContinue'; `
     $Env:chocolateyVersion = $Env:Chocolatey_Version; `
     Set-ExecutionPolicy Bypass -Scope Process -Force; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
-    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')); `
+    wevtutil sl Microsoft-Windows-PowerShell/Operational /e:false; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Get-ScheduledTask -TaskPath '\Microsoft\Windows\.NET Framework\' -ErrorAction Stop | Disable-ScheduledTask -ErrorAction Stop | Out-Null
+
+COPY .\scripts\choco-install.ps1 C:\choco-install.ps1
 
 # Disable .NET CLI telemetry
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-# Install the .NET 8 runtime alongside the .NET 10 SDK from the base image
-RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
-    .\dotnet-install.ps1 -Version $Env:Dotnet_Runtime_Version -Runtime dotnet -InstallDir 'C:\Program Files\dotnet'; `
-    rm dotnet-install.ps1
-
-# Install JDK
-RUN choco install openjdk --allow-empty-checksums --y --no-progress --version $Env:Java_Jdk_Version; `
-    Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
-    Update-SessionEnvironment
-
-# Install Azure CLI
-RUN choco install azure-cli -y --version $Env:Azure_Cli_Version --no-progress
-
+# Install the .NET 8 runtime alongside the .NET 10 SDK from the base image, JDK, Azure CLI, the AWS CLI and the AWS IAM Authenticator
 # remove az cli warning - https://github.com/Azure/arm-deploy/issues/173
-RUN az config set bicep.use_binary_from_path=false 
+RUN $ErrorActionPreference = 'Stop'; `
+    Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
+    .\dotnet-install.ps1 -Version $Env:Dotnet_Runtime_Version -Runtime dotnet -InstallDir 'C:\Program Files\dotnet'; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    rm dotnet-install.ps1; `
+    C:\choco-install.ps1 openjdk $Env:Java_Jdk_Version -AllowEmptyChecksums; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Remove-Item -Recurse -Force 'C:\Program Files\OpenJDK\jdk-*\lib\src.zip', 'C:\Program Files\OpenJDK\jdk-*\jmods'; `
+    C:\choco-install.ps1 azure-cli $Env:Azure_Cli_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; Update-SessionEnvironment; `
+    az config set bicep.use_binary_from_path=false; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    C:\choco-install.ps1 awscli $Env:Aws_Cli_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Remove-Item -Recurse -Force 'C:\Program Files\Amazon\AWSCLIV2\awscli\examples'; `
+    C:\choco-install.ps1 aws-iam-authenticator $Env:Aws_Iam_Authenticator_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
-# Install the AWS CLI
-RUN choco install awscli -y --version $Env:Aws_Cli_Version --no-progress
-
-# Install the AWS IAM Authenticator 
-RUN choco install aws-iam-authenticator -y --version $Env:Aws_Iam_Authenticator_Version --no-progress
-
-# Install AWS PowerShell modules
+# Install AWS PowerShell modules and Azure PowerShell modules
 # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-windows.html#ps-installing-awspowershellnetcore
-RUN Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force; `
-    Install-Module -name AWSPowerShell.NetCore -RequiredVersion $Env:Aws_Powershell_Version -Force
-
-# Install Azure PowerShell modules
 # https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-3.6.1
-RUN Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion $Env:Azure_Powershell_Version; `
-    Enable-AzureRmAlias -Scope LocalMachine
+RUN $ErrorActionPreference = 'Stop'; `
+    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force; `
+    Install-Module -name AWSPowerShell.NetCore -RequiredVersion $Env:Aws_Powershell_Version -Force; `
+    Get-ChildItem (Get-Module -ListAvailable AWSPowerShell.NetCore).ModuleBase -Recurse -Filter *-help.xml | Remove-Item -Force; `
+    Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion $Env:Azure_Powershell_Version; `
+    Enable-AzureRmAlias -Scope LocalMachine; `
+    Get-ChildItem (Get-Module -ListAvailable Az, Az.*).ModuleBase -Recurse -Filter *-help.xml | Remove-Item -Force
 
-# Install NodeJS
-RUN choco install nodejs-lts -y --version $Env:Node_Version --no-progress
-
-# Install kubectl
-RUN New-Item -ItemType Directory -Path C:\kubectl -Force | Out-Null; `
+# Install NodeJS, kubectl, Kubelogin, helm 3 and Terraform
+RUN $ErrorActionPreference = 'Stop'; `
+    C:\choco-install.ps1 nodejs-lts $Env:Node_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    New-Item -ItemType Directory -Path C:\kubectl -Force | Out-Null; `
     foreach ($v in ($Env:Kubectl_Versions -split ',')) { `
         Invoke-WebRequest "https://dl.k8s.io/release/v$v/bin/windows/amd64/kubectl.exe" -OutFile "C:\kubectl\kubectl-$v.exe"; `
     } `
-    Copy-Item "C:\kubectl\kubectl-$($Env:Kubectl_Version).exe" C:\Windows\system32\kubectl.exe;
-
-# Install Kubelogin
-RUN choco install azure-kubelogin --version $Env:Kubelogin_Version --no-progress -y
-
-# Install helm 3
-RUN Invoke-WebRequest "https://get.helm.sh/helm-v${Env:Helm_Version}-windows-amd64.zip" -OutFile helm.zip; `
+    Copy-Item "C:\kubectl\kubectl-$($Env:Kubectl_Version).exe" C:\Windows\system32\kubectl.exe; `
+    C:\choco-install.ps1 azure-kubelogin $Env:Kubelogin_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Invoke-WebRequest "https://get.helm.sh/helm-v${Env:Helm_Version}-windows-amd64.zip" -OutFile helm.zip; `
     Expand-Archive helm.zip -DestinationPath helm; `
     mv helm\windows-amd64\helm.exe C:\Windows\system32\; `
-    Remove-Item -Recurse -Force helm, helm.zip
+    Remove-Item -Recurse -Force helm, helm.zip; `
+    C:\choco-install.ps1 terraform $Env:Terraform_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
-# Install Terraform
-RUN choco install -y terraform --version $Env:Terraform_Version --no-progress
-
-# Install python
-RUN choco install -y python3 --version $Env:Python_Version --no-progress; `
+# Install python, Pip, 7ZIP (because gcloud), gcloud and gcloud kubectl auth
+RUN $ErrorActionPreference = 'Stop'; `
     Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
-    Update-SessionEnvironment
+    C:\choco-install.ps1 python3 $Env:Python_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Remove-Item -Recurse -Force C:\Python3*\Doc, C:\Python3*\Lib\test, 'C:\ProgramData\Package Cache'; `
+    Update-SessionEnvironment; `
+    python -m pip install --no-cache-dir --upgrade pip==$Env:Pip_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    C:\choco-install.ps1 7zip $Env:7Zip_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Update-SessionEnvironment; `
+    C:\choco-install.ps1 gcloudsdk $Env:Google_Cloud_Cli_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Update-SessionEnvironment; `
+    gcloud components install gke-gcloud-auth-plugin --quiet; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Get-ChildItem (gcloud info --format='value(installation.sdk_root)') -Recurse -Directory -Filter __pycache__ | Remove-Item -Recurse -Force; if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
-# Install Pip
-RUN python -m pip install --upgrade pip==$Env:Pip_Version; `
-    Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
-    Update-SessionEnvironment
-
-# Install 7ZIP because gcloud
-RUN choco install 7zip -y --version $Env:7Zip_Version --no-progress
-
-# Install gcloud
-RUN choco install gcloudsdk -y --version $Env:Google_Cloud_Cli_Version --no-progress
-
-# Install gcloud kubectl auth
-RUN gcloud components install gke-gcloud-auth-plugin --quiet
-
-# Install ScriptCS
-RUN choco install scriptcs -y --version $Env:ScriptCs_Version --no-progress
-
-# Install Octopus CLI
-RUN choco install octopus-cli -y --version $Env:Octopus_Cli_Version --no-progress
-
-# Install octo
-RUN choco install octopustools -y --version $Env:Octopus_Cli_Legacy_Version --no-progress
-
-# Install Octopus Client
-RUN Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion $Env:Octopus_Client_Version
-    
-# Install eksctl
-RUN choco install eksctl -y --version $Env:Eks_Cli_Version --no-progress
-
-# Install NuGet CLI
-RUN choco install nuget.commandline -y --version $Env:Nuget_Cli_Version --no-progress
-
+# Install ScriptCS, Octopus CLI, octo, Octopus Client, eksctl, NuGet CLI, Git and Argo CD
 # PowerShell 7 is provided by the .NET SDK base image
-
-# Install Git
-RUN choco install git.install --yes --version $Env:Git_Version --no-progress
-
-# Install Argo CD
-RUN choco install argocd-cli --yes --version $Env:Argo_Cli_Version --no-progress
+RUN $ErrorActionPreference = 'Stop'; `
+    C:\choco-install.ps1 scriptcs $Env:ScriptCs_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    C:\choco-install.ps1 octopus-cli $Env:Octopus_Cli_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    C:\choco-install.ps1 octopustools $Env:Octopus_Cli_Legacy_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Install-Package Octopus.Client -source https://www.nuget.org/api/v2 -SkipDependencies -Force -RequiredVersion $Env:Octopus_Client_Version; `
+    C:\choco-install.ps1 eksctl $Env:Eks_Cli_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    C:\choco-install.ps1 nuget.commandline $Env:Nuget_Cli_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    C:\choco-install.ps1 git.install $Env:Git_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    Remove-Item -Recurse -Force 'C:\Program Files\Git\mingw64\share\doc'; `
+    C:\choco-install.ps1 argocd-cli $Env:Argo_Cli_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
 # Update path for new tools
 ADD .\scripts\update_path.cmd C:\update_path.cmd
