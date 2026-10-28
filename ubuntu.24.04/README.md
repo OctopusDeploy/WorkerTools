@@ -48,7 +48,7 @@ MultiArch
 - Java Jdk 21
 - Kubectl 1.36
 - Kubelogin v0.2.19
-- NodeJS 24 - latest
+- Node.js 24.22.1
 - Octopus CLI 2.21.0
 - Octopus Client 21.6.26529
 - Powershell 7.6.1
