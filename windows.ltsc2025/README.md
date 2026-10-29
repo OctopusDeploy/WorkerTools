@@ -40,7 +40,7 @@
 - Java Jdk 25.0.0.1
 - Kubectl 1.36.1 (also 1.35.1, 1.34.4, 1.33.8, 1.32.12 in C:\kubectl)
 - Kubelogin (azure-kubelogin) 0.2.18
-- Node 24.16.0
+- Node.js 24.22.1
 - Nuget CLI 7.6.0
 - Octopus CLI Legacy 9.1.7
 - Octopus CLI 2.21.1

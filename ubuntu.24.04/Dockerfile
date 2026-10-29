@@ -22,7 +22,7 @@ ARG Helm_Version=v3.21.3
 ARG Java_Jdk_Version=21
 ARG Kubectl_Version=1.36
 ARG Kubelogin_Version=v0.2.19
-ARG NodeJs_Version=24
+ARG NodeJs_Version=24.22.1
 ARG Octopus_Cli_Version=2.21.0
 ARG Octopus_Client_Version=21.6.2652
 ARG PythonVersion=3.14
@@ -108,8 +108,9 @@ RUN mkdir -p /etc/apt/keyrings && \
     az config set bicep.use_binary_from_path=false
 
 # Install NodeJS
-RUN wget --quiet -O - https://deb.nodesource.com/setup_${NodeJs_Version}.x | bash && \
-    apt-get install -y nodejs && \
+RUN NodeJs_Major_Version="${NodeJs_Version%%.*}" && \
+    wget --quiet -O - https://deb.nodesource.com/setup_${NodeJs_Major_Version}.x | bash && \
+    apt-get install -y nodejs=${NodeJs_Version}-1nodesource1 && \
     rm -rf /var/lib/apt/lists/*
 
 # Install kubectl

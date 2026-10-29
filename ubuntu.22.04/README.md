@@ -39,7 +39,7 @@
 - Java Jdk 25 (Distro latest)
 - Kubectl 1.35
 - Kubelogin v0.2.19
-- NodeJS 24 - Latest
+- Node.js 24.22.1
 - Octopus CLI 2.20.1
 - Octopus CLI Legacy 9.1.7
 - Octopus Client 20.3.2503

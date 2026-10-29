@@ -38,7 +38,7 @@
 - Java Jdk 25.0.0.1
 - Kubectl 1.35.0
 - Kubelogin (azure-kubelogin) 0.2.18
-- Node 24.12.0
+- Node.js 24.22.1
 - Octopus CLI Legacy 9.1.7
 - Octopus CLI 2.20.1
 - Octopus Client 20.3.2503

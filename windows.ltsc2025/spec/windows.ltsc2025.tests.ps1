@@ -67,7 +67,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has node installed' {
-        [string](& node --version) | Should -Match '24.16.0'
+        [string](& node --version) | Should -Match '^v24\.22\.1$'
         $LASTEXITCODE | Should -be 0
     }
 
