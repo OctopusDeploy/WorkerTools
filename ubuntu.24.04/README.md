@@ -34,16 +34,16 @@ MultiArch
 ## Installed Software
 
 - Argo CD CLI 3.3.9
-- Aws CLI 2.34.42
+- Aws CLI 2.39.6
 - Aws Iam Authenticator 0.7.14
 - Aws Powershell 5.0.207
-- Azure CLI 2.88.0
+- Azure CLI 2.92.0
 - Azure Powershell 15.5.0
 - Dotnet Sdk 10.0
 - Ecs CLI 1.21.0
 - Eksctl 0.226.0
-- Google Cloud CLI 566.0.0
-- Google Cloud GKE auth plugin 566.0.0
+- Google Cloud CLI 592.0.0
+- Google Cloud GKE auth plugin 592.0.0
 - Helm v3.21.3
 - Java Jdk 21
 - Kubectl 1.36
