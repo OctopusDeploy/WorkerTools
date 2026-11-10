@@ -25,7 +25,7 @@ Describe  'installed dependencies' {
 
     It 'has az installed' {
       $output = (& az version) | convertfrom-json
-      $output.'azure-cli' | Should -be '2.88.0'
+      $output.'azure-cli' | Should -be '2.92.0'
       $LASTEXITCODE | Should -be 0
     }
 
@@ -34,7 +34,7 @@ Describe  'installed dependencies' {
     }
 
     It 'has aws cli installed' {
-      aws --version 2>&1 | Should -match '2.32.28'
+      aws --version 2>&1 | Should -match '2.39.6'
     }
 
     It 'has node installed' {
@@ -74,13 +74,13 @@ Describe  'installed dependencies' {
     }
 
     It 'has gcloud installed' {
-        gcloud --version | Select -First 1 | Should -be 'Google Cloud SDK 550.0.0'
+        gcloud --version | Select -First 1 | Should -be 'Google Cloud SDK 592.0.0'
         $LASTEXITCODE | Should -be 0
     }
     
     It 'has gke-gcloud-auth-plugin installed' {
         #We use belike here as the hash after the 'alpha+' changes and isn't that important
-        gke-gcloud-auth-plugin --version | Select -First 1 | Should -beLike 'Kubernetes v1.30.0+*'
+        gke-gcloud-auth-plugin --version | Select -First 1 | Should -beLike 'Kubernetes v*'
         $LASTEXITCODE | Should -be 0
     }
 

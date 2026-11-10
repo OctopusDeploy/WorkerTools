@@ -8,16 +8,16 @@ ARG TARGETPLATFORM
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG Argocd_Version=3.3.9
-ARG Aws_Cli_Version=2.34.42
+ARG Aws_Cli_Version=2.39.6
 ARG Aws_Iam_Authenticator_Version=0.7.14
 ARG Aws_Powershell_Version=5.0.207
-ARG Azure_Cli_Version=2.88.0-1~noble
+ARG Azure_Cli_Version=2.92.0-1~noble
 ARG Azure_Powershell_Version=15.5.0
 ARG Dotnet_Sdk_Version=10.0
 ARG Ecs_Cli_Version=1.21.0
 ARG Eks_Cli_Version=v0.226.0
-ARG Google_Cloud_Cli_Version=566.0.0-0
-ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=566.0.0-0
+ARG Google_Cloud_Cli_Version=592.0.0-0
+ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=592.0.0-0
 ARG Helm_Version=v3.21.3
 ARG Istio_Version=1.29.2
 ARG Java_Jdk_Version=21

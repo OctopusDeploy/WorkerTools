@@ -29,7 +29,7 @@ Describe  'installed dependencies' {
 
     It 'has az installed' {
         $output = (& az version) | ConvertFrom-Json
-        $output.'azure-cli' | Should -Be '2.88.0'
+        $output.'azure-cli' | Should -Be '2.92.0'
         $LASTEXITCODE | Should -be 0
     }
 
@@ -39,7 +39,7 @@ Describe  'installed dependencies' {
 
     It 'has aws cli installed' {
         $output = & aws --version 2>&1
-        [string]$output | Should -Match '2.32.28'
+        [string]$output | Should -Match '2.39.6'
     }
 
     It 'has aws powershell installed' {
@@ -85,7 +85,7 @@ Describe  'installed dependencies' {
 
     It 'has gcloud installed' {
         $output = & gcloud --version
-        [string]$output | Should -Match '550.0.0'
+        [string]$output | Should -Match '592.0.0'
         $LASTEXITCODE | Should -be 0
     }
 

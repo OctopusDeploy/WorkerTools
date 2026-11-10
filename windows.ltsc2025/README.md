@@ -28,14 +28,14 @@
 - .NET Runtime 8.0.27
 - .NET Framework 4.8.1
 - Argo CD CLI 3.4.2
-- Aws CLI 2.34.53
+- Aws CLI 2.39.6
 - Aws Iam Authenticator 0.7.17
 - Aws PowerShell Modules 5.0.218
-- Azure CLI 2.88.0
+- Azure CLI 2.92.0
 - Azure PowerShell Modules 15.6.1
 - Eksctl 0.226.0
-- Google Cloud CLI 566.0.0
-- Google Cloud GKE auth plugin 566.0.0-0
+- Google Cloud CLI 592.0.0
+- Google Cloud GKE auth plugin 592.0.0-0
 - Helm 3.21.3
 - Java Jdk 25.0.0.1
 - Kubectl 1.36.1 (also 1.35.1, 1.34.4, 1.33.8, 1.32.12 in C:\kubectl)

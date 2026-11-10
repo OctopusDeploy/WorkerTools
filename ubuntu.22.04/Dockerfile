@@ -3,16 +3,16 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG Argocd_Version=3.2.3
-ARG Aws_Cli_Version=2.32.28
+ARG Aws_Cli_Version=2.39.6
 ARG Aws_Iam_Authenticator_Version=0.7.10
 ARG Aws_Powershell_Version=5.0.128
-ARG Azure_Cli_Version=2.88.0-1~jammy
+ARG Azure_Cli_Version=2.92.0-1~jammy
 ARG Azure_Powershell_Version=15.1.0
 ARG Dotnet_Sdk_Version=8.0
 ARG Ecs_Cli_Version=1.21.0
 ARG Eks_Cli_Version=v0.221.0
-ARG Google_Cloud_Cli_Version=550.0.0-0
-ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=550.0.0-0
+ARG Google_Cloud_Cli_Version=592.0.0-0
+ARG Google_Cloud_Gke_Cloud_Auth_Plugin_Version=592.0.0-0
 ARG Helm_Version=v3.21.3
 ARG Java_Jdk_Version=25
 ARG Kubectl_Version=1.35
