@@ -141,7 +141,7 @@ Describe  'installed dependencies' {
 
     It 'has 7zip installed' {
         $output = (& "C:\Program Files\7-Zip\7z.exe" --help) -join "`n"
-        $output | Should -Match '7-Zip 26.00'
+        $output | Should -Match '7-Zip 26.06'
         $LASTEXITCODE | Should -be 0
     }
 
