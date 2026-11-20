@@ -1,10 +1,16 @@
 param(
     [Parameter(Mandatory = $true)][string]$Package,
-    [Parameter(Mandatory = $true)][string]$Version,
+    [string]$Version,
     [switch]$AllowEmptyChecksums
 )
 
-$chocoArgs = @('install', $Package, '--version', $Version, '-y', '--no-progress')
+$chocoArgs = @('install', $Package, '-y', '--no-progress')
+
+# Version is not always needed to be set
+if (![string]::IsNullOrEmpty($Version)) { 
+    $chocoArgs += @('--version', $Version)
+}
+
 if ($AllowEmptyChecksums) { $chocoArgs += '--allow-empty-checksums' }
 
 & choco @chocoArgs
