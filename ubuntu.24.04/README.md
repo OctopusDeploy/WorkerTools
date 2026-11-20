@@ -45,7 +45,7 @@ MultiArch
 - Google Cloud CLI 592.0.0
 - Google Cloud GKE auth plugin 592.0.0
 - Helm v3.21.3
-- Java Jdk 21
+- Java JDK 25 (Distro latest)
 - Kubectl 1.36
 - Kubelogin v0.2.19
 - Node.js 24.22.1

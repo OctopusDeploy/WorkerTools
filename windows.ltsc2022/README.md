@@ -35,7 +35,7 @@
 - Google Cloud CLI 592.0.0
 - Google Cloud GKE auth plugin 592.0.0-0
 - Helm 3.21.3
-- Java Jdk 25.0.0.1
+- Java JDK 25 (latest)
 - Kubectl 1.35.0
 - Kubelogin (azure-kubelogin) 0.2.18
 - Node.js 24.22.1

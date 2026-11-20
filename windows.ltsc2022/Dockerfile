@@ -14,7 +14,7 @@ ARG Eks_Cli_Version=0.221.0
 ARG Git_Version=2.52.0
 ARG Google_Cloud_Cli_Version=592.0.0
 ARG Helm_Version=3.21.3
-ARG Java_Jdk_Version=25.0.0.1
+ARG Java_Jdk_Version=25
 ARG Kubectl_Version=1.35.0
 ARG Kubelogin_Version=0.2.18
 ARG Node_Version=24.22.1
@@ -39,7 +39,7 @@ RUN Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/d
     rm dotnet-install.ps1
 
 # Install JDK
-RUN choco install openjdk --allow-empty-checksums --y --no-progress --version $Env:Java_Jdk_Version; `
+RUN choco install "microsoft-openjdk${Env:Java_Jdk_Version}" --allow-empty-checksums --y --no-progress; `
     Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; `
     Update-SessionEnvironment
 
