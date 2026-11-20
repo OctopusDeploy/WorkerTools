@@ -16,7 +16,7 @@ Describe  'installed dependencies' {
 
     It 'has java installed' {
         $output = & java --version
-        [string]$output | Should -Match '21\.0\.'
+        [string]$output | Should -Match '25\.0\.'
         $LASTEXITCODE | Should -be 0
     }
 
