@@ -3,7 +3,7 @@
 FROM mcr.microsoft.com/dotnet/framework/runtime:4.8.1-20230808-windowsservercore-ltsc2022
 SHELL ["powershell", "-Command"]
 
-ARG 7Zip_Version=25.1.0
+ARG 7Zip_Version=26.6.0
 ARG Argo_Cli_Version=3.2.3
 ARG Aws_Cli_Version=2.39.6
 ARG Aws_Iam_Authenticator_Version=0.7.10

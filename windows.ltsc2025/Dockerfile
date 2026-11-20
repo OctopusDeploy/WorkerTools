@@ -3,7 +3,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0.300-windowsservercore-ltsc2025
 SHELL ["powershell", "-Command"]
 
-ARG 7Zip_Version=26.0.0
+ARG 7Zip_Version=26.6.0
 ARG Argo_Cli_Version=3.4.2
 ARG Chocolatey_Version=2.7.2
 ARG Dotnet_Runtime_Version=8.0.27
@@ -51,7 +51,7 @@ RUN $ErrorActionPreference = 'Stop'; `
     Invoke-WebRequest 'https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1' -outFile 'dotnet-install.ps1'; `
     .\dotnet-install.ps1 -Version $Env:Dotnet_Runtime_Version -Runtime dotnet -InstallDir 'C:\Program Files\dotnet'; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
     rm dotnet-install.ps1; `
-    C:\choco-install.ps1 "microsoft-openjdk${Env:Java_Jdk_Version}" -AllowEmptyChecksums; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
+    C:\choco-install.ps1 "microsoft-openjdk$($Env:Java_Jdk_Version)" -AllowEmptyChecksums; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
     Remove-Item -Recurse -Force 'C:\Program Files\OpenJDK\jdk-*\lib\src.zip', 'C:\Program Files\OpenJDK\jdk-*\jmods'; `
     C:\choco-install.ps1 azure-cli $Env:Azure_Cli_Version; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
     Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1; Update-SessionEnvironment; `
