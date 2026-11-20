@@ -1,7 +1,8 @@
 param(
     [Parameter(Mandatory = $true)][string]$Package,
     [string]$Version,
-    [switch]$AllowEmptyChecksums
+    [switch]$AllowEmptyChecksums,
+    [string[]]$Params
 )
 
 $chocoArgs = @('install', $Package, '-y', '--no-progress')
@@ -12,6 +13,12 @@ if (![string]::IsNullOrEmpty($Version)) {
 }
 
 if ($AllowEmptyChecksums) { $chocoArgs += '--allow-empty-checksums' }
+
+#add any params
+if ( $null -ne $Params -and @($Params).Count -gt 0) {
+    $chocoArgs += '--params'
+    $chocoArgs += @($Params)
+}
 
 & choco @chocoArgs
 $exitCode = $LASTEXITCODE
