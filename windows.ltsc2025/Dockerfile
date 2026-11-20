@@ -38,7 +38,7 @@ RUN $ProgressPreference = 'SilentlyContinue'; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')); `
     wevtutil sl Microsoft-Windows-PowerShell/Operational /e:false; if ($LASTEXITCODE) { exit $LASTEXITCODE }; `
-    Get-ScheduledTask -TaskPath '\Microsoft\Windows\.NET Framework\' -ErrorAction Stop | Disable-ScheduledTask -ErrorAction Stop | Out-Null'
+    Get-ScheduledTask -TaskPath '\Microsoft\Windows\.NET Framework\' -ErrorAction Stop | Disable-ScheduledTask -ErrorAction Stop | Out-Null
 
 COPY .\scripts\choco-install.ps1 C:\choco-install.ps1
 
